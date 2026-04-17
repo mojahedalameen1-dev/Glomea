@@ -51,7 +51,6 @@ class AppRouter {
   static const addMedication = '/add-medication';
   static const labReview = '/lab-review';
 
-  
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   static GoRouter createRouter(Ref ref, {String initialLocation = authGateway}) {
@@ -65,34 +64,32 @@ class AppRouter {
         final isLoggedIn = session != null;
         debugPrint('Router CHECK: location=$location, isLoggedIn=$isLoggedIn');
 
-        final isOnAuth = location == login || 
-                         location == register || 
-                         location == intro ||
-                         location == authGateway;
-        
+        final isOnAuth = location == login ||
+            location == register ||
+            location == intro ||
+            location == authGateway;
+
         final isOnBoarding = location.contains('/onboarding');
- 
-        // 1. إذا لم يكن هناك جلسة وغير متواجد في صفحات المصادقة -> وجهه للدخول
+
+        // 1. No session — redirect to login unless already on auth screens
         if (!isLoggedIn) {
           if (isOnAuth) return null;
           debugPrint('Router: No session, redirecting to login');
           return login;
         }
- 
-        // 2. إذا كان هناك جلسة وهو في صفحات المصادقة (أو Onboarding)
-        // نحتاج لمعرفة هل أكمل الـ Onboarding أم لا
-        
-        final authAsync = ref.read(authNotifierProvider);
+
+        // 2. Session exists — watch (not read) so redirect re-evaluates on change
+        final authAsync = ref.watch(authNotifierProvider);
         if (authAsync.isLoading) {
           debugPrint('Router: Auth state loading, skipping redirect');
           return null;
         }
- 
+
         if (isOnAuth || isOnBoarding) {
           final patient = authAsync.valueOrNull;
-          final bool isOnboarded = patient?.onboardingComplete ?? 
-                                   (session.user.userMetadata?['onboarding_complete'] == true);
- 
+          final bool isOnboarded = patient?.onboardingComplete ??
+              (session.user.userMetadata?['onboarding_complete'] == true);
+
           debugPrint('Router: isOnboarded=$isOnboarded, location=$location');
 
           if (!isOnboarded) {
@@ -103,22 +100,23 @@ class AppRouter {
             debugPrint('Router: User not onboarded, forcing step1');
             return '$onboarding/step1';
           }
- 
+
           debugPrint('Router: User onboarded, redirecting to dashboard');
           return dashboard;
         }
- 
-        return null; // لا تغيير في المسارات الأخرى
+
+        return null;
       },
       routes: [
         GoRoute(path: intro, builder: (context, state) => const IntroScreen()),
         GoRoute(path: authGateway, builder: (context, state) => const AuthGatewayScreen()),
         GoRoute(path: login, builder: (context, state) => const LoginScreen()),
         GoRoute(path: register, builder: (context, state) => const RegisterScreen()),
-        
+
         GoRoute(
           path: onboarding,
-          redirect: (context, state) => state.matchedLocation == onboarding ? '$onboarding/step1' : null,
+          redirect: (context, state) =>
+              state.matchedLocation == onboarding ? '$onboarding/step1' : null,
           routes: [
             GoRoute(
               path: 'step1',
@@ -130,24 +128,25 @@ class AppRouter {
             ),
           ],
         ),
-        
+
         StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) => kIsWeb 
-              ? WebShell(navigationShell: navigationShell) 
+          builder: (context, state, navigationShell) => kIsWeb
+              ? WebShell(navigationShell: navigationShell)
               : BottomNavShell(navigationShell: navigationShell),
           branches: [
             StatefulShellBranch(
-              routes: [ 
+              routes: [
                 GoRoute(
-                  path: dashboard, 
-                  builder: (context, state) => kIsWeb ? const WebDashboardScreen() : const DashboardScreen()
-                ) 
+                  path: dashboard,
+                  builder: (context, state) =>
+                      kIsWeb ? const WebDashboardScreen() : const DashboardScreen(),
+                )
               ],
             ),
             StatefulShellBranch(
-              routes: [ 
+              routes: [
                 GoRoute(
-                  path: history, 
+                  path: history,
                   builder: (context, state) {
                     final search = state.uri.queryParameters['search'];
                     return HistoryScreen(searchQuery: search);
@@ -161,27 +160,53 @@ class AppRouter {
                       },
                     ),
                   ],
-                ) 
+                )
               ],
             ),
             StatefulShellBranch(
-              routes: [ GoRoute(path: alerts, builder: (context, state) => const AlertsScreen()) ],
+              routes: [
+                GoRoute(path: alerts, builder: (context, state) => const AlertsScreen())
+              ],
             ),
             StatefulShellBranch(
-              routes: [ GoRoute(path: medications, builder: (context, state) => const MedicationsScreen()) ],
+              routes: [
+                GoRoute(path: medications, builder: (context, state) => const MedicationsScreen())
+              ],
             ),
             StatefulShellBranch(
-              routes: [ GoRoute(path: profile, builder: (context, state) => const ProfileScreen()) ],
+              routes: [
+                GoRoute(path: profile, builder: (context, state) => const ProfileScreen())
+              ],
             ),
           ],
         ),
 
         // Modal Entries
-        GoRoute(path: labEntry, parentNavigatorKey: _rootNavigatorKey, builder: (context, state) => const LabEntryScreen()),
-        GoRoute(path: dailyEntry, parentNavigatorKey: _rootNavigatorKey, builder: (context, state) => const DailyEntryScreen()),
-        GoRoute(path: foodSearch, parentNavigatorKey: _rootNavigatorKey, builder: (context, state) => const FoodSearchScreen()),
-        GoRoute(path: barcodeScanner, parentNavigatorKey: _rootNavigatorKey, builder: (context, state) => const BarcodeScannerScreen()),
-        GoRoute(path: addMedication, parentNavigatorKey: _rootNavigatorKey, builder: (context, state) => const AddMedicationScreen()),
+        GoRoute(
+          path: labEntry,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const LabEntryScreen(),
+        ),
+        GoRoute(
+          path: dailyEntry,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const DailyEntryScreen(),
+        ),
+        GoRoute(
+          path: foodSearch,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const FoodSearchScreen(),
+        ),
+        GoRoute(
+          path: barcodeScanner,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const BarcodeScannerScreen(),
+        ),
+        GoRoute(
+          path: addMedication,
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) => const AddMedicationScreen(),
+        ),
         GoRoute(
           path: labReview,
           parentNavigatorKey: _rootNavigatorKey,
@@ -201,14 +226,14 @@ class AppRouter {
 
 class _RouterNotifier extends ChangeNotifier {
   final Ref _ref;
+
   _RouterNotifier(this._ref) {
-    // 1. استماع لتغييرات حالة المصادقة (دخول/خروج)
+    // Listen to auth state changes (login/logout)
     _ref.listen<AsyncValue<AuthState>>(authStateProvider, (_, __) {
       notifyListeners();
     });
 
-    // 2. استماع انتقائي لحالة الـ Onboarding فقط لضمان التحويل التلقائي عند الإكمال
-    // نستخدم select للتنبيه فقط عند انتقال الحالة من false إلى true
+    // Listen only to onboarding completion transition (false → true)
     _ref.listen<bool?>(
       authNotifierProvider.select((s) => s.valueOrNull?.onboardingComplete),
       (previous, next) {
