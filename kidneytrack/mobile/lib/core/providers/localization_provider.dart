@@ -9,16 +9,12 @@ final localizationProvider = StateNotifierProvider<LocalizationNotifier, Locale>
 
 final appLocalizationsProvider = Provider<AppLocalizations>((ref) {
   final locale = ref.watch(localizationProvider);
-  // This is a bit tricky without context, but AppLocalizations.delegate.load returns a Future.
-  // We can use the lookup function if we had it, but standard way in Riverpod 
-  // without context is often difficult unless we use a lookup table.
-  // However, flutter_gen provides a lookup function.
   return lookupAppLocalizations(locale);
 });
 
 class LocalizationNotifier extends StateNotifier<Locale> {
   static const String _languageKey = 'selected_language';
-  
+
   LocalizationNotifier() : super(const Locale('en')) {
     _loadLocale();
   }
@@ -26,18 +22,23 @@ class LocalizationNotifier extends StateNotifier<Locale> {
   Future<void> _loadLocale() async {
     final prefs = await SharedPreferences.getInstance();
     final langCode = prefs.getString(_languageKey);
-    
+
     if (langCode != null) {
+      // المستخدم سبق أن اختار لغة — نحترم اختياره
       state = Locale(langCode);
     } else {
-      // Default to English on first launch as per requirement
-      state = const Locale('en');
+      // أول تشغيل — نكتشف لغة الجهاز
+      final deviceLocales = PlatformDispatcher.instance.locales;
+      final isDeviceArabic = deviceLocales.any(
+        (locale) => locale.languageCode == 'ar',
+      );
+      state = isDeviceArabic ? const Locale('ar') : const Locale('en');
     }
   }
 
   Future<void> setLocale(Locale locale) async {
     if (state == locale) return;
-    
+
     state = locale;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_languageKey, locale.languageCode);
