@@ -16,14 +16,16 @@ class MedicalInsightContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: padding ?? const EdgeInsets.all(24),
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+          color: isDark
+              ? AppColors.borderBaseDark
+              : AppColors.borderBase.withValues(alpha: 0.1),
         ),
         boxShadow: isDark ? null : AppShadows.elev1,
       ),
@@ -62,9 +64,9 @@ class EGFRCard extends StatelessWidget {
               ),
               Text(
                 egfr!.toStringAsFixed(0),
-                style: AppTextStyles.metricValue.copyWith(
+                style: AppTextStyles.displayLarge.copyWith(
                   color: stage!.color,
-                  fontSize: 24,
+                  fontSize: 36,
                 ),
               ),
             ],
@@ -80,7 +82,8 @@ class EGFRCard extends StatelessWidget {
                 ),
                 const Gap(4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: stage!.color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -136,8 +139,13 @@ class FluidOverloadCard extends StatelessWidget {
               Text(l10n.fluidOverload, style: AppTextStyles.label),
               Text(
                 '${overloadKg! > 0 ? "+" : ""}${overloadKg!.toStringAsFixed(1)} kg',
-                style: AppTextStyles.h3.copyWith(
-                  color: isWarning ? (isDark ? AppColors.textCriticalDark : AppColors.textCritical) : AppColors.primary,
+                style: AppTextStyles.metricValue.copyWith(
+                  color: isWarning
+                      ? (isDark
+                          ? AppColors.textCriticalDark
+                          : AppColors.textCritical)
+                      : AppColors.primary,
+                  fontSize: 28,
                 ),
               ),
             ],
@@ -148,7 +156,9 @@ class FluidOverloadCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: (overloadKg! / 5).clamp(0.0, 1.0),
               minHeight: 12,
-              backgroundColor: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+              backgroundColor: isDark
+                  ? AppColors.borderBaseDark
+                  : AppColors.borderBase.withValues(alpha: 0.1),
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -159,13 +169,17 @@ class FluidOverloadCard extends StatelessWidget {
               Text(
                 '${l10n.dryWeight}: ${dryWeight!.toStringAsFixed(1)}',
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
               Text(
                 '${l10n.currentWeight}: ${currentWeight!.toStringAsFixed(1)}',
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -193,7 +207,7 @@ class BloodPressureCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     IconData trendIcon;
     Color trendColor;
-    
+
     if (trend == 'rising') {
       trendIcon = Icons.trending_up;
       trendColor = AppColors.textCritical;
@@ -226,7 +240,7 @@ class BloodPressureCard extends StatelessWidget {
                 Text(l10n.bpAverage, style: AppTextStyles.label),
                 Text(
                   '${avg.toStringAsFixed(0)} mmHg',
-                  style: AppTextStyles.h2.copyWith(fontSize: 20),
+                  style: AppTextStyles.metricValue.copyWith(fontSize: 28),
                 ),
               ],
             ),
@@ -236,14 +250,18 @@ class BloodPressureCard extends StatelessWidget {
             children: [
               Text(
                 '${controlRate.toStringAsFixed(0)}%',
-                style: AppTextStyles.h3.copyWith(
-                  color: isDark ? AppColors.textSuccessDark : AppColors.textSuccess,
+                style: AppTextStyles.h2.copyWith(
+                  color: isDark
+                      ? AppColors.textSuccessDark
+                      : AppColors.textSuccess,
                 ),
               ),
               Text(
                 l10n.controlRate,
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -283,8 +301,14 @@ class PotassiumDailyCard extends StatelessWidget {
               Text(l10n.dailyPotassium, style: AppTextStyles.label),
               Text(
                 '${status.consumed.toStringAsFixed(0)} / ${status.limit} mg',
-                style: AppTextStyles.bodyM.copyWith(
-                  color: isDark ? (status.status == 'danger' ? AppColors.textCriticalDark : (status.status == 'warning' ? AppColors.textWarningDark : AppColors.textSuccessDark)) : color,
+                style: AppTextStyles.h3.copyWith(
+                  color: isDark
+                      ? (status.status == 'danger'
+                          ? AppColors.textCriticalDark
+                          : (status.status == 'warning'
+                              ? AppColors.textWarningDark
+                              : AppColors.textSuccessDark))
+                      : color,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -296,7 +320,9 @@ class PotassiumDailyCard extends StatelessWidget {
             child: LinearProgressIndicator(
               value: (status.percentage / 100).clamp(0.0, 1.0),
               minHeight: 10,
-              backgroundColor: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+              backgroundColor: isDark
+                  ? AppColors.borderBaseDark
+                  : AppColors.borderBase.withValues(alpha: 0.1),
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -304,7 +330,9 @@ class PotassiumDailyCard extends StatelessWidget {
           Text(
             '${l10n.remaining}: ${status.remaining.toStringAsFixed(0)} mg',
             style: AppTextStyles.bodyS.copyWith(
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondary,
             ),
           ),
         ],
@@ -321,7 +349,7 @@ class EarlyDeteriorationAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(20),
@@ -329,7 +357,9 @@ class EarlyDeteriorationAlert extends StatelessWidget {
         color: isDark ? AppColors.bgCriticalDark : AppColors.bgCritical,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark ? AppColors.borderCriticalDark : AppColors.borderCritical.withValues(alpha: 0.5),
+          color: isDark
+              ? AppColors.borderCriticalDark
+              : AppColors.borderCritical.withValues(alpha: 0.5),
           width: 1.5,
         ),
       ),
@@ -349,7 +379,9 @@ class EarlyDeteriorationAlert extends StatelessWidget {
                 Text(
                   l10n.urgentMedicalAlert,
                   style: AppTextStyles.label.copyWith(
-                    color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+                    color: isDark
+                        ? AppColors.textCriticalDark
+                        : AppColors.textCritical,
                     fontSize: 16,
                   ),
                 ),
@@ -357,7 +389,9 @@ class EarlyDeteriorationAlert extends StatelessWidget {
                 Text(
                   message,
                   style: AppTextStyles.bodyM.copyWith(
-                    color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+                    color: isDark
+                        ? AppColors.textCriticalDark
+                        : AppColors.textCritical,
                     fontWeight: FontWeight.bold,
                     height: 1.4,
                   ),

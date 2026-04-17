@@ -19,9 +19,12 @@ class HealthGauge extends StatelessWidget {
 
   Color get statusColor {
     switch (status) {
-      case IndicatorStatus.safe: return AppColors.safeGreen;
-      case IndicatorStatus.warning: return AppColors.warningAmber;
-      case IndicatorStatus.critical: return AppColors.criticalRed;
+      case IndicatorStatus.safe:
+        return AppColors.safeGreen;
+      case IndicatorStatus.warning:
+        return AppColors.warningAmber;
+      case IndicatorStatus.critical:
+        return AppColors.criticalRed;
     }
   }
 

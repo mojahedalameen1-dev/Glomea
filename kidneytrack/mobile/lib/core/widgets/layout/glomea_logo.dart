@@ -18,7 +18,8 @@ class GlomeaLogo extends StatefulWidget {
   State<GlomeaLogo> createState() => _GlomeaLogoState();
 }
 
-class _GlomeaLogoState extends State<GlomeaLogo> with SingleTickerProviderStateMixin {
+class _GlomeaLogoState extends State<GlomeaLogo>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _kidneyAnimation;
   late Animation<double> _leafAnimation;
@@ -112,9 +113,11 @@ class LogoPathPainter extends CustomPainter {
     // Main Kidney (Glomea C-Shape)
     final kidneyPath = Path();
     kidneyPath.moveTo(w * 0.75, h * 0.25);
-    kidneyPath.cubicTo(w * 0.95, h * 0.45, w * 0.85, h * 0.85, w * 0.5, h * 0.95);
+    kidneyPath.cubicTo(
+        w * 0.95, h * 0.45, w * 0.85, h * 0.85, w * 0.5, h * 0.95);
     kidneyPath.cubicTo(w * 0.1, h * 0.85, w * 0.05, h * 0.4, w * 0.3, h * 0.2);
-    kidneyPath.cubicTo(w * 0.45, h * 0.05, w * 0.65, h * 0.1, w * 0.75, h * 0.25);
+    kidneyPath.cubicTo(
+        w * 0.45, h * 0.05, w * 0.65, h * 0.1, w * 0.75, h * 0.25);
 
     _drawProgressPath(canvas, kidneyPath, kidneyProgress, paint);
 
@@ -130,22 +133,24 @@ class LogoPathPainter extends CustomPainter {
       leafPath.moveTo(w * 0.5, h * 0.45);
       leafPath.quadraticBezierTo(w * 0.65, h * 0.35, w * 0.7, h * 0.55);
       leafPath.quadraticBezierTo(w * 0.55, h * 0.7, w * 0.5, h * 0.45);
-      
+
       _drawProgressPath(canvas, leafPath, leafProgress, leafPaint);
     }
   }
 
-  void _drawProgressPath(Canvas canvas, Path path, double progress, Paint paint) {
+  void _drawProgressPath(
+      Canvas canvas, Path path, double progress, Paint paint) {
     for (final pathMetric in path.computeMetrics()) {
-      final extractPath = pathMetric.extractPath(0.0, pathMetric.length * progress);
+      final extractPath =
+          pathMetric.extractPath(0.0, pathMetric.length * progress);
       canvas.drawPath(extractPath, paint);
     }
   }
 
   @override
   bool shouldRepaint(covariant LogoPathPainter oldDelegate) {
-    return oldDelegate.kidneyProgress != kidneyProgress || 
-           oldDelegate.leafProgress != leafProgress ||
-           oldDelegate.color != color;
+    return oldDelegate.kidneyProgress != kidneyProgress ||
+        oldDelegate.leafProgress != leafProgress ||
+        oldDelegate.color != color;
   }
 }

@@ -27,7 +27,6 @@ class LiveIndicatorInput extends StatefulWidget {
 class _LiveIndicatorInputState extends State<LiveIndicatorInput> {
   final TextEditingController _controller = TextEditingController();
   double _value = 0.0;
-  
 
   Color get _statusColor {
     if (_value == 0) return AppColors.borderBase;
@@ -57,10 +56,14 @@ class _LiveIndicatorInputState extends State<LiveIndicatorInput> {
       decoration: BoxDecoration(
         color: AppColors.bgSurface,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: _statusColor.withValues(alpha: 0.5), width: 2),
+        border:
+            Border.all(color: _statusColor.withValues(alpha: 0.5), width: 2),
         boxShadow: [
           if (_value > 0)
-            BoxShadow(color: _statusColor.withValues(alpha: 0.1), blurRadius: 10, spreadRadius: 2),
+            BoxShadow(
+                color: _statusColor.withValues(alpha: 0.1),
+                blurRadius: 10,
+                spreadRadius: 2),
         ],
       ),
       child: Column(
@@ -69,8 +72,11 @@ class _LiveIndicatorInputState extends State<LiveIndicatorInput> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.indicatorName, style: AppTextStyles.h2.copyWith(fontSize: 18)),
-              Text(widget.unit, style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+              Text(widget.indicatorName,
+                  style: AppTextStyles.h2.copyWith(fontSize: 18)),
+              Text(widget.unit,
+                  style: AppTextStyles.bodyS
+                      .copyWith(color: AppColors.textSecondary)),
             ],
           ),
           const Gap(16),
@@ -78,15 +84,22 @@ class _LiveIndicatorInputState extends State<LiveIndicatorInput> {
             controller: _controller,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             onChanged: _onInputChanged,
-            style: AppTextStyles.h1.copyWith(fontSize: 28, color: _statusColor == AppColors.borderBase ? AppColors.textPrimary : _statusColor),
+            style: AppTextStyles.h1.copyWith(
+                fontSize: 28,
+                color: _statusColor == AppColors.borderBase
+                    ? AppColors.textPrimary
+                    : _statusColor),
             decoration: InputDecoration(
               hintText: '0.0',
               border: InputBorder.none,
-              suffixIcon: _value > 0 ? Icon(Icons.check_circle, color: _statusColor) : null,
+              suffixIcon: _value > 0
+                  ? Icon(Icons.check_circle, color: _statusColor)
+                  : null,
             ),
-          ).animate(target: _value > widget.thresholds.warningMax ? 1 : 0)
-           .shake(hz: 8, curve: Curves.easeInOut),
-          
+          )
+              .animate(target: _value > widget.thresholds.warningMax ? 1 : 0)
+              .shake(hz: 8, curve: Curves.easeInOut),
+
           const Gap(12),
           // Threshold Visualization bar
           Stack(
@@ -108,11 +121,18 @@ class _LiveIndicatorInputState extends State<LiveIndicatorInput> {
               AnimatedPositioned(
                 duration: 400.ms,
                 curve: Curves.easeOutCubic,
-                left: (MediaQuery.of(context).size.width - 80) * (_value / (widget.thresholds.warningMax * 1.5)).clamp(0.0, 1.0),
+                left: (MediaQuery.of(context).size.width - 80) *
+                    (_value / (widget.thresholds.warningMax * 1.5))
+                        .clamp(0.0, 1.0),
                 child: Container(
                   width: 12,
                   height: 12,
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(blurRadius: 4, color: Colors.black26)]),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(blurRadius: 4, color: Colors.black26)
+                      ]),
                 ),
               ),
             ],

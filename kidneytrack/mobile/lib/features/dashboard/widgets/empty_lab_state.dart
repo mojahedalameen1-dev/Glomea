@@ -18,7 +18,8 @@ class EmptyLabState extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.analytics_outlined, size: 48, color: AppColors.textSecondary),
+          const Icon(Icons.analytics_outlined,
+              size: 48, color: AppColors.textSecondary),
           const SizedBox(height: 16),
           Text(
             'لا توجد تحاليل طبية بعد',
@@ -36,7 +37,8 @@ class EmptyLabState extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
             ),
             child: const Text('إضافة أول تحليل'),
           ),

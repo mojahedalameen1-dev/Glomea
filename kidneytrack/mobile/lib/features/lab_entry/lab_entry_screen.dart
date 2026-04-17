@@ -24,74 +24,130 @@ import 'package:kidneytrack_mobile/l10n/app_localizations.dart';
 const List<Map<String, dynamic>> _allIndicators = [
   // ── Existing ──────────────────────────────────────────────────────────────
   {
-    'code': 'CREAT', 'unit': 'mg/dL',
-    'min': 0.5, 'max': 15.0, 'safeMin': 0.7, 'safeMax': 1.3,
+    'code': 'CREAT',
+    'unit': 'mg/dL',
+    'min': 0.5,
+    'max': 15.0,
+    'safeMin': 0.7,
+    'safeMax': 1.3,
     'convertible': true,
   },
   {
-    'code': 'K', 'unit': 'mEq/L',
-    'min': 2.0, 'max': 8.0, 'safeMin': 3.5, 'safeMax': 5.0,
+    'code': 'K',
+    'unit': 'mEq/L',
+    'min': 2.0,
+    'max': 8.0,
+    'safeMin': 3.5,
+    'safeMax': 5.0,
     'convertible': false,
   },
   {
-    'code': 'UREA', 'unit': 'mg/dL',
-    'min': 5.0, 'max': 200.0, 'safeMin': 10.0, 'safeMax': 50.0,
+    'code': 'UREA',
+    'unit': 'mg/dL',
+    'min': 5.0,
+    'max': 200.0,
+    'safeMin': 10.0,
+    'safeMax': 50.0,
     'convertible': true,
   },
   {
-    'code': 'NA', 'unit': 'mEq/L',
-    'min': 110.0, 'max': 170.0, 'safeMin': 135.0, 'safeMax': 145.0,
+    'code': 'NA',
+    'unit': 'mEq/L',
+    'min': 110.0,
+    'max': 170.0,
+    'safeMin': 135.0,
+    'safeMax': 145.0,
     'convertible': false,
   },
   {
-    'code': 'HGB', 'unit': 'g/dL',
-    'min': 5.0, 'max': 20.0, 'safeMin': 12.0, 'safeMax': 16.0,
+    'code': 'HGB',
+    'unit': 'g/dL',
+    'min': 5.0,
+    'max': 20.0,
+    'safeMin': 12.0,
+    'safeMax': 16.0,
     'convertible': false,
   },
   {
-    'code': 'PHOS', 'unit': 'mg/dL',
-    'min': 1.0, 'max': 15.0, 'safeMin': 3.0, 'safeMax': 4.5,
+    'code': 'PHOS',
+    'unit': 'mg/dL',
+    'min': 1.0,
+    'max': 15.0,
+    'safeMin': 3.0,
+    'safeMax': 4.5,
     'convertible': true,
   },
   // ── New indicators ────────────────────────────────────────────────────────
   {
-    'code': 'hba1c', 'unit': '%',
-    'min': 4.0, 'max': 14.0, 'safeMin': 4.0, 'safeMax': 7.0,
+    'code': 'hba1c',
+    'unit': '%',
+    'min': 4.0,
+    'max': 14.0,
+    'safeMin': 4.0,
+    'safeMax': 7.0,
     'convertible': false,
   },
   {
-    'code': 'total_cholesterol', 'unit': 'mg/dL',
-    'min': 100.0, 'max': 400.0, 'safeMin': 0.0, 'safeMax': 200.0,
+    'code': 'total_cholesterol',
+    'unit': 'mg/dL',
+    'min': 100.0,
+    'max': 400.0,
+    'safeMin': 0.0,
+    'safeMax': 200.0,
     'convertible': true,
   },
   {
-    'code': 'ldl', 'unit': 'mg/dL',
-    'min': 0.0, 'max': 300.0, 'safeMin': 0.0, 'safeMax': 100.0,
+    'code': 'ldl',
+    'unit': 'mg/dL',
+    'min': 0.0,
+    'max': 300.0,
+    'safeMin': 0.0,
+    'safeMax': 100.0,
     'convertible': true,
   },
   {
-    'code': 'triglycerides', 'unit': 'mg/dL',
-    'min': 0.0, 'max': 500.0, 'safeMin': 0.0, 'safeMax': 150.0,
+    'code': 'triglycerides',
+    'unit': 'mg/dL',
+    'min': 0.0,
+    'max': 500.0,
+    'safeMin': 0.0,
+    'safeMax': 150.0,
     'convertible': true,
   },
   {
-    'code': 'calcium', 'unit': 'mg/dL',
-    'min': 5.0, 'max': 15.0, 'safeMin': 8.4, 'safeMax': 10.2,
+    'code': 'calcium',
+    'unit': 'mg/dL',
+    'min': 5.0,
+    'max': 15.0,
+    'safeMin': 8.4,
+    'safeMax': 10.2,
     'convertible': true,
   },
   {
-    'code': 'vitamin_d', 'unit': 'ng/mL',
-    'min': 0.0, 'max': 100.0, 'safeMin': 30.0, 'safeMax': 100.0,
+    'code': 'vitamin_d',
+    'unit': 'ng/mL',
+    'min': 0.0,
+    'max': 100.0,
+    'safeMin': 30.0,
+    'safeMax': 100.0,
     'convertible': false,
   },
   {
-    'code': 'phosphorus_blood', 'unit': 'mg/dL',
-    'min': 1.0, 'max': 10.0, 'safeMin': 2.5, 'safeMax': 4.5,
+    'code': 'phosphorus_blood',
+    'unit': 'mg/dL',
+    'min': 1.0,
+    'max': 10.0,
+    'safeMin': 2.5,
+    'safeMax': 4.5,
     'convertible': true,
   },
   {
-    'code': 'urine_acr', 'unit': 'mg/g',
-    'min': 0.0, 'max': 1000.0, 'safeMin': 0.0, 'safeMax': 30.0,
+    'code': 'urine_acr',
+    'unit': 'mg/g',
+    'min': 0.0,
+    'max': 1000.0,
+    'safeMin': 0.0,
+    'safeMax': 30.0,
     'convertible': false,
   },
 ];
@@ -144,11 +200,11 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
 
     try {
       await ref.read(labEntryProvider.notifier).saveLabResults(
-        recordedAt: _selectedDate,
-        indicators: _values, // Already in mg/dL
-        units: units,
-        imageUrl: null,
-      );
+            recordedAt: _selectedDate,
+            indicators: _values, // Already in mg/dL
+            units: units,
+            imageUrl: null,
+          );
 
       if (!mounted) return;
       setState(() => _showSuccess = true);
@@ -158,7 +214,9 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.errorSavingExt('$e')), backgroundColor: AppColors.textCritical),
+          SnackBar(
+              content: Text(l10n.errorSavingExt('$e')),
+              backgroundColor: AppColors.textCritical),
         );
       }
     } finally {
@@ -168,15 +226,18 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
 
   Future<void> _startOcrScan() async {
     try {
-      final options = DocumentScannerOptions(mode: ScannerMode.filter, pageLimit: 1);
+      final options =
+          DocumentScannerOptions(mode: ScannerMode.filter, pageLimit: 1);
       final documentScanner = DocumentScanner(options: options);
       final result = await documentScanner.scanDocument();
       final images = result.images;
       if (images == null || images.isEmpty) return;
 
       final String imagePath = images.first;
-      final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-      final RecognizedText recognizedText = await textRecognizer.processImage(InputImage.fromFilePath(imagePath));
+      final textRecognizer =
+          TextRecognizer(script: TextRecognitionScript.latin);
+      final RecognizedText recognizedText =
+          await textRecognizer.processImage(InputImage.fromFilePath(imagePath));
       final String rawText = recognizedText.text;
       await textRecognizer.close();
       await documentScanner.close();
@@ -193,7 +254,9 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.errorScanningExt('$e')), backgroundColor: AppColors.textCritical),
+          SnackBar(
+              content: Text(l10n.errorScanningExt('$e')),
+              backgroundColor: AppColors.textCritical),
         );
       }
     }
@@ -216,7 +279,10 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () async {
-              if (!_isDirty) { context.pop(); return; }
+              if (!_isDirty) {
+                context.pop();
+                return;
+              }
               final shouldPop = await showExitConfirmDialog(context);
               if (shouldPop && context.mounted) context.pop();
             },
@@ -244,7 +310,10 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
             selectedDate: _selectedDate,
             firstDate: DateTime(2000),
             lastDate: DateTime.now(),
-            onDateSelected: (date) => setState(() { _selectedDate = date; _isDirty = true; }),
+            onDateSelected: (date) => setState(() {
+              _selectedDate = date;
+              _isDirty = true;
+            }),
           ),
           const SizedBox(height: 20),
 
@@ -258,30 +327,37 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
 
           // ── Save button ────────────────────────────────────────────────────
           SizedBox(
-            width: double.infinity, height: 56,
+            width: double.infinity,
+            height: 56,
             child: ElevatedButton(
               onPressed: _isUploading ? null : _onSave,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary, elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                backgroundColor: AppColors.primary,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
               ),
               child: _isUploading
                   ? const CircularProgressIndicator(color: Colors.white)
-                  : Text(l10n.saveResultsManually, style: AppTextStyles.h2.copyWith(color: Colors.white)),
+                  : Text(l10n.saveResultsManually,
+                      style: AppTextStyles.h2.copyWith(color: Colors.white)),
             ),
           ),
           const SizedBox(height: 12),
 
           // ── OCR button ─────────────────────────────────────────────────────
           SizedBox(
-            width: double.infinity, height: 56,
+            width: double.infinity,
+            height: 56,
             child: OutlinedButton.icon(
               onPressed: _isUploading ? null : _startOcrScan,
               icon: const Icon(Icons.document_scanner_outlined),
               label: Text(l10n.scanLabPaperOCR),
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: AppColors.primary.withValues(alpha: 0.5)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                side:
+                    BorderSide(color: AppColors.primary.withValues(alpha: 0.5)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
                 textStyle: AppTextStyles.h3,
               ),
             ),
@@ -312,7 +388,8 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
                   _unitPref == 'mg'
                       ? l10n.unitStoredAsIsMg
                       : l10n.unitConvertedAutomaticallyMmol,
-                  style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodyS
+                      .copyWith(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -329,8 +406,8 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
               // Convert already-entered values
               setState(() {
                 for (final code in _values.keys.toList()) {
-                  final isConvertible = _allIndicators
-                      .any((i) => i['code'] == code && i['convertible'] == true);
+                  final isConvertible = _allIndicators.any(
+                      (i) => i['code'] == code && i['convertible'] == true);
                   if (!isConvertible) continue;
                   if (newPref == 'mmol' && _unitPref == 'mg') {
                     _values[code] = convertToMmol(code, _values[code]!);
@@ -354,24 +431,37 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
   Widget _buildSuccessOverlay(AppLocalizations l10n) {
     return Animate(
       child: Container(
-                color: AppColors.bgSurface.withValues(alpha: 0.9),
-                width: double.infinity, height: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Animate(
-                      onPlay: (c) => c.repeat(reverse: true),
-                      child: Container(
-                        width: 100, height: 100,
-                        decoration: const BoxDecoration(color: AppColors.textSuccess, shape: BoxShape.circle),
-                        child: const Icon(Icons.check, color: Colors.white, size: 60),
-                      ),
-                    ).scale(duration: 600.ms, curve: Curves.elasticOut).then().shake(duration: 400.ms),
-                    const SizedBox(height: 24),
-                    Animate(child: Text(l10n.dataSavedSuccessfully, style: AppTextStyles.h2.copyWith(color: AppColors.textPrimary)))
-                        .fadeIn(delay: 400.ms).slideY(begin: 0.5, end: 0),
-                    const SizedBox(height: 8),
-                    Animate(child: Text(l10n.updatingDashboard, style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary)))
+        color: AppColors.bgSurface.withValues(alpha: 0.9),
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Animate(
+              onPlay: (c) => c.repeat(reverse: true),
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: const BoxDecoration(
+                    color: AppColors.textSuccess, shape: BoxShape.circle),
+                child: const Icon(Icons.check, color: Colors.white, size: 60),
+              ),
+            )
+                .scale(duration: 600.ms, curve: Curves.elasticOut)
+                .then()
+                .shake(duration: 400.ms),
+            const SizedBox(height: 24),
+            Animate(
+                    child: Text(l10n.dataSavedSuccessfully,
+                        style: AppTextStyles.h2
+                            .copyWith(color: AppColors.textPrimary)))
+                .fadeIn(delay: 400.ms)
+                .slideY(begin: 0.5, end: 0),
+            const SizedBox(height: 8),
+            Animate(
+                    child: Text(l10n.updatingDashboard,
+                        style: AppTextStyles.bodyM
+                            .copyWith(color: AppColors.textSecondary)))
                 .fadeIn(delay: 600.ms),
           ],
         ),
@@ -393,18 +483,22 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
     final double minMg = (ind['min'] as num).toDouble();
     final double maxMg = (ind['max'] as num).toDouble();
 
-    final double displaySafeMin = inMmol ? convertToMmol(code, safeMinMg) : safeMinMg;
-    final double displaySafeMax = inMmol ? convertToMmol(code, safeMaxMg) : safeMaxMg;
+    final double displaySafeMin =
+        inMmol ? convertToMmol(code, safeMinMg) : safeMinMg;
+    final double displaySafeMax =
+        inMmol ? convertToMmol(code, safeMaxMg) : safeMaxMg;
     final double displayMin = inMmol ? convertToMmol(code, minMg) : minMg;
     final double displayMax = inMmol ? convertToMmol(code, maxMg) : maxMg;
 
     // Current display value (stored in mg internally)
     final double storedMg = _values[code] ?? 0.0;
-    final double displayValue = inMmol ? convertToMmol(code, storedMg) : storedMg;
+    final double displayValue =
+        inMmol ? convertToMmol(code, storedMg) : storedMg;
 
     // Warning message
     final String? warning = getLabWarning(code, storedMg, l10n);
-    final String? note = code == 'hba1c' ? l10n.noteImportantForDiabeticCKD : null;
+    final String? note =
+        code == 'hba1c' ? l10n.noteImportantForDiabeticCKD : null;
     final String labelName = getLocalizedLabName(code, l10n);
 
     return Container(
@@ -413,7 +507,12 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
       decoration: BoxDecoration(
         color: AppColors.bgSurface,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10, offset: const Offset(0, 4))],
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4))
+        ],
         border: Border.all(color: AppColors.borderBase.withValues(alpha: 0.5)),
       ),
       child: Column(
@@ -427,7 +526,9 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
           ]),
           if (note != null) ...[
             const SizedBox(height: 4),
-            Text(note, style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+            Text(note,
+                style: AppTextStyles.bodyS
+                    .copyWith(color: AppColors.textSecondary)),
           ],
           const SizedBox(height: 16),
 
@@ -453,7 +554,8 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
 
           const SizedBox(height: 12),
           Text(
-            l10n.normalRange(displaySafeMin.toStringAsFixed(1), displaySafeMax.toStringAsFixed(1), displayUnit),
+            l10n.normalRange(displaySafeMin.toStringAsFixed(1),
+                displaySafeMax.toStringAsFixed(1), displayUnit),
             style: AppTextStyles.bodyS,
           ),
           const SizedBox(height: 8),
@@ -479,7 +581,9 @@ class _LabEntryScreenState extends ConsumerState<LabEntryScreen> {
               child: Text(
                 warning,
                 style: AppTextStyles.bodyS.copyWith(
-                  color: warning.startsWith('🔴') ? AppColors.textCritical : AppColors.textWarning,
+                  color: warning.startsWith('🔴')
+                      ? AppColors.textCritical
+                      : AppColors.textWarning,
                 ),
               ),
             ),

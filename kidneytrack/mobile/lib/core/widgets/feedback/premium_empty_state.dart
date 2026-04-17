@@ -48,8 +48,14 @@ class PremiumEmptyState extends StatelessWidget {
                     ),
                   ),
                 )
-                    .animate(onPlay: (controller) => controller.repeat(reverse: true))
-                    .scale(begin: const Offset(0.8, 0.8), end: const Offset(1.2, 1.2), duration: 3.seconds, curve: Curves.easeInOut)
+                    .animate(
+                        onPlay: (controller) =>
+                            controller.repeat(reverse: true))
+                    .scale(
+                        begin: const Offset(0.8, 0.8),
+                        end: const Offset(1.2, 1.2),
+                        duration: 3.seconds,
+                        curve: Curves.easeInOut)
                     .fade(begin: 0.6, end: 0.2),
 
                 // Secondary Rotating Halo
@@ -64,8 +70,9 @@ class PremiumEmptyState extends StatelessWidget {
                       strokeAlign: BorderSide.strokeAlignOutside,
                     ),
                   ),
-                ).animate(onPlay: (controller) => controller.repeat())
-                 .rotate(duration: 10.seconds),
+                )
+                    .animate(onPlay: (controller) => controller.repeat())
+                    .rotate(duration: 10.seconds),
 
                 // The Central Icon with specific animations
                 Container(
@@ -89,9 +96,18 @@ class PremiumEmptyState extends StatelessWidget {
                 )
                     .animate()
                     .scale(duration: 600.ms, curve: Curves.easeOutBack)
-                    .shimmer(delay: 1.seconds, duration: 2.seconds, color: baseColor.withValues(alpha: 0.2))
-                    .animate(onPlay: (controller) => controller.repeat(reverse: true))
-                    .moveY(begin: -8, end: 8, duration: 2.seconds, curve: Curves.easeInOut),
+                    .shimmer(
+                        delay: 1.seconds,
+                        duration: 2.seconds,
+                        color: baseColor.withValues(alpha: 0.2))
+                    .animate(
+                        onPlay: (controller) =>
+                            controller.repeat(reverse: true))
+                    .moveY(
+                        begin: -8,
+                        end: 8,
+                        duration: 2.seconds,
+                        curve: Curves.easeInOut),
               ],
             ),
 
@@ -111,7 +127,8 @@ class PremiumEmptyState extends StatelessWidget {
 
             Text(
               subtitle,
-              style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
+              style:
+                  AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             )
                 .animate()
@@ -128,10 +145,12 @@ class PremiumEmptyState extends StatelessWidget {
                     backgroundColor: baseColor,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
                     elevation: 0,
                   ),
-                  child: Text(actionLabel!, style: AppTextStyles.h2.copyWith(color: Colors.white)),
+                  child: Text(actionLabel!,
+                      style: AppTextStyles.h2.copyWith(color: Colors.white)),
                 ),
               )
                   .animate()

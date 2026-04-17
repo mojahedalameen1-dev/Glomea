@@ -35,7 +35,12 @@ class DesignSystemGallery extends StatelessWidget {
               unit: 'mmol/L',
               status: IndicatorStatus.critical,
               sparklineData: const <double>[4.2, 4.5, 4.8, 5.2, 5.5, 5.6, 5.8],
-              thresholds: const ThresholdRange(safeMin: 3.5, safeMax: 5.0, warningMin: 5.1, warningMax: 5.5, criticalMax: 6.0),
+              thresholds: const ThresholdRange(
+                  safeMin: 3.5,
+                  safeMax: 5.0,
+                  warningMin: 5.1,
+                  warningMax: 5.5,
+                  criticalMax: 6.0),
               delta: 12.5,
               onTap: () {},
             ),
@@ -43,13 +48,13 @@ class DesignSystemGallery extends StatelessWidget {
             const GlassCard(
               child: Column(
                 children: [
-                  Text('بطاقة زجاجية (Glass Card)', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text('بطاقة زجاجية (Glass Card)',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                   SizedBox(height: 8),
                   Text('تستخدم للملخصات والمعلومات الإضافية مع تأثير ضبابي.'),
                 ],
               ),
             ),
-            
             const SizedBox(height: 32),
             const SectionHeader(title: 'الرسوم البيانية (Charts)'),
             const Center(
@@ -77,7 +82,6 @@ class DesignSystemGallery extends StatelessWidget {
               yAxisLabel: 'kg',
               tooltipValueFormatter: (v) => v.toStringAsFixed(1),
             ),
-
             const SizedBox(height: 32),
             const SectionHeader(title: 'المؤشرات (Indicators)'),
             const Row(
@@ -95,7 +99,6 @@ class DesignSystemGallery extends StatelessWidget {
                 status: IndicatorStatus.warning,
               ),
             ),
-
             const SizedBox(height: 32),
             const SectionHeader(title: 'المدخلات (Inputs)'),
             const AppTextField(
@@ -109,19 +112,21 @@ class DesignSystemGallery extends StatelessWidget {
               unit: 'مل',
               onChanged: (val) {},
             ),
-            
             const SizedBox(height: 32),
             const SectionHeader(title: 'التفاعلات (Interactions)'),
             Center(
               child: TapScale(
                 onTap: () {},
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   decoration: BoxDecoration(
                     gradient: AppGradients.headerGradient,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text('اضغط هنا للتفاعل', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: const Text('اضغط هنا للتفاعل',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
             ),

@@ -28,7 +28,11 @@ class SparklineChart extends StatelessWidget {
         maxY: values.reduce((a, b) => a > b ? a : b) * 1.1,
         lineBarsData: [
           LineChartBarData(
-            spots: values.asMap().entries.map((e) => FlSpot(e.key.toDouble(), e.value)).toList(),
+            spots: values
+                .asMap()
+                .entries
+                .map((e) => FlSpot(e.key.toDouble(), e.value))
+                .toList(),
             isCurved: true,
             color: color,
             barWidth: 2.5,

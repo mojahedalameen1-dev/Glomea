@@ -4,7 +4,8 @@ import '../models/food_consumption.dart';
 import '../../features/auth/providers/auth_provider.dart';
 
 /// Notifier for managing food consumption logs.
-class FoodConsumptionNotifier extends StateNotifier<AsyncValue<List<FoodConsumption>>> {
+class FoodConsumptionNotifier
+    extends StateNotifier<AsyncValue<List<FoodConsumption>>> {
   final String? patientId;
   final _supabase = Supabase.instance.client;
 
@@ -15,20 +16,23 @@ class FoodConsumptionNotifier extends StateNotifier<AsyncValue<List<FoodConsumpt
       state = const AsyncValue.data([]);
       return;
     }
-    
+
     state = const AsyncValue.loading();
     try {
       final now = DateTime.now();
-      final startOfDay = DateTime(now.year, now.month, now.day).toIso8601String();
-      
+      final startOfDay =
+          DateTime(now.year, now.month, now.day).toIso8601String();
+
       final response = await _supabase
           .from('FoodConsumption')
           .select()
           .eq('patientId', patientId!)
           .gte('consumedAt', startOfDay)
           .order('consumedAt', ascending: false);
-          
-      final list = (response as List).map((json) => FoodConsumption.fromJson(json)).toList();
+
+      final list = (response as List)
+          .map((json) => FoodConsumption.fromJson(json))
+          .toList();
       state = AsyncValue.data(list);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
@@ -38,7 +42,7 @@ class FoodConsumptionNotifier extends StateNotifier<AsyncValue<List<FoodConsumpt
   Future<void> addConsumption(FoodConsumption consumption) async {
     try {
       await _supabase.from('FoodConsumption').insert(consumption.toJson());
-      
+
       // Update local state proactively if we already have data
       state.whenData((currentList) {
         state = AsyncValue.data([consumption, ...currentList]);
@@ -52,14 +56,15 @@ class FoodConsumptionNotifier extends StateNotifier<AsyncValue<List<FoodConsumpt
 }
 
 /// Provider for the food consumption notifier.
-final foodConsumptionProvider = StateNotifierProvider<FoodConsumptionNotifier, AsyncValue<List<FoodConsumption>>>((ref) {
+final foodConsumptionProvider = StateNotifierProvider<FoodConsumptionNotifier,
+    AsyncValue<List<FoodConsumption>>>((ref) {
   final auth = ref.watch(authNotifierProvider);
   final patientId = auth.valueOrNull?.id;
   final notifier = FoodConsumptionNotifier(patientId);
-  
+
   if (patientId != null) {
     notifier.fetchTodayConsumption();
   }
-  
+
   return notifier;
 });

@@ -23,19 +23,21 @@ class ClinicalBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     Color accentColor;
     Color bgColor;
     IconData icon;
 
     switch (severity) {
       case MedicalSeverity.warning:
-        accentColor = isDark ? AppColors.borderWarning : AppColors.borderWarning;
+        accentColor =
+            isDark ? AppColors.borderWarning : AppColors.borderWarning;
         bgColor = isDark ? AppColors.bgWarningDark : AppColors.bgWarning;
         icon = Icons.warning_amber_rounded;
         break;
       case MedicalSeverity.critical:
-        accentColor = isDark ? AppColors.borderCritical : AppColors.borderCritical;
+        accentColor =
+            isDark ? AppColors.borderCritical : AppColors.borderCritical;
         bgColor = isDark ? AppColors.bgCriticalDark : AppColors.bgCritical;
         icon = Icons.gpp_maybe_rounded;
         break;
@@ -52,7 +54,7 @@ class ClinicalBanner extends StatelessWidget {
         color: bgColor,
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         border: Border(
-           left: BorderSide(color: accentColor, width: 4),
+          left: BorderSide(color: accentColor, width: 4),
         ),
       ),
       padding: const EdgeInsets.all(AppDimensions.padM),
@@ -79,7 +81,8 @@ class ClinicalBanner extends StatelessWidget {
                     ),
                     child: Text(
                       actionLabel!,
-                      style: AppTextStyles.label.copyWith(color: AppColors.primary),
+                      style: AppTextStyles.label
+                          .copyWith(color: AppColors.primary),
                     ),
                   ),
                 ],

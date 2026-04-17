@@ -8,13 +8,13 @@ class OnboardingData {
   final String? kidneyStage;
   final String? dialysisStatus;
   final String? avatarUrl;
-  
+
   final int? fluidLimitMl;
   final int? potassiumLimitMg;
   final int? sodiumLimitMg;
   final int? proteinLimitG;
   final int? phosphorusLimitMg;
-  
+
   final String? physicianName;
   final bool notificationsEnabled;
 
@@ -91,7 +91,8 @@ class OnboardingState {
 class OnboardingNotifier extends StateNotifier<OnboardingState> {
   final Ref _ref;
 
-  OnboardingNotifier(this._ref) : super(OnboardingState(data: OnboardingData()));
+  OnboardingNotifier(this._ref)
+      : super(OnboardingState(data: OnboardingData()));
 
   void updateData(OnboardingData newData) {
     state = state.copyWith(data: newData);
@@ -99,7 +100,7 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
 
   Future<bool> completeOnboarding() async {
     state = state.copyWith(isLoading: true, error: null);
-    
+
     try {
       // 1. Save Physician Name to SharedPreferences (Local Only)
       if (state.data.physicianName != null) {
@@ -116,23 +117,31 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
       };
 
       if (data.fullName != null) payload['full_name'] = data.fullName;
-      if (data.physicianName != null) payload['physician_name'] = data.physicianName;
+      if (data.physicianName != null)
+        payload['physician_name'] = data.physicianName;
       if (data.age != null) {
         // Calculate a rough birthdate since backend expects birthDate
         final birthYear = DateTime.now().year - data.age!;
         payload['birthDate'] = DateTime(birthYear, 1, 1).toIso8601String();
       }
       if (data.kidneyStage != null) payload['kidneyStage'] = data.kidneyStage;
-      if (data.dialysisStatus != null) payload['dialysisStatus'] = data.dialysisStatus;
+      if (data.dialysisStatus != null)
+        payload['dialysisStatus'] = data.dialysisStatus;
       if (data.avatarUrl != null) payload['avatarUrl'] = data.avatarUrl;
-      
-      if (data.fluidLimitMl != null) payload['fluidLimitMl'] = data.fluidLimitMl;
-      if (data.potassiumLimitMg != null) payload['potassiumLimitMg'] = data.potassiumLimitMg;
-      if (data.sodiumLimitMg != null) payload['sodiumLimitMg'] = data.sodiumLimitMg;
-      if (data.proteinLimitG != null) payload['proteinLimitG'] = data.proteinLimitG;
-      if (data.phosphorusLimitMg != null) payload['phosphorusLimitMg'] = data.phosphorusLimitMg;
 
-      final error = await _ref.read(authNotifierProvider.notifier).updatePatient(payload);
+      if (data.fluidLimitMl != null)
+        payload['fluidLimitMl'] = data.fluidLimitMl;
+      if (data.potassiumLimitMg != null)
+        payload['potassiumLimitMg'] = data.potassiumLimitMg;
+      if (data.sodiumLimitMg != null)
+        payload['sodiumLimitMg'] = data.sodiumLimitMg;
+      if (data.proteinLimitG != null)
+        payload['proteinLimitG'] = data.proteinLimitG;
+      if (data.phosphorusLimitMg != null)
+        payload['phosphorusLimitMg'] = data.phosphorusLimitMg;
+
+      final error =
+          await _ref.read(authNotifierProvider.notifier).updatePatient(payload);
 
       if (error != null) {
         state = state.copyWith(isLoading: false, error: error);

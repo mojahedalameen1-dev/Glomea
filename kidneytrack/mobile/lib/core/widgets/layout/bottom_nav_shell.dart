@@ -30,9 +30,9 @@ class BottomNavShell extends StatelessWidget {
           children: [
             const Icon(Icons.qr_code_scanner, color: Colors.white, size: 24),
             Text(
-              'فحص', 
+              'فحص',
               style: AppTextStyles.bodyS.copyWith(
-                color: Colors.white, 
+                color: Colors.white,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
               ),
@@ -51,7 +51,9 @@ class BottomNavShell extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+                color: isDark
+                    ? AppColors.borderBaseDark
+                    : AppColors.borderBase.withValues(alpha: 0.1),
               ),
             ),
           ),
@@ -129,9 +131,9 @@ class _NavBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isSelected = index == currentIndex;
-    
-    final activeColor = isDark ? AppColors.textInfoDark : AppColors.primary;
-    final inactiveColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final activeColor = AppColors.primary;
+    final inactiveColor =
+        isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
 
     return InkWell(
       onTap: () => onTap(index),

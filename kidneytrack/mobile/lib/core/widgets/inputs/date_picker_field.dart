@@ -24,8 +24,11 @@ class DatePickerField extends StatelessWidget {
     required this.onDateSelected,
     this.firstDate,
     this.lastDate,
-  }) : assert(firstDate == null || lastDate == null || !firstDate.isAfter(lastDate), 
-          'firstDate ($firstDate) cannot be after lastDate ($lastDate)');
+  }) : assert(
+            firstDate == null ||
+                lastDate == null ||
+                !firstDate.isAfter(lastDate),
+            'firstDate ($firstDate) cannot be after lastDate ($lastDate)');
 
   DateTime _safeInitialDate({
     required DateTime? currentValue,
@@ -53,9 +56,9 @@ class DatePickerField extends StatelessWidget {
       label: label,
       readOnly: true,
       controller: TextEditingController(
-        text: selectedDate != null 
-          ? intl.DateFormat('yyyy-MM-dd').format(selectedDate!) 
-          : '',
+        text: selectedDate != null
+            ? intl.DateFormat('yyyy-MM-dd').format(selectedDate!)
+            : '',
       ),
       hint: 'اختر التاريخ',
       onTap: () async {

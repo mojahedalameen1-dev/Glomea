@@ -25,13 +25,15 @@ class _IntroScreenState extends State<IntroScreen> {
     ),
     IntroStep(
       title: 'تتبع مؤشراتي',
-      description: 'سجل فحوصاتك المخبرية وراقب تغيرات البوتاسيوم والكرياتينين بلحظة.',
+      description:
+          'سجل فحوصاتك المخبرية وراقب تغيرات البوتاسيوم والكرياتينين بلحظة.',
       icon: Icons.analytics_rounded,
       color: AppColors.accent,
     ),
     IntroStep(
       title: 'تنبيهات ذكية',
-      description: 'احصل على تنبيهات فورية ونصائح طبية مبنية على نتائج فحوصاتك.',
+      description:
+          'احصل على تنبيهات فورية ونصائح طبية مبنية على نتائج فحوصاتك.',
       icon: Icons.notifications_active_rounded,
       color: AppColors.textWarning,
     ),
@@ -85,7 +87,8 @@ class _IntroScreenState extends State<IntroScreen> {
                     Text(
                       step.title,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles.h1.copyWith(color: AppColors.textPrimary),
+                      style: AppTextStyles.h1
+                          .copyWith(color: AppColors.textPrimary),
                     )
                         .animate(key: ValueKey('title_$index'))
                         .fadeIn(delay: 300.ms)
@@ -107,7 +110,7 @@ class _IntroScreenState extends State<IntroScreen> {
               );
             },
           ),
-          
+
           // Navigation Bottom Bar
           Positioned(
             bottom: 60,
@@ -126,18 +129,21 @@ class _IntroScreenState extends State<IntroScreen> {
                       height: 8,
                       width: _currentPage == index ? 24 : 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index ? AppColors.primary : AppColors.borderBase,
+                        color: _currentPage == index
+                            ? AppColors.primary
+                            : AppColors.borderBase,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ),
                 ),
-                
+
                 // Next/Start Button
                 GestureDetector(
                   onTap: _onNext,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 32, vertical: 16),
                     decoration: BoxDecoration(
                       gradient: AppGradients.primaryGradient,
                       borderRadius: BorderRadius.circular(30),
@@ -153,15 +159,23 @@ class _IntroScreenState extends State<IntroScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          _currentPage == _steps.length - 1 ? 'ابدأ الآن' : 'التالي',
+                          _currentPage == _steps.length - 1
+                              ? 'ابدأ الآن'
+                              : 'التالي',
                           style: AppTextStyles.h3.copyWith(color: Colors.white),
                         ),
                         const SizedBox(width: 8),
-                        const Icon(Icons.arrow_forward_rounded, color: Colors.white),
+                        const Icon(Icons.arrow_forward_rounded,
+                            color: Colors.white),
                       ],
                     ),
-                  ).animate(target: _currentPage == _steps.length - 1 ? 1 : 0)
-                      .scale(begin: const Offset(1,1), end: const Offset(1.1, 1.1), duration: 400.ms)
+                  )
+                      .animate(
+                          target: _currentPage == _steps.length - 1 ? 1 : 0)
+                      .scale(
+                          begin: const Offset(1, 1),
+                          end: const Offset(1.1, 1.1),
+                          duration: 400.ms)
                       .then()
                       .shake(hz: 4),
                 ),

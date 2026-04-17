@@ -20,20 +20,25 @@ class HistoryEmptyFilterView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1),
+                color:
+                    (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+                        .withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.search_off_outlined,
                 size: 48,
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondary,
               ),
             ),
             const SizedBox(height: 24),
             Text(
               'لا توجد نتائج لهذا الفلتر',
               style: AppTextStyles.h2.copyWith(
-                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -41,7 +46,9 @@ class HistoryEmptyFilterView extends StatelessWidget {
             Text(
               'جرب اختيار فئة أخرى أو مسح الفلاتر لعرض كافة البيانات.',
               style: AppTextStyles.bodyS.copyWith(
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondary,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,
@@ -50,8 +57,10 @@ class HistoryEmptyFilterView extends StatelessWidget {
             OutlinedButton(
               onPressed: onClearFilters,
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
               child: const Text('مسح الفلاتر'),
             ),
@@ -85,21 +94,25 @@ class HistoryErrorView extends StatelessWidget {
             Icon(
               Icons.error_outline_rounded,
               size: 56,
-              color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+              color:
+                  isDark ? AppColors.textCriticalDark : AppColors.textCritical,
             ),
             const SizedBox(height: 24),
             Text(
               'عذراً، حدث خطأ ما',
               style: AppTextStyles.h3.copyWith(
                 fontWeight: FontWeight.bold,
-                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               style: AppTextStyles.bodyS.copyWith(
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondary,
               ),
               textAlign: TextAlign.center,
             ),
@@ -111,8 +124,10 @@ class HistoryErrorView extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
           ],
@@ -136,26 +151,46 @@ class SkeletonLogCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgSurfaceDark : Colors.white,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1)),
+        border: Border.all(
+            color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+                .withValues(alpha: 0.1)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Container(width: 48, height: 48, decoration: BoxDecoration(color: baseColor, borderRadius: BorderRadius.circular(12))),
+            Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                    color: baseColor, borderRadius: BorderRadius.circular(12))),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(width: 120, height: 16, decoration: BoxDecoration(color: baseColor, borderRadius: BorderRadius.circular(4))),
+                  Container(
+                      width: 120,
+                      height: 16,
+                      decoration: BoxDecoration(
+                          color: baseColor,
+                          borderRadius: BorderRadius.circular(4))),
                   const SizedBox(height: 8),
-                  Container(width: 80, height: 12, decoration: BoxDecoration(color: baseColor, borderRadius: BorderRadius.circular(4))),
+                  Container(
+                      width: 80,
+                      height: 12,
+                      decoration: BoxDecoration(
+                          color: baseColor,
+                          borderRadius: BorderRadius.circular(4))),
                 ],
               ),
             ),
-            Container(width: 40, height: 20, decoration: BoxDecoration(color: baseColor, borderRadius: BorderRadius.circular(4))),
+            Container(
+                width: 40,
+                height: 20,
+                decoration: BoxDecoration(
+                    color: baseColor, borderRadius: BorderRadius.circular(4))),
           ],
         ),
       ),

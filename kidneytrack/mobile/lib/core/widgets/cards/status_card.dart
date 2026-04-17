@@ -35,20 +35,23 @@ class StatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     Color statusColor;
     String statusLabelAr;
     switch (status) {
       case IndicatorStatus.safe:
-        statusColor = isDark ? AppColors.textSuccessDark : AppColors.textSuccess;
+        statusColor =
+            isDark ? AppColors.textSuccessDark : AppColors.textSuccess;
         statusLabelAr = 'مستقر';
         break;
       case IndicatorStatus.warning:
-        statusColor = isDark ? AppColors.textWarningDark : AppColors.textWarning;
+        statusColor =
+            isDark ? AppColors.textWarningDark : AppColors.textWarning;
         statusLabelAr = 'تنبيه';
         break;
       case IndicatorStatus.critical:
-        statusColor = isDark ? AppColors.textCriticalDark : AppColors.textCritical;
+        statusColor =
+            isDark ? AppColors.textCriticalDark : AppColors.textCritical;
         statusLabelAr = 'حرج';
         break;
     }
@@ -61,7 +64,9 @@ class StatusCard extends StatelessWidget {
           color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+            color: isDark
+                ? AppColors.borderBaseDark
+                : AppColors.borderBase.withValues(alpha: 0.1),
           ),
           boxShadow: isDark ? null : AppShadows.elev1,
         ),
@@ -79,7 +84,11 @@ class StatusCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 ),
-                _StatusBadge(status: status, color: statusColor, text: statusLabelAr, isDark: isDark),
+                _StatusBadge(
+                    status: status,
+                    color: statusColor,
+                    text: statusLabelAr,
+                    isDark: isDark),
               ],
             ),
             const Gap(12),
@@ -87,7 +96,8 @@ class StatusCard extends StatelessWidget {
               indicatorName,
               style: AppTextStyles.label.copyWith(
                 fontSize: 15,
-                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                color:
+                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -103,16 +113,20 @@ class StatusCard extends StatelessWidget {
                     endValue: value,
                     decimals: 1,
                     style: AppTextStyles.metricValue.copyWith(
-                      fontSize: 24, 
-                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                      fontSize: 24,
+                      color: isDark
+                          ? AppColors.textPrimaryDark
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ),
                 const Gap(4),
                 Text(
-                  unit, 
+                  unit,
                   style: AppTextStyles.unit.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -147,8 +161,8 @@ class _StatusBadge extends StatelessWidget {
   final bool isDark;
 
   const _StatusBadge({
-    required this.status, 
-    required this.color, 
+    required this.status,
+    required this.color,
     required this.text,
     required this.isDark,
   });
@@ -164,7 +178,7 @@ class _StatusBadge extends StatelessWidget {
       child: Text(
         text,
         style: AppTextStyles.bodyS.copyWith(
-          color: color, 
+          color: color,
           fontSize: 10,
           fontWeight: FontWeight.bold,
         ),

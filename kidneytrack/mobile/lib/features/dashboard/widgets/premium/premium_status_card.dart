@@ -30,13 +30,15 @@ class PremiumStatusCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.premiumCardDark : Colors.white,
         borderRadius: BorderRadius.circular(28),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,14 +64,17 @@ class PremiumStatusCard extends StatelessWidget {
                 ),
               ),
               if (isWarning)
-                const Icon(Icons.warning_amber_rounded, color: AppColors.textCritical, size: 20),
+                const Icon(Icons.warning_amber_rounded,
+                    color: AppColors.textCritical, size: 20),
             ],
           ),
           const Gap(16),
           Text(
             label,
             style: AppTextStyles.bodyS.copyWith(
-              color: isDark ? AppColors.textSecondaryDark : AppColors.premiumTextSub,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.premiumTextSub,
             ),
           ),
           const Gap(4),
@@ -79,9 +84,9 @@ class PremiumStatusCard extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: AppTextStyles.h2.copyWith(
-                  fontSize: 22,
-                  color: isDark ? Colors.white : AppColors.premiumTextMain,
+                style: AppTextStyles.metricValue.copyWith(
+                  fontSize: 28,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
                 ),
               ),
               const Gap(4),
@@ -107,7 +112,8 @@ class PremiumStatusCard extends StatelessWidget {
                   height: height,
                   margin: const EdgeInsets.only(right: 2),
                   decoration: BoxDecoration(
-                    color: accentColor.withValues(alpha: index == 9 ? 1.0 : 0.3),
+                    color:
+                        accentColor.withValues(alpha: index == 9 ? 1.0 : 0.3),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 );

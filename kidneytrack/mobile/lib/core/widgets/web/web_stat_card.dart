@@ -21,7 +21,7 @@ class WebStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeColor = color ?? AppColors.primary;
-    
+
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -52,7 +52,8 @@ class WebStatCard extends StatelessWidget {
               ),
               Text(
                 unit,
-                style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodyS
+                    .copyWith(color: AppColors.textSecondary),
               ),
             ],
           ),

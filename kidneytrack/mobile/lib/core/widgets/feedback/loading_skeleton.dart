@@ -40,7 +40,8 @@ class DashboardSkeleton extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          const LoadingSkeleton(width: 180, height: 180, borderRadius: 99), // Ring
+          const LoadingSkeleton(
+              width: 180, height: 180, borderRadius: 99), // Ring
           const SizedBox(height: 24),
           GridView.builder(
             shrinkWrap: true,
@@ -52,7 +53,8 @@ class DashboardSkeleton extends StatelessWidget {
               childAspectRatio: 0.8,
             ),
             itemCount: 4,
-            itemBuilder: (context, index) => const LoadingSkeleton(width: double.infinity, height: 200),
+            itemBuilder: (context, index) =>
+                const LoadingSkeleton(width: double.infinity, height: 200),
           ),
         ],
       ),

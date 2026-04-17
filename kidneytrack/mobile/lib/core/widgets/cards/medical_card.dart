@@ -40,13 +40,15 @@ class MedicalCard extends StatelessWidget {
         break;
       case MedicalSeverity.warning:
         bgColor = isDark ? AppColors.bgWarningDark : AppColors.bgWarning;
-        borderColor = isDark ? AppColors.borderWarning : AppColors.borderWarning;
+        borderColor =
+            isDark ? AppColors.borderWarning : AppColors.borderWarning;
         borderWidth = 1.5;
         shadows = AppShadows.elev2;
         break;
       case MedicalSeverity.critical:
         bgColor = isDark ? AppColors.bgCriticalDark : AppColors.bgCritical;
-        borderColor = isDark ? AppColors.borderCritical : AppColors.borderCritical;
+        borderColor =
+            isDark ? AppColors.borderCritical : AppColors.borderCritical;
         borderWidth = 2.0;
         shadows = AppShadows.elev3;
         break;

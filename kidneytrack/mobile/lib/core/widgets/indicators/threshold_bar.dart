@@ -24,16 +24,17 @@ class ThresholdBar extends StatelessWidget {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         final totalRange = max - min;
-        
+
         // Safety check for division by zero
         if (totalRange <= 0) return const SizedBox.shrink();
 
         final safeStartValue = (safeMin - min).clamp(0, totalRange);
-        final safeWidthValue = (safeMax - safeMin).clamp(0, totalRange - safeStartValue);
+        final safeWidthValue =
+            (safeMax - safeMin).clamp(0, totalRange - safeStartValue);
 
         final safeRangeStartPx = (safeStartValue / totalRange) * width;
         final safeRangeWidthPx = (safeWidthValue / totalRange) * width;
-        
+
         final valuePosPct = ((value - min) / totalRange).clamp(0.0, 1.0);
         final valuePx = valuePosPct * width;
 
@@ -93,8 +94,12 @@ class ThresholdBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(min.toStringAsFixed(1), style: AppTextStyles.bodyS.copyWith(fontSize: 10, color: AppColors.textSecondary)),
-                Text(max.toStringAsFixed(1), style: AppTextStyles.bodyS.copyWith(fontSize: 10, color: AppColors.textSecondary)),
+                Text(min.toStringAsFixed(1),
+                    style: AppTextStyles.bodyS.copyWith(
+                        fontSize: 10, color: AppColors.textSecondary)),
+                Text(max.toStringAsFixed(1),
+                    style: AppTextStyles.bodyS.copyWith(
+                        fontSize: 10, color: AppColors.textSecondary)),
               ],
             ),
           ],

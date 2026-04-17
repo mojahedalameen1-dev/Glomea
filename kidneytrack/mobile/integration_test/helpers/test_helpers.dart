@@ -29,10 +29,12 @@ class TestHelpers {
     await tester.pumpAndSettle();
   }
 
-  static Future<void> enterText(WidgetTester tester, String label, String value) async {
+  static Future<void> enterText(
+      WidgetTester tester, String label, String value) async {
     // Fallback if the above complex finder fails, try to find by hint or label directly
     // Since AppTextField has the label above the TextFormField
-    await tester.enterText(find.byType(TextFormField).at(0), value); // This is risky, let's refine
+    await tester.enterText(
+        find.byType(TextFormField).at(0), value); // This is risky, let's refine
   }
 
   // Refined way to find TextFormField by label in AppTextField
@@ -46,7 +48,8 @@ class TestHelpers {
     );
   }
 
-  static Future<void> fillField(WidgetTester tester, String label, String value) async {
+  static Future<void> fillField(
+      WidgetTester tester, String label, String value) async {
     final field = find.descendant(
       of: find.ancestor(of: find.text(label), matching: find.byType(Column)),
       matching: find.byType(TextFormField),

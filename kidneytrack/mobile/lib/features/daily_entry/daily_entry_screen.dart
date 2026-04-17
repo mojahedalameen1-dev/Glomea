@@ -12,7 +12,6 @@ import 'package:go_router/go_router.dart';
 import '../../core/utils/dialogs.dart';
 import '../../core/widgets/indicators/threshold_bar.dart';
 
-
 class DailyEntryScreen extends ConsumerStatefulWidget {
   const DailyEntryScreen({super.key});
 
@@ -27,13 +26,13 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
   final _sugarController = TextEditingController();
   final _fluidController = TextEditingController();
   final _notesController = TextEditingController();
-  
+
   // Nutrient Controllers
   final _potassiumController = TextEditingController();
   final _sodiumController = TextEditingController();
   final _proteinController = TextEditingController();
   final _phosphorusController = TextEditingController();
-  
+
   bool _isSaving = false;
   bool _isDirty = false;
   int _fluidCurrent = 0;
@@ -45,7 +44,6 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
       _fluidCurrent += ml;
       _isDirty = true;
       _fluidController.text = _fluidCurrent.toString();
-
     });
   }
 
@@ -89,199 +87,225 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
           ),
         ),
         body: SingleChildScrollView(
-
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            // Weight Card
-            _buildCard(
-              title: 'الوزن',
-              child: AppTextField(
-                controller: _weightController,
-                label: 'الوزن الحالي',
-                hint: '75.0',
-                keyboardType: TextInputType.number,
-                onChanged: (_) => setState(() => _isDirty = true),
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text('كجم'),
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              // Weight Card
+              _buildCard(
+                title: 'الوزن',
+                child: AppTextField(
+                  controller: _weightController,
+                  label: 'الوزن الحالي',
+                  hint: '75.0',
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) => setState(() => _isDirty = true),
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Text('كجم'),
+                  ),
                 ),
               ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Blood Pressure
-            _buildCard(
-              title: 'ضغط الدم',
-              child: Row(
-                children: [
-                  Expanded(
-                    child: AppTextField(
-                      controller: _systolicController,
-                      label: 'الانقباضي',
-                      hint: '120',
-                      keyboardType: TextInputType.number,
-                      onChanged: (_) => setState(() => _isDirty = true),
-                      suffixIcon: const Padding(
 
-                        padding: EdgeInsets.all(12),
-                        child: Text('mmHg'),
+              const SizedBox(height: 24),
+
+              // Blood Pressure
+              _buildCard(
+                title: 'ضغط الدم',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: AppTextField(
+                        controller: _systolicController,
+                        label: 'الانقباضي',
+                        hint: '120',
+                        keyboardType: TextInputType.number,
+                        onChanged: (_) => setState(() => _isDirty = true),
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Text('mmHg'),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: AppTextField(
-                      controller: _diastolicController,
-                      label: 'الانبساطي',
-                      hint: '80',
-                      keyboardType: TextInputType.number,
-                      onChanged: (_) => setState(() => _isDirty = true),
-                      suffixIcon: const Padding(
-
-                        padding: EdgeInsets.all(12),
-                        child: Text('mmHg'),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: AppTextField(
+                        controller: _diastolicController,
+                        label: 'الانبساطي',
+                        hint: '80',
+                        keyboardType: TextInputType.number,
+                        onChanged: (_) => setState(() => _isDirty = true),
+                        suffixIcon: const Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Text('mmHg'),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Blood Sugar
-            _buildCard(
-              title: 'سكر الدم',
-              child: AppTextField(
-                controller: _sugarController,
-                label: 'القراءة',
-                hint: '100',
-                keyboardType: TextInputType.number,
-                onChanged: (_) => setState(() => _isDirty = true),
-                suffixIcon: const Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Text('mg/dL'),
+                  ],
                 ),
               ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Fluid Card
-            _buildCard(
-              title: 'السوائل اليوم',
-              child: Column(
-                children: [
-                  FluidRingChart(currentMl: _fluidCurrent, limitMl: _fluidLimit),
-                  const SizedBox(height: 24),
-                  Wrap(
-                    spacing: 12,
-                    children: [100, 200, 250, 500].map((ml) => _buildFluidChip(ml)).toList(),
+
+              const SizedBox(height: 24),
+
+              // Blood Sugar
+              _buildCard(
+                title: 'سكر الدم',
+                child: AppTextField(
+                  controller: _sugarController,
+                  label: 'القراءة',
+                  hint: '100',
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) => setState(() => _isDirty = true),
+                  suffixIcon: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Text('mg/dL'),
                   ),
-                  const SizedBox(height: 16),
-                  AppTextField(
-                    controller: _fluidController,
-                    label: 'إجمالي السوائل (مل)', 
-                    keyboardType: TextInputType.number,
-                    onChanged: (v) {
-                      final val = int.tryParse(v) ?? 0;
-                      setState(() {
-                        _fluidCurrent = val;
-                        _isDirty = true;
-                      });
-                    },
-
-                  ),
-                ],
+                ),
               ),
-            ),
-            
-            const SizedBox(height: 24),
-            
-            // Notes Card
-            _buildCard(
-              title: 'ملاحظات (اختياري)',
-              child: AppTextField(
-                controller: _notesController,
-                label: 'أي أعراض أو ملاحظات؟',
-                maxLines: 3,
-                onChanged: (_) => setState(() => _isDirty = true),
+
+              const SizedBox(height: 24),
+
+              // Fluid Card
+              _buildCard(
+                title: 'السوائل اليوم',
+                child: Column(
+                  children: [
+                    FluidRingChart(
+                        currentMl: _fluidCurrent, limitMl: _fluidLimit),
+                    const SizedBox(height: 24),
+                    Wrap(
+                      spacing: 12,
+                      children: [100, 200, 250, 500]
+                          .map((ml) => _buildFluidChip(ml))
+                          .toList(),
+                    ),
+                    const SizedBox(height: 16),
+                    AppTextField(
+                      controller: _fluidController,
+                      label: 'إجمالي السوائل (مل)',
+                      keyboardType: TextInputType.number,
+                      onChanged: (v) {
+                        final val = int.tryParse(v) ?? 0;
+                        setState(() {
+                          _fluidCurrent = val;
+                          _isDirty = true;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
 
-            const SizedBox(height: 24),
+              const SizedBox(height: 24),
 
-            // Dietary Intake Card
-            _buildDietaryCard(),
-            
-            const SizedBox(height: 48),
-            
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: _isSaving ? null : () async {
-                  setState(() => _isSaving = true);
-
-                  final patientId = ref.read(authNotifierProvider).value?.id;
-                  if (patientId == null) return;
-
-                  final navigator = Navigator.of(context);
-                  final messenger = ScaffoldMessenger.of(context);
-
-                  final success = await ref
-                    .read(dailyEntryProvider.notifier)
-                    .saveReading(
-                      patientId:     patientId,
-                      weightKg:      _weightController.text.isNotEmpty ? double.tryParse(_weightController.text) : null,
-                      systolic:      _systolicController.text.isNotEmpty ? int.tryParse(_systolicController.text) : null,
-                      diastolic:     _diastolicController.text.isNotEmpty ? int.tryParse(_diastolicController.text) : null,
-                      bloodSugar:    _sugarController.text.isNotEmpty ? double.tryParse(_sugarController.text) : null,
-                      fluidIntakeMl: _fluidController.text.isNotEmpty ? int.tryParse(_fluidController.text) : null,
-                      notes:         _notesController.text,
-                      potassiumMg:   _potassiumController.text.isNotEmpty ? int.tryParse(_potassiumController.text) : null,
-                      sodiumMg:      _sodiumController.text.isNotEmpty ? int.tryParse(_sodiumController.text) : null,
-                      proteinG:      _proteinController.text.isNotEmpty ? double.tryParse(_proteinController.text) : null,
-                      phosphorusMg:  _phosphorusController.text.isNotEmpty ? int.tryParse(_phosphorusController.text) : null,
-                    );
-
-                  if (!context.mounted) return; // Use context.mounted check
-
-                  setState(() => _isSaving = false);
-                  
-                  if (success) {
-                    ref.invalidate(medicalInsightsProvider);
-                    // ref.invalidate(recentReadingsProvider);
-                    messenger.showSnackBar(
-                      const SnackBar(
-                        content: Text('✅ تم حفظ القراءات بنجاح'),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
-                    navigator.pop();
-                  } else {
-                    messenger.showSnackBar(
-                      const SnackBar(
-                        content: Text('❌ فشل الحفظ — تحقق من الاتصال'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                child: _isSaving
-                  ? const CircularProgressIndicator(color: Colors.white)
-                  : Text('حفظ القياسات', style: AppTextStyles.h2.copyWith(color: Colors.white)),
+              // Notes Card
+              _buildCard(
+                title: 'ملاحظات (اختياري)',
+                child: AppTextField(
+                  controller: _notesController,
+                  label: 'أي أعراض أو ملاحظات؟',
+                  maxLines: 3,
+                  onChanged: (_) => setState(() => _isDirty = true),
+                ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 24),
+
+              // Dietary Intake Card
+              _buildDietaryCard(),
+
+              const SizedBox(height: 48),
+
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: _isSaving
+                      ? null
+                      : () async {
+                          setState(() => _isSaving = true);
+
+                          final patientId =
+                              ref.read(authNotifierProvider).value?.id;
+                          if (patientId == null) return;
+
+                          final navigator = Navigator.of(context);
+                          final messenger = ScaffoldMessenger.of(context);
+
+                          final success = await ref
+                              .read(dailyEntryProvider.notifier)
+                              .saveReading(
+                                patientId: patientId,
+                                weightKg: _weightController.text.isNotEmpty
+                                    ? double.tryParse(_weightController.text)
+                                    : null,
+                                systolic: _systolicController.text.isNotEmpty
+                                    ? int.tryParse(_systolicController.text)
+                                    : null,
+                                diastolic: _diastolicController.text.isNotEmpty
+                                    ? int.tryParse(_diastolicController.text)
+                                    : null,
+                                bloodSugar: _sugarController.text.isNotEmpty
+                                    ? double.tryParse(_sugarController.text)
+                                    : null,
+                                fluidIntakeMl: _fluidController.text.isNotEmpty
+                                    ? int.tryParse(_fluidController.text)
+                                    : null,
+                                notes: _notesController.text,
+                                potassiumMg: _potassiumController
+                                        .text.isNotEmpty
+                                    ? int.tryParse(_potassiumController.text)
+                                    : null,
+                                sodiumMg: _sodiumController.text.isNotEmpty
+                                    ? int.tryParse(_sodiumController.text)
+                                    : null,
+                                proteinG: _proteinController.text.isNotEmpty
+                                    ? double.tryParse(_proteinController.text)
+                                    : null,
+                                phosphorusMg: _phosphorusController
+                                        .text.isNotEmpty
+                                    ? int.tryParse(_phosphorusController.text)
+                                    : null,
+                              );
+
+                          if (!context.mounted)
+                            return; // Use context.mounted check
+
+                          setState(() => _isSaving = false);
+
+                          if (success) {
+                            ref.invalidate(medicalInsightsProvider);
+                            // ref.invalidate(recentReadingsProvider);
+                            messenger.showSnackBar(
+                              const SnackBar(
+                                content: Text('✅ تم حفظ القراءات بنجاح'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                            navigator.pop();
+                          } else {
+                            messenger.showSnackBar(
+                              const SnackBar(
+                                content: Text('❌ فشل الحفظ — تحقق من الاتصال'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
+                        },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary),
+                  child: _isSaving
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : Text('حفظ القياسات',
+                          style:
+                              AppTextStyles.h2.copyWith(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildCard({required String title, required Widget child}) {
     return Container(
@@ -290,7 +314,10 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 5)),
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 5)),
         ],
       ),
       child: Column(
@@ -309,7 +336,8 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
       onPressed: () => _addFluid(ml),
       label: Text('+$ml مل'),
       backgroundColor: AppColors.primary.withValues(alpha: 0.05),
-      labelStyle: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+      labelStyle: const TextStyle(
+          color: AppColors.primary, fontWeight: FontWeight.bold),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ).animate().scale(duration: 200.ms);
   }
@@ -366,7 +394,7 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
     required IconData icon,
   }) {
     final currentValue = double.tryParse(controller.text) ?? 0;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -394,9 +422,13 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('الحد اليومي: ${limit.toStringAsFixed(0)} $unit', style: AppTextStyles.bodyS),
+            Text('الحد اليومي: ${limit.toStringAsFixed(0)} $unit',
+                style: AppTextStyles.bodyS),
             if (currentValue > limit)
-              Text('⚠️ تجاوزت الحد!', style: AppTextStyles.bodyS.copyWith(color: AppColors.textCritical, fontWeight: FontWeight.bold)),
+              Text('⚠️ تجاوزت الحد!',
+                  style: AppTextStyles.bodyS.copyWith(
+                      color: AppColors.textCritical,
+                      fontWeight: FontWeight.bold)),
           ],
         ),
       ],

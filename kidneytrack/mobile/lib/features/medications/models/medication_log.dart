@@ -24,7 +24,8 @@ class MedicationLog {
       medicationId: json['medication_id'],
       patientId: json['patient_id'],
       scheduledAt: DateTime.parse(json['scheduled_at']),
-      takenAt: json['taken_at'] != null ? DateTime.parse(json['taken_at']) : null,
+      takenAt:
+          json['taken_at'] != null ? DateTime.parse(json['taken_at']) : null,
       status: json['status'],
     );
   }

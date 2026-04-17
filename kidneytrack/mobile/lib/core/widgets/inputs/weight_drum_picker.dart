@@ -26,7 +26,7 @@ class WeightDrumPicker extends StatefulWidget {
 class _WeightDrumPickerState extends State<WeightDrumPicker> {
   late FixedExtentScrollController _intController;
   late FixedExtentScrollController _decController;
-  
+
   late int _intPart;
   late int _decPart;
 
@@ -35,7 +35,7 @@ class _WeightDrumPickerState extends State<WeightDrumPicker> {
     super.initState();
     _intPart = widget.initialValue.toInt();
     _decPart = ((widget.initialValue - _intPart) * 10).round();
-    
+
     _intController = FixedExtentScrollController(initialItem: _intPart - 30);
     _decController = FixedExtentScrollController(initialItem: _decPart);
   }
@@ -49,15 +49,18 @@ class _WeightDrumPickerState extends State<WeightDrumPicker> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final mediaQuery = MediaQuery.of(context);
-    
+
     // Dynamic height based on text scaling to ensure senior visibility and no clipping
-    final double pickerHeight = 200 * mediaQuery.textScaler.clamp(minScaleFactor: 1.0, maxScaleFactor: 1.5).scale(1.0);
+    final double pickerHeight = 200 *
+        mediaQuery.textScaler
+            .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.5)
+            .scale(1.0);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          widget.label, 
+          widget.label,
           style: AppTextStyles.h3.copyWith(
             color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
           ),
@@ -69,7 +72,9 @@ class _WeightDrumPickerState extends State<WeightDrumPicker> {
             color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
             borderRadius: BorderRadius.circular(24),
             border: Border.all(
-              color: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+              color: isDark
+                  ? AppColors.borderBaseDark
+                  : AppColors.borderBase.withValues(alpha: 0.1),
             ),
             boxShadow: isDark ? null : AppShadows.elev1,
           ),
@@ -88,18 +93,22 @@ class _WeightDrumPickerState extends State<WeightDrumPicker> {
                     _update();
                     HapticFeedback.selectionClick();
                   },
-                  children: List.generate(220, (i) => Center(
-                    child: Text(
-                      '${i + 30}', 
-                      style: AppTextStyles.h2.copyWith(
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                      ),
-                    ),
-                  )),
+                  children: List.generate(
+                      220,
+                      (i) => Center(
+                            child: Text(
+                              '${i + 30}',
+                              style: AppTextStyles.h2.copyWith(
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimary,
+                              ),
+                            ),
+                          )),
                 ),
               ),
               Text(
-                '.', 
+                '.',
                 style: AppTextStyles.h1.copyWith(color: AppColors.primary),
               ),
               SizedBox(
@@ -114,22 +123,28 @@ class _WeightDrumPickerState extends State<WeightDrumPicker> {
                     _update();
                     HapticFeedback.selectionClick();
                   },
-                  children: List.generate(10, (i) => Center(
-                    child: Text(
-                      '$i', 
-                      style: AppTextStyles.h2.copyWith(
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                      ),
-                    ),
-                  )),
+                  children: List.generate(
+                      10,
+                      (i) => Center(
+                            child: Text(
+                              '$i',
+                              style: AppTextStyles.h2.copyWith(
+                                color: isDark
+                                    ? AppColors.textPrimaryDark
+                                    : AppColors.textPrimary,
+                              ),
+                            ),
+                          )),
                 ),
               ),
               const Gap(12),
               Text(
-                'كجم', 
+                'كجم',
                 style: AppTextStyles.h3.copyWith(
-                  fontSize: 20, 
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  fontSize: 20,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],

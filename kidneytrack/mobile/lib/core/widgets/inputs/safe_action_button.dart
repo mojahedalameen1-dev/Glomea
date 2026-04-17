@@ -35,14 +35,20 @@ class SafeActionButton extends StatelessWidget {
 
     switch (style) {
       case ActionButtonStyle.critical:
-        bgColor = (isDark ? AppColors.bgCriticalDark : AppColors.bgCritical).withValues(alpha: 0.8);
-        textColor = isDark ? AppColors.textCriticalDark : AppColors.textCritical;
-        border = BorderSide(color: (isDark ? AppColors.borderCritical : AppColors.borderCritical).withValues(alpha: 0.5));
+        bgColor = (isDark ? AppColors.bgCriticalDark : AppColors.bgCritical)
+            .withValues(alpha: 0.8);
+        textColor =
+            isDark ? AppColors.textCriticalDark : AppColors.textCritical;
+        border = BorderSide(
+            color:
+                (isDark ? AppColors.borderCritical : AppColors.borderCritical)
+                    .withValues(alpha: 0.5));
         break;
       case ActionButtonStyle.secondary:
         bgColor = Colors.transparent;
         textColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
-        border = BorderSide(color: isDark ? AppColors.borderBaseDark : AppColors.borderBase);
+        border = BorderSide(
+            color: isDark ? AppColors.borderBaseDark : AppColors.borderBase);
         break;
       case ActionButtonStyle.primary:
         bgColor = AppColors.primary;

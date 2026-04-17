@@ -15,7 +15,8 @@ class AddMedicationScreen extends ConsumerStatefulWidget {
   const AddMedicationScreen({super.key});
 
   @override
-  ConsumerState<AddMedicationScreen> createState() => _AddMedicationScreenState();
+  ConsumerState<AddMedicationScreen> createState() =>
+      _AddMedicationScreenState();
 }
 
 class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
@@ -23,10 +24,10 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
   final _nameController = TextEditingController();
   final _doseController = TextEditingController();
   final _notesController = TextEditingController();
-  
+
   Map<String, dynamic>? _selectedMedData;
   String? _interactionWarning;
-  
+
   final String _frequency = 'daily';
   final List<String> _times = ['08:00', '20:00'];
   final DateTime _startDate = DateTime.now();
@@ -41,7 +42,7 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
         orElse: () => {},
       );
       if (_selectedMedData?.isEmpty ?? true) _selectedMedData = null;
-      
+
       _checkInteractions(name);
       _isDirty = true;
     });
@@ -50,12 +51,12 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
   void _checkInteractions(String newMedName) {
     _interactionWarning = null;
     final currentMeds = ref.read(medicationsProvider).medications;
-    
+
     for (final existingMed in currentMeds) {
       for (final interaction in drugInteractions) {
         final d1 = interaction['drug1'];
         final d2 = interaction['drug2'];
-        
+
         if ((d1 == newMedName && d2 == existingMed.name) ||
             (d2 == newMedName && d1 == existingMed.name)) {
           _interactionWarning = interaction['message'];
@@ -75,7 +76,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     );
     if (picked != null) {
       setState(() {
-        _times[index] = '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
+        _times[index] =
+            '${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}';
         _isDirty = true;
       });
     }
@@ -124,7 +126,9 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('خطأ في الحفظ: $e'), backgroundColor: AppColors.textCritical),
+          SnackBar(
+              content: Text('خطأ في الحفظ: $e'),
+              backgroundColor: AppColors.textCritical),
         );
       }
     } finally {
@@ -179,22 +183,20 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                       }
                       return knownMedications
                           .where((Map<String, dynamic> option) {
-                            return option['name']
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(textEditingValue.text.toLowerCase()) ||
-                                option['nameAr']
-                                    .toString()
-                                    .contains(textEditingValue.text);
-                          })
-                          .map((m) => '${m['name']} (${m['nameAr']})');
+                        return option['name'].toString().toLowerCase().contains(
+                                textEditingValue.text.toLowerCase()) ||
+                            option['nameAr']
+                                .toString()
+                                .contains(textEditingValue.text);
+                      }).map((m) => '${m['name']} (${m['nameAr']})');
                     },
                     onSelected: (String selection) {
                       final name = selection.split(' (')[0];
                       _nameController.text = name;
                       _onMedicationSelected(name);
                     },
-                    fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted) {
+                    fieldViewBuilder:
+                        (context, controller, focusNode, onFieldSubmitted) {
                       return TextFormField(
                         controller: controller,
                         focusNode: focusNode,
@@ -205,10 +207,12 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                           prefixIcon: Icons.search_rounded,
                         ),
                         onChanged: (v) {
-                           _nameController.text = v;
-                           _onMedicationSelected(v);
+                          _nameController.text = v;
+                          _onMedicationSelected(v);
                         },
-                        validator: (v) => v == null || v.isEmpty ? l10n.medicationNameRequired : null,
+                        validator: (v) => v == null || v.isEmpty
+                            ? l10n.medicationNameRequired
+                            : null,
                       );
                     },
                     optionsViewBuilder: (context, onSelected, options) {
@@ -226,7 +230,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                               itemBuilder: (BuildContext context, int index) {
                                 final String option = options.elementAt(index);
                                 return ListTile(
-                                  title: Text(option, style: AppTextStyles.bodyM),
+                                  title:
+                                      Text(option, style: AppTextStyles.bodyM),
                                   onTap: () => onSelected(option),
                                 );
                               },
@@ -237,7 +242,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     },
                   ),
                 ),
-                if (_selectedMedData != null || _interactionWarning != null) ...[
+                if (_selectedMedData != null ||
+                    _interactionWarning != null) ...[
                   const SizedBox(height: 16),
                   _buildSafetyCard(l10n),
                 ],
@@ -248,9 +254,11 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                   child: TextFormField(
                     controller: _doseController,
                     style: AppTextStyles.bodyM,
-                    decoration: _buildInputDecoration(context: context, hint: l10n.dosageHint),
+                    decoration: _buildInputDecoration(
+                        context: context, hint: l10n.dosageHint),
                     onChanged: (_) => setState(() => _isDirty = true),
-                    validator: (v) => v == null || v.isEmpty ? l10n.dosageRequired : null,
+                    validator: (v) =>
+                        v == null || v.isEmpty ? l10n.dosageRequired : null,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -269,18 +277,26 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                                   onTap: () => _selectTime(entry.key),
                                   borderRadius: BorderRadius.circular(16),
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 14),
                                     decoration: BoxDecoration(
-                                      color: isDark ? AppColors.bgBaseDark : Colors.white,
+                                      color: isDark
+                                          ? AppColors.bgBaseDark
+                                          : Colors.white,
                                       borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(color: AppColors.borderBase.withValues(alpha: 0.1)),
+                                      border: Border.all(
+                                          color: AppColors.borderBase
+                                              .withValues(alpha: 0.1)),
                                     ),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.access_time_filled_rounded, 
-                                          size: 20, color: AppColors.primary.withValues(alpha: 0.6)),
+                                        Icon(Icons.access_time_filled_rounded,
+                                            size: 20,
+                                            color: AppColors.primary
+                                                .withValues(alpha: 0.6)),
                                         const SizedBox(width: 12),
-                                        Text(entry.value, style: AppTextStyles.bodyM),
+                                        Text(entry.value,
+                                            style: AppTextStyles.bodyM),
                                       ],
                                     ),
                                   ),
@@ -288,7 +304,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                               ),
                               if (_times.length > 1)
                                 IconButton(
-                                  icon: const Icon(Icons.remove_circle_rounded, color: AppColors.textCritical),
+                                  icon: const Icon(Icons.remove_circle_rounded,
+                                      color: AppColors.textCritical),
                                   onPressed: () => _removeTime(entry.key),
                                 ),
                             ],
@@ -302,7 +319,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                         label: Text(l10n.addAnotherTime),
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.primary,
-                          textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                          textStyle:
+                              const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -315,7 +333,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     controller: _notesController,
                     maxLines: 3,
                     style: AppTextStyles.bodyM,
-                    decoration: _buildInputDecoration(context: context, hint: l10n.notesHint),
+                    decoration: _buildInputDecoration(
+                        context: context, hint: l10n.notesHint),
                     onChanged: (_) => setState(() => _isDirty = true),
                   ),
                 ),
@@ -327,16 +346,19 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 18),
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
                   ),
-                  child: _isSaving 
-                    ? const SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                      )
-                    : Text(l10n.saveMedication, 
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  child: _isSaving
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(
+                              color: Colors.white, strokeWidth: 2),
+                        )
+                      : Text(l10n.saveMedication,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(height: 32),
               ],
@@ -347,20 +369,31 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     );
   }
 
-  InputDecoration _buildInputDecoration({required BuildContext context, required String hint, IconData? prefixIcon}) {
+  InputDecoration _buildInputDecoration(
+      {required BuildContext context,
+      required String hint,
+      IconData? prefixIcon}) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary.withValues(alpha: 0.5)),
+      hintStyle: AppTextStyles.bodyS
+          .copyWith(color: AppColors.textSecondary.withValues(alpha: 0.5)),
       filled: true,
-      fillColor: Theme.of(context).brightness == Brightness.dark ? AppColors.bgBaseDark : Colors.white,
-      prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.textSecondary.withValues(alpha: 0.6)) : null,
+      fillColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.bgBaseDark
+          : Colors.white,
+      prefixIcon: prefixIcon != null
+          ? Icon(prefixIcon,
+              color: AppColors.textSecondary.withValues(alpha: 0.6))
+          : null,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
+        borderSide:
+            BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
+        borderSide:
+            BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
@@ -378,9 +411,10 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     final bool isNephrotoxic = _selectedMedData?['nephrotoxic'] ?? false;
     final bool isSafe = _selectedMedData?['safeChoice'] ?? false;
     final bool needsAdjustment = _selectedMedData?['doseAdjustment'] ?? false;
-    final String? warning = l10n.localeName == 'ar' 
+    final String? warning = l10n.localeName == 'ar'
         ? (_selectedMedData?['warning'] ?? _interactionWarning)
-        : (_selectedMedData?['warningEn'] ?? _interactionWarning); // Should add warningEn if possible
+        : (_selectedMedData?['warningEn'] ??
+            _interactionWarning); // Should add warningEn if possible
 
     Color color = Colors.blue;
     IconData icon = Icons.info_rounded;
@@ -389,7 +423,9 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     if (isNephrotoxic || _interactionWarning != null) {
       color = AppColors.textCritical;
       icon = Icons.warning_rounded;
-      title = _interactionWarning != null ? l10n.drugInteractionWarning : l10n.highRiskMedicationWarning;
+      title = _interactionWarning != null
+          ? l10n.drugInteractionWarning
+          : l10n.highRiskMedicationWarning;
     } else if (needsAdjustment) {
       color = AppColors.textWarning;
       icon = Icons.report_problem_rounded;
@@ -417,7 +453,8 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 14),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: color, fontSize: 14),
                 ),
               ),
             ],
@@ -426,7 +463,10 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
             const SizedBox(height: 10),
             Text(
               warning,
-              style: TextStyle(fontSize: 13, color: color.withValues(alpha: 1.0), height: 1.4),
+              style: TextStyle(
+                  fontSize: 13,
+                  color: color.withValues(alpha: 1.0),
+                  height: 1.4),
             ),
           ],
         ],
@@ -434,15 +474,23 @@ class _AddMedicationScreenState extends ConsumerState<AddMedicationScreen> {
     );
   }
 
-  Widget _buildField({required String label, required Widget child, bool isRequired = false}) {
+  Widget _buildField(
+      {required String label, required Widget child, bool isRequired = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(label, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.grey)),
+            Text(label,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey)),
             if (isRequired)
-              const Text(' *', style: TextStyle(color: AppColors.textCritical, fontWeight: FontWeight.bold)),
+              const Text(' *',
+                  style: TextStyle(
+                      color: AppColors.textCritical,
+                      fontWeight: FontWeight.bold)),
           ],
         ),
         const SizedBox(height: 10),

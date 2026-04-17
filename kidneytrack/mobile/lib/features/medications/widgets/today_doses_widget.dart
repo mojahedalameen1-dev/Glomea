@@ -22,13 +22,13 @@ class TodayDosesWidget extends ConsumerWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark 
-              ? AppColors.bgSurfaceDark 
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.bgSurfaceDark
               : AppColors.bgSurface,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: Theme.of(context).brightness == Brightness.dark 
-                ? AppColors.borderBaseDark.withValues(alpha: 0.1) 
+            color: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.borderBaseDark.withValues(alpha: 0.1)
                 : AppColors.borderBase.withValues(alpha: 0.1),
           ),
         ),
@@ -42,8 +42,8 @@ class TodayDosesWidget extends ConsumerWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                Icons.medication_liquid_outlined, 
-                size: 32, 
+                Icons.medication_liquid_outlined,
+                size: 32,
                 color: AppColors.primary.withValues(alpha: 0.4),
               ),
             ),

@@ -1,6 +1,6 @@
 class LabOcrParser {
   /// Parses raw text from OCR to extract lab values for kidney patients.
-  /// 
+  ///
   /// Returns a map of indicator codes to their extracted double values (or null if not found).
   /// Indicator keys match the codes used in LabEntryScreen.
   static Map<String, double?> parseLabResults(String rawText) {
@@ -19,7 +19,7 @@ class LabOcrParser {
     final patterns = {
       'CREAT': [
         RegExp(r'creatinine[:\s]+(\d+\.?\d*)', caseSensitive: false), // English
-        RegExp(r'كرياتينين[:\s]+(\d+\.?\d*)'),                       // Arabic
+        RegExp(r'كرياتينين[:\s]+(\d+\.?\d*)'), // Arabic
       ],
       'UREA': [
         RegExp(r'(?:urea|bun)[:\s]+(\d+\.?\d*)', caseSensitive: false),

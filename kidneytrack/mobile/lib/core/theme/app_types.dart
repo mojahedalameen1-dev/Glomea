@@ -5,9 +5,9 @@ enum IndicatorStatus {
 }
 
 enum MedicalSeverity {
-  normal,   // Class A
-  info,     // Class B
-  warning,  // Class C
+  normal, // Class A
+  info, // Class B
+  warning, // Class C
   critical, // Class D
 }
 

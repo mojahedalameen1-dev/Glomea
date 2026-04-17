@@ -31,8 +31,9 @@ class FluidRingChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final double effectiveSize = math.min(size, math.min(constraints.maxWidth, constraints.maxHeight));
-        
+        final double effectiveSize = math.min(
+            size, math.min(constraints.maxWidth, constraints.maxHeight));
+
         return CircularPercentIndicator(
           radius: effectiveSize / 2,
           lineWidth: effectiveSize * 0.08,
@@ -43,22 +44,24 @@ class FluidRingChart extends StatelessWidget {
           circularStrokeCap: CircularStrokeCap.round,
           backgroundColor: AppColors.borderBase.withValues(alpha: 0.1),
           linearGradient: LinearGradient(
-            colors: percent < 0.8 
-              ? <Color>[const Color(0xFF0288D1), const Color(0xFF26C6DA)] 
-              : percent < 1.0 
-                ? <Color>[AppColors.textWarning, const Color(0xFFFFD54F)]
-                : <Color>[AppColors.textCritical, const Color(0xFFFF6D00)],
+            colors: percent < 0.8
+                ? <Color>[const Color(0xFF0288D1), const Color(0xFF26C6DA)]
+                : percent < 1.0
+                    ? <Color>[AppColors.textWarning, const Color(0xFFFFD54F)]
+                    : <Color>[AppColors.textCritical, const Color(0xFFFF6D00)],
           ),
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CountUpText(
                 endValue: currentMl.toDouble(),
-                style: AppTextStyles.metricValue.copyWith(fontSize: effectiveSize * 0.18),
+                style: AppTextStyles.metricValue
+                    .copyWith(fontSize: effectiveSize * 0.18),
               ),
               Text(
                 'مل',
-                style: AppTextStyles.bodyS.copyWith(fontSize: effectiveSize * 0.08),
+                style: AppTextStyles.bodyS
+                    .copyWith(fontSize: effectiveSize * 0.08),
               ),
               const SizedBox(height: 4),
               Container(
@@ -69,7 +72,8 @@ class FluidRingChart extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 'من $limitMl مل',
-                style: AppTextStyles.bodyS.copyWith(fontSize: effectiveSize * 0.08),
+                style: AppTextStyles.bodyS
+                    .copyWith(fontSize: effectiveSize * 0.08),
               ),
             ],
           ),

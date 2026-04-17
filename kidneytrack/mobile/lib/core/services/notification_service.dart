@@ -17,7 +17,8 @@ class NotificationService {
       requestSoundPermission: false,
     );
 
-    const InitializationSettings initializationSettings = InitializationSettings(
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
@@ -32,12 +33,12 @@ class NotificationService {
 
   static Future<bool> requestPermissions() async {
     if (kIsWeb) return false;
-    
+
     final bool? androidPermission = await _notificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
-        
+
     final bool? iosPermission = await _notificationsPlugin
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
@@ -56,11 +57,12 @@ class NotificationService {
     required String body,
     String channelId = 'glomea_channel',
   }) async {
-    final AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
+    final AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
       channelId,
       channelId == 'medication_channel' ? 'تنبيهات الأدوية' : 'تنبيهات جلوميا',
-      channelDescription: channelId == 'medication_channel' 
-          ? 'تذكير بأخذ جرعات الأدوية' 
+      channelDescription: channelId == 'medication_channel'
+          ? 'تذكير بأخذ جرعات الأدوية'
           : 'تنبيهات المواعيد والتحاليل',
       importance: Importance.max,
       priority: Priority.high,

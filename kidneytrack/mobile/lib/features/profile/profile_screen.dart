@@ -21,7 +21,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (birthDate == null) return null;
     final today = DateTime.now();
     int age = today.year - birthDate.year;
-    if (today.month < birthDate.month || (today.month == birthDate.month && today.day < birthDate.day)) {
+    if (today.month < birthDate.month ||
+        (today.month == birthDate.month && today.day < birthDate.day)) {
       age--;
     }
     return age;
@@ -50,74 +51,112 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       children: [
                         _buildInfoRow(
                           l10n.birthDateAge,
-                          birth != null ? '${birth.year}/${birth.month}/${birth.day} (${_calculateAge(birth)} ${l10n.years})' : l10n.tapToSelect,
+                          birth != null
+                              ? '${birth.year}/${birth.month}/${birth.day} (${_calculateAge(birth)} ${l10n.years})'
+                              : l10n.tapToSelect,
                           onTap: () => _updateBirthDate(context, ref, patient),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
                           l10n.targetBp,
                           '${patient?.targetSystolic ?? HealthConstants.profileScreenDefaultSystolic} / ${patient?.targetDiastolic ?? HealthConstants.profileScreenDefaultDiastolic}',
-                          onTap: () => _showBpTargetSheet(context, ref, patient),
+                          onTap: () =>
+                              _showBpTargetSheet(context, ref, patient),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.height, 
+                          l10n.height,
                           '${patient?.heightCm?.toInt() ?? "-"} ${l10n.unitCm}',
-                          onTap: () => _updateField(context, ref, 'heightCm', l10n.height, patient?.heightCm ?? 170.0),
+                          onTap: () => _updateField(context, ref, 'heightCm',
+                              l10n.height, patient?.heightCm ?? 170.0),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.weight, 
+                          l10n.weight,
                           '${patient?.weightKg ?? "-"} ${l10n.unitKg}',
-                          onTap: () => _updateField(context, ref, 'weightKg', l10n.weight, patient?.weightKg ?? 70.0),
+                          onTap: () => _updateField(context, ref, 'weightKg',
+                              l10n.weight, patient?.weightKg ?? 70.0),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.fluidLimit, 
+                          l10n.fluidLimit,
                           '${patient?.fluidLimitMl ?? HealthConstants.defaultFluidLimitMl} ${l10n.unitMl}',
-                          onTap: () => _updateField(context, ref, 'fluidLimitMl', l10n.fluidLimit, (patient?.fluidLimitMl ?? HealthConstants.defaultFluidLimitMl).toDouble()),
+                          onTap: () => _updateField(
+                              context,
+                              ref,
+                              'fluidLimitMl',
+                              l10n.fluidLimit,
+                              (patient?.fluidLimitMl ??
+                                      HealthConstants.defaultFluidLimitMl)
+                                  .toDouble()),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.potassiumLimit, 
+                          l10n.potassiumLimit,
                           '${patient?.potassiumLimitMg ?? HealthConstants.defaultPotassiumLimitMg} ${l10n.unitMg}',
-                          onTap: () => _updateField(context, ref, 'potassiumLimitMg', l10n.potassiumLimit, (patient?.potassiumLimitMg ?? HealthConstants.defaultPotassiumLimitMg).toDouble()),
+                          onTap: () => _updateField(
+                              context,
+                              ref,
+                              'potassiumLimitMg',
+                              l10n.potassiumLimit,
+                              (patient?.potassiumLimitMg ??
+                                      HealthConstants.defaultPotassiumLimitMg)
+                                  .toDouble()),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.phosphorusLimit, 
+                          l10n.phosphorusLimit,
                           '${patient?.phosphorusLimitMg ?? HealthConstants.defaultPhosphorusLimitMg} ${l10n.unitMg}',
-                          onTap: () => _updateField(context, ref, 'phosphorusLimitMg', l10n.phosphorusLimit, (patient?.phosphorusLimitMg ?? HealthConstants.defaultPhosphorusLimitMg).toDouble()),
+                          onTap: () => _updateField(
+                              context,
+                              ref,
+                              'phosphorusLimitMg',
+                              l10n.phosphorusLimit,
+                              (patient?.phosphorusLimitMg ??
+                                      HealthConstants.defaultPhosphorusLimitMg)
+                                  .toDouble()),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.sodiumLimit, 
+                          l10n.sodiumLimit,
                           '${patient?.sodiumLimitMg ?? HealthConstants.defaultSodiumLimitMg} ${l10n.unitMg}',
-                          onTap: () => _updateField(context, ref, 'sodiumLimitMg', l10n.sodiumLimit, (patient?.sodiumLimitMg ?? HealthConstants.defaultSodiumLimitMg).toDouble()),
+                          onTap: () => _updateField(
+                              context,
+                              ref,
+                              'sodiumLimitMg',
+                              l10n.sodiumLimit,
+                              (patient?.sodiumLimitMg ??
+                                      HealthConstants.defaultSodiumLimitMg)
+                                  .toDouble()),
                         ),
                         _buildDivider(),
                         _buildInfoRow(
-                          l10n.proteinLimit, 
+                          l10n.proteinLimit,
                           '${patient?.proteinLimitG ?? HealthConstants.defaultProteinLimitG} ${l10n.unitG}',
-                          onTap: () => _updateField(context, ref, 'proteinLimitG', l10n.proteinLimit, (patient?.proteinLimitG ?? HealthConstants.defaultProteinLimitG).toDouble()),
+                          onTap: () => _updateField(
+                              context,
+                              ref,
+                              'proteinLimitG',
+                              l10n.proteinLimit,
+                              (patient?.proteinLimitG ??
+                                      HealthConstants.defaultProteinLimitG)
+                                  .toDouble()),
                         ),
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 24),
-                  
                   _buildSection(
                     title: l10n.settings,
                     child: Column(
                       children: [
                         _buildSettingTile(
-                          Icons.notifications_outlined, 
-                          l10n.notifications, 
+                          Icons.notifications_outlined,
+                          l10n.notifications,
                           subtitle: l10n.notificationsComingSoon,
                           trailing: Switch(
-                            value: patient?.notificationsEnabled ?? false, 
-                            onChanged: null, 
+                            value: patient?.notificationsEnabled ?? false,
+                            onChanged: null,
                           ),
                         ),
                         _buildDivider(),
@@ -125,26 +164,31 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ],
                     ),
                   ),
-                  
                   const SizedBox(height: 24),
-                  
                   _buildSection(
                     title: l10n.security,
-                    child: _buildSettingTile(Icons.lock_outline, l10n.changePassword, onTap: () {}),
+                    child: _buildSettingTile(
+                        Icons.lock_outline, l10n.changePassword,
+                        onTap: () {}),
                   ),
-                  
                   const SizedBox(height: 40),
-                  
                   TextButton.icon(
                     onPressed: () => _showLogoutDialog(context, ref),
-                    icon: const Icon(Icons.logout, color: AppColors.textCritical),
-                    label: Text(l10n.logout, style: const TextStyle(color: AppColors.textCritical, fontWeight: FontWeight.bold)),
+                    icon:
+                        const Icon(Icons.logout, color: AppColors.textCritical),
+                    label: Text(l10n.logout,
+                        style: const TextStyle(
+                            color: AppColors.textCritical,
+                            fontWeight: FontWeight.bold)),
                   ),
-             
                   TextButton.icon(
                     onPressed: () => _showLogoutDialog(context, ref),
-                    icon: const Icon(Icons.logout, color: AppColors.textCritical),
-                    label: const Text('تسجيل الخروج', style: TextStyle(color: AppColors.textCritical, fontWeight: FontWeight.bold)),
+                    icon:
+                        const Icon(Icons.logout, color: AppColors.textCritical),
+                    label: const Text('تسجيل الخروج',
+                        style: TextStyle(
+                            color: AppColors.textCritical,
+                            fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 100),
                 ],
@@ -173,16 +217,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           CircleAvatar(
             radius: 40,
             backgroundColor: Colors.white,
-            backgroundImage: patient?.avatarUrl != null ? NetworkImage(patient!.avatarUrl!) : null,
+            backgroundImage: patient?.avatarUrl != null
+                ? NetworkImage(patient!.avatarUrl!)
+                : null,
             child: patient?.avatarUrl == null
                 ? Text(
                     patient?.fullName?.substring(0, 1).toUpperCase() ?? 'K',
-                    style: AppTextStyles.h1.copyWith(color: AppColors.primary, fontSize: 32),
+                    style: AppTextStyles.h1
+                        .copyWith(color: AppColors.primary, fontSize: 32),
                   )
                 : null,
           ),
           const SizedBox(height: 12),
-          Text(patient?.fullName ?? l10n.patient, style: AppTextStyles.h2.copyWith(color: Colors.white)),
+          Text(patient?.fullName ?? l10n.patient,
+              style: AppTextStyles.h2.copyWith(color: Colors.white)),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +239,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               const SizedBox(width: 8),
               Text(
                 '${_getStageDisplay(l10n, patient?.kidneyStage)} • ${_getDialysisDisplay(l10n, patient?.dialysisStatus)}',
-                style: const TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -202,22 +253,33 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   String _getStageDisplay(AppLocalizations l10n, String? stage) {
     switch (stage) {
-      case 'STAGE_1': return l10n.stage1;
-      case 'STAGE_2': return l10n.stage2;
-      case 'STAGE_3': return l10n.stage3;
-      case 'STAGE_4': return l10n.stage4;
-      case 'STAGE_5': return l10n.stage5;
-      case 'POST_TRANSPLANT': return l10n.kidneyTransplant;
-      default: return l10n.notSpecified;
+      case 'STAGE_1':
+        return l10n.stage1;
+      case 'STAGE_2':
+        return l10n.stage2;
+      case 'STAGE_3':
+        return l10n.stage3;
+      case 'STAGE_4':
+        return l10n.stage4;
+      case 'STAGE_5':
+        return l10n.stage5;
+      case 'POST_TRANSPLANT':
+        return l10n.kidneyTransplant;
+      default:
+        return l10n.notSpecified;
     }
   }
 
   String _getDialysisDisplay(AppLocalizations l10n, String? status) {
     switch (status) {
-      case 'NON_DIALYSIS': return l10n.noDialysis;
-      case 'HEMODIALYSIS': return l10n.hemodialysis;
-      case 'PERITONEAL': return l10n.peritonealDialysis;
-      default: return '-';
+      case 'NON_DIALYSIS':
+        return l10n.noDialysis;
+      case 'HEMODIALYSIS':
+        return l10n.hemodialysis;
+      case 'PERITONEAL':
+        return l10n.peritonealDialysis;
+      default:
+        return '-';
     }
   }
 
@@ -227,13 +289,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.only(right: 8, bottom: 8),
-          child: Text(title, style: AppTextStyles.label.copyWith(color: AppColors.textSecondary)),
+          child: Text(title,
+              style:
+                  AppTextStyles.label.copyWith(color: AppColors.textSecondary)),
         ),
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.borderBase.withValues(alpha: 0.1)),
+            border:
+                Border.all(color: AppColors.borderBase.withValues(alpha: 0.1)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.02),
@@ -249,7 +314,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget _buildDivider() {
-    return Divider(height: 1, color: AppColors.borderBase.withValues(alpha: 0.05), indent: 16, endIndent: 16);
+    return Divider(
+        height: 1,
+        color: AppColors.borderBase.withValues(alpha: 0.05),
+        indent: 16,
+        endIndent: 16);
   }
 
   Widget _buildInfoRow(String label, String value, {VoidCallback? onTap}) {
@@ -264,10 +333,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             Text(label, style: AppTextStyles.bodyM),
             Row(
               children: [
-                Text(value, style: AppTextStyles.h3.copyWith(fontSize: 14, color: AppColors.primary)),
+                Text(value,
+                    style: AppTextStyles.h3
+                        .copyWith(fontSize: 14, color: AppColors.primary)),
                 if (onTap != null) ...[
                   const SizedBox(width: 8),
-                  const Icon(Icons.chevron_left, size: 16, color: AppColors.textSecondary),
+                  const Icon(Icons.chevron_left,
+                      size: 16, color: AppColors.textSecondary),
                 ],
               ],
             ),
@@ -277,26 +349,34 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Widget _buildLanguageSetting(BuildContext context, WidgetRef ref, Locale activeLocale, AppLocalizations l10n) {
+  Widget _buildLanguageSetting(BuildContext context, WidgetRef ref,
+      Locale activeLocale, AppLocalizations l10n) {
     final isAr = activeLocale.languageCode == 'ar';
     return _buildSettingTile(
-      Icons.language, 
-      l10n.language, 
+      Icons.language,
+      l10n.language,
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(isAr ? 'العربية' : 'English', style: TextStyle(color: AppColors.primary.withValues(alpha: 0.7), fontWeight: FontWeight.bold)),
+          Text(isAr ? 'العربية' : 'English',
+              style: TextStyle(
+                  color: AppColors.primary.withValues(alpha: 0.7),
+                  fontWeight: FontWeight.bold)),
           const SizedBox(width: 8),
-          const Icon(Icons.chevron_left, size: 16, color: AppColors.textSecondary),
+          const Icon(Icons.chevron_left,
+              size: 16, color: AppColors.textSecondary),
         ],
       ),
       onTap: () {
-        ref.read(localizationProvider.notifier).setLocale(isAr ? const Locale('en') : const Locale('ar'));
+        ref
+            .read(localizationProvider.notifier)
+            .setLocale(isAr ? const Locale('en') : const Locale('ar'));
       },
     );
   }
 
-  Widget _buildSettingTile(IconData icon, String label, {String? subtitle, Widget? trailing, VoidCallback? onTap}) {
+  Widget _buildSettingTile(IconData icon, String label,
+      {String? subtitle, Widget? trailing, VoidCallback? onTap}) {
     final isRtl = Directionality.of(context) == TextDirection.rtl;
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -309,8 +389,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         child: Icon(icon, color: AppColors.primary, size: 20),
       ),
       title: Text(label, style: AppTextStyles.bodyM),
-      subtitle: subtitle != null ? Text(subtitle, style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)) : null,
-      trailing: trailing ?? Icon(isRtl ? Icons.chevron_left : Icons.chevron_right, size: 16, color: AppColors.textSecondary),
+      subtitle: subtitle != null
+          ? Text(subtitle,
+              style:
+                  AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary))
+          : null,
+      trailing: trailing ??
+          Icon(isRtl ? Icons.chevron_left : Icons.chevron_right,
+              size: 16, color: AppColors.textSecondary),
       onTap: onTap,
     );
   }
@@ -323,20 +409,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         title: Text(l10n.logout),
         content: Text(l10n.logoutConfirm),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.cancel)),
           TextButton(
             onPressed: () {
               ref.read(authNotifierProvider.notifier).logout();
               Navigator.pop(context);
             },
-            child: Text(l10n.logout, style: const TextStyle(color: AppColors.textCritical)),
+            child: Text(l10n.logout,
+                style: const TextStyle(color: AppColors.textCritical)),
           ),
         ],
       ),
     );
   }
 
-  void _updateField(BuildContext context, WidgetRef ref, String field, String label, double initialValue) {
+  void _updateField(BuildContext context, WidgetRef ref, String field,
+      String label, double initialValue) {
     final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController(text: initialValue.toString());
     showDialog(
@@ -353,17 +443,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () async {
               final value = double.tryParse(controller.text);
               if (value != null) {
-                final data = {field: field == 'fluidLimitMl' ? value.toInt() : value};
-                final error = await ref.read(authNotifierProvider.notifier).updatePatient(data);
+                final data = {
+                  field: field == 'fluidLimitMl' ? value.toInt() : value
+                };
+                final error = await ref
+                    .read(authNotifierProvider.notifier)
+                    .updatePatient(data);
                 if (error == null && context.mounted) {
                   Navigator.pop(context);
                 } else if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error!)));
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(error!)));
                 }
               }
             },
@@ -375,16 +472,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  void _showBpTargetSheet(BuildContext context, WidgetRef ref, dynamic patient) {
+  void _showBpTargetSheet(
+      BuildContext context, WidgetRef ref, dynamic patient) {
     final l10n = AppLocalizations.of(context)!;
-    int systolic = patient?.targetSystolic ?? HealthConstants.profileScreenDefaultSystolic;
-    int diastolic = patient?.targetDiastolic ?? HealthConstants.profileScreenDefaultDiastolic;
+    int systolic =
+        patient?.targetSystolic ?? HealthConstants.profileScreenDefaultSystolic;
+    int diastolic = patient?.targetDiastolic ??
+        HealthConstants.profileScreenDefaultDiastolic;
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (ctx) => StatefulBuilder(
         builder: (context, setSheetState) => Padding(
           padding: EdgeInsets.only(
@@ -402,7 +503,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.systolic, style: AppTextStyles.bodyM),
-                  Text('$systolic', style: AppTextStyles.h2.copyWith(color: AppColors.primary)),
+                  Text('$systolic',
+                      style:
+                          AppTextStyles.h2.copyWith(color: AppColors.primary)),
                 ],
               ),
               Slider(
@@ -417,7 +520,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(l10n.diastolic, style: AppTextStyles.bodyM),
-                  Text('$diastolic', style: AppTextStyles.h2.copyWith(color: AppColors.primary)),
+                  Text('$diastolic',
+                      style:
+                          AppTextStyles.h2.copyWith(color: AppColors.primary)),
                 ],
               ),
               Slider(
@@ -433,19 +538,28 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () async {
-                    final data = {'targetSystolic': systolic, 'targetDiastolic': diastolic};
-                    final error = await ref.read(authNotifierProvider.notifier).updatePatient(data);
+                    final data = {
+                      'targetSystolic': systolic,
+                      'targetDiastolic': diastolic
+                    };
+                    final error = await ref
+                        .read(authNotifierProvider.notifier)
+                        .updatePatient(data);
                     if (error == null && context.mounted) {
                       Navigator.pop(context);
                     } else if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error!)));
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(error!)));
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
                   ),
-                  child: Text(l10n.saveChanges, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: Text(l10n.saveChanges,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -455,7 +569,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     );
   }
 
-  Future<void> _updateBirthDate(BuildContext context, WidgetRef ref, dynamic patient) async {
+  Future<void> _updateBirthDate(
+      BuildContext context, WidgetRef ref, dynamic patient) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: patient?.birthDate ?? DateTime(1980),
@@ -469,9 +584,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       ),
     );
     if (picked != null && picked != patient?.birthDate) {
-      final error = await ref.read(authNotifierProvider.notifier).updatePatient({'birthDate': picked.toIso8601String()});
+      final error = await ref
+          .read(authNotifierProvider.notifier)
+          .updatePatient({'birthDate': picked.toIso8601String()});
       if (error != null && context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error)));
       }
     }
   }

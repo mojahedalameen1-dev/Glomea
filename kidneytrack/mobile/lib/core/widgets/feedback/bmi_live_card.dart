@@ -23,7 +23,8 @@ class BmiLiveCard extends StatefulWidget {
   State<BmiLiveCard> createState() => _BmiLiveCardState();
 }
 
-class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStateMixin {
+class _BmiLiveCardState extends State<BmiLiveCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _pulseController;
   late Animation<double> _scaleAnimation;
 
@@ -37,7 +38,8 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
     _scaleAnimation = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.03), weight: 50),
       TweenSequenceItem(tween: Tween(begin: 1.03, end: 1.0), weight: 50),
-    ]).animate(CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut));
+    ]).animate(
+        CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut));
   }
 
   @override
@@ -54,7 +56,8 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
     super.dispose();
   }
 
-  double get _bmi => widget.weightKg / ((widget.heightCm / 100) * (widget.heightCm / 100));
+  double get _bmi =>
+      widget.weightKg / ((widget.heightCm / 100) * (widget.heightCm / 100));
 
   (String, Color) get _bmiStatus {
     if (_bmi < 18.5) return ('وزن منخفض', Colors.blue);
@@ -65,10 +68,13 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    if (widget.heightCm <= 0 || widget.weightKg <= 0) return const SizedBox.shrink();
+    if (widget.heightCm <= 0 || widget.weightKg <= 0)
+      return const SizedBox.shrink();
 
     final status = _bmiStatus;
-    final diff = widget.dryWeightKg != null ? (widget.weightKg - widget.dryWeightKg!) : 0.0;
+    final diff = widget.dryWeightKg != null
+        ? (widget.weightKg - widget.dryWeightKg!)
+        : 0.0;
     final closeToDry = diff.abs() < 0.5;
 
     return ScaleTransition(
@@ -87,15 +93,20 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
               children: [
                 Column(
                   children: [
-                    Text('مؤشر كتلة الجسم', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+                    Text('مؤشر كتلة الجسم',
+                        style: AppTextStyles.bodyS
+                            .copyWith(color: AppColors.textSecondary)),
                     const SizedBox(height: 4),
                     TweenAnimationBuilder<double>(
-                      tween: Tween(begin: _bmi, end: _bmi), // Dummy for initial, we react to changes
+                      tween: Tween(
+                          begin: _bmi,
+                          end: _bmi), // Dummy for initial, we react to changes
                       duration: const Duration(milliseconds: 500),
                       builder: (context, val, _) {
                         return Text(
                           val.toStringAsFixed(1),
-                          style: AppTextStyles.h1.copyWith(fontSize: 48, color: status.$2),
+                          style: AppTextStyles.h1
+                              .copyWith(fontSize: 48, color: status.$2),
                         );
                       },
                     ),
@@ -117,13 +128,15 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
                         child: Text(
                           status.$1,
                           key: ValueKey(status.$1),
-                          style: AppTextStyles.h3.copyWith(color: status.$2, fontSize: 18),
+                          style: AppTextStyles.h3
+                              .copyWith(color: status.$2, fontSize: 18),
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         'مؤشر استرشادي لوزنك وتوزيعه',
-                        style: AppTextStyles.bodyS.copyWith(fontSize: 11, color: AppColors.textSecondary),
+                        style: AppTextStyles.bodyS.copyWith(
+                            fontSize: 11, color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -138,18 +151,25 @@ class _BmiLiveCardState extends State<BmiLiveCard> with SingleTickerProviderStat
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    closeToDry ? Icons.check_circle_rounded : Icons.info_outline_rounded,
+                    closeToDry
+                        ? Icons.check_circle_rounded
+                        : Icons.info_outline_rounded,
                     size: 16,
-                    color: closeToDry ? AppColors.safeGreen : AppColors.textSecondary,
+                    color: closeToDry
+                        ? AppColors.safeGreen
+                        : AppColors.textSecondary,
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    closeToDry 
-                      ? 'أنت قريب جداً من وزنك الجاف'
-                      : 'أنت أعلى من وزنك الجاف بـ ${diff.toStringAsFixed(1)} كجم',
+                    closeToDry
+                        ? 'أنت قريب جداً من وزنك الجاف'
+                        : 'أنت أعلى من وزنك الجاف بـ ${diff.toStringAsFixed(1)} كجم',
                     style: AppTextStyles.bodyS.copyWith(
-                      color: closeToDry ? AppColors.safeGreen : AppColors.textSecondary,
-                      fontWeight: closeToDry ? FontWeight.bold : FontWeight.normal,
+                      color: closeToDry
+                          ? AppColors.safeGreen
+                          : AppColors.textSecondary,
+                      fontWeight:
+                          closeToDry ? FontWeight.bold : FontWeight.normal,
                     ),
                   ),
                 ],

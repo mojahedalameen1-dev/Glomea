@@ -13,9 +13,15 @@ class DashboardSummary {
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) {
     return DashboardSummary(
-      metrics: (json['metrics'] as List).map((m) => IndicatorMetric.fromJson(m)).toList(),
-      fluidHistory: (json['fluidHistory'] as List).map((f) => FluidIntakeRecord.fromJson(f)).toList(),
-      latestLabResults: (json['latestLabResults'] as List).map((l) => LabResultSummary.fromJson(l)).toList(),
+      metrics: (json['metrics'] as List)
+          .map((m) => IndicatorMetric.fromJson(m))
+          .toList(),
+      fluidHistory: (json['fluidHistory'] as List)
+          .map((f) => FluidIntakeRecord.fromJson(f))
+          .toList(),
+      latestLabResults: (json['latestLabResults'] as List)
+          .map((l) => LabResultSummary.fromJson(l))
+          .toList(),
       unreadAlerts: json['unreadAlerts'] ?? 0,
     );
   }
@@ -28,7 +34,12 @@ class IndicatorMetric {
   final double delta;
   final List<double> sparkline;
 
-  IndicatorMetric({required this.name, required this.value, required this.unit, required this.delta, required this.sparkline});
+  IndicatorMetric(
+      {required this.name,
+      required this.value,
+      required this.unit,
+      required this.delta,
+      required this.sparkline});
 
   factory IndicatorMetric.fromJson(Map<String, dynamic> json) {
     return IndicatorMetric(
@@ -36,7 +47,10 @@ class IndicatorMetric {
       value: json['value'].toDouble(),
       unit: json['unit'],
       delta: json['delta']?.toDouble() ?? 0.0,
-      sparkline: (json['sparkline'] as List).map((s) => s.toDouble()).toList().cast<double>(),
+      sparkline: (json['sparkline'] as List)
+          .map((s) => s.toDouble())
+          .toList()
+          .cast<double>(),
     );
   }
 }
@@ -76,7 +90,10 @@ class LabResultSummary {
       indicatorNameAr: json['indicatorNameAr'],
       value: json['value'].toDouble(),
       status: json['status'],
-      sparkline: (json['sparkline'] as List).map((s) => s.toDouble()).toList().cast<double>(),
+      sparkline: (json['sparkline'] as List)
+          .map((s) => s.toDouble())
+          .toList()
+          .cast<double>(),
     );
   }
 }

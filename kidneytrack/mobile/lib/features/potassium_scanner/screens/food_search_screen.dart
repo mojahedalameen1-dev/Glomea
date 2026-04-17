@@ -60,12 +60,12 @@ class _FoodSearchScreenState extends State<FoodSearchScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: Text(l10n.searchFoods, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(l10n.searchFoods,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () => Navigator.of(context).pop(),
         ),
-
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: Padding(
@@ -88,7 +88,8 @@ class _FoodSearchScreenState extends State<FoodSearchScreen> {
                 decoration: InputDecoration(
                   hintText: l10n.searchProductHint,
                   hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-                  prefixIcon: const Icon(Icons.search, color: AppColors.primary),
+                  prefixIcon:
+                      const Icon(Icons.search, color: AppColors.primary),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -155,14 +156,18 @@ class _FoodSearchScreenState extends State<FoodSearchScreen> {
               shape: BoxShape.circle,
             ),
             child: Icon(
-              _searchController.text.isEmpty ? Icons.fastfood_outlined : Icons.search_off_rounded,
+              _searchController.text.isEmpty
+                  ? Icons.fastfood_outlined
+                  : Icons.search_off_rounded,
               size: 70,
               color: Colors.grey[300],
             ),
           ),
           const SizedBox(height: 24),
           Text(
-            _searchController.text.isEmpty ? l10n.searchAnyFoodOrBrand : l10n.noMatchingResults,
+            _searchController.text.isEmpty
+                ? l10n.searchAnyFoodOrBrand
+                : l10n.noMatchingResults,
             style: TextStyle(
               color: Colors.grey[800],
               fontSize: 16,
@@ -171,7 +176,9 @@ class _FoodSearchScreenState extends State<FoodSearchScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            _searchController.text.isEmpty ? l10n.nutritionalFactsHint : l10n.ensureCorrectSpelling,
+            _searchController.text.isEmpty
+                ? l10n.nutritionalFactsHint
+                : l10n.ensureCorrectSpelling,
             style: TextStyle(color: Colors.grey[500], fontSize: 13),
           ),
         ],
@@ -198,7 +205,11 @@ class _FoodGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = _getOverallStatus(food);
-    final statusColor = status == 2 ? Colors.red : status == 1 ? Colors.orange : Colors.green;
+    final statusColor = status == 2
+        ? Colors.red
+        : status == 1
+            ? Colors.orange
+            : Colors.green;
     final l10n = AppLocalizations.of(context)!;
 
     return GestureDetector(
@@ -226,15 +237,18 @@ class _FoodGridItem extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.grey[100],
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(20)),
                       child: food.imageUrl != null && food.imageUrl!.isNotEmpty
                           ? Image.network(
                               food.imageUrl!,
                               fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) => _buildImagePlaceholder(),
+                              errorBuilder: (_, __, ___) =>
+                                  _buildImagePlaceholder(),
                             )
                           : _buildImagePlaceholder(),
                     ),
@@ -248,7 +262,10 @@ class _FoodGridItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: statusColor,
                         boxShadow: [
-                          BoxShadow(color: statusColor.withValues(alpha: 0.3), blurRadius: 4, spreadRadius: 1),
+                          BoxShadow(
+                              color: statusColor.withValues(alpha: 0.3),
+                              blurRadius: 4,
+                              spreadRadius: 1),
                         ],
                       ),
                     ),
@@ -275,7 +292,9 @@ class _FoodGridItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      food.brand.isNotEmpty ? food.brand : l10n.dataNotAvailable,
+                      food.brand.isNotEmpty
+                          ? food.brand
+                          : l10n.dataNotAvailable,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.grey[500], fontSize: 11),
@@ -291,7 +310,8 @@ class _FoodGridItem extends StatelessWidget {
   }
 
   Widget _buildImagePlaceholder() {
-    return Center(child: Icon(Icons.fastfood, color: Colors.grey[300], size: 40));
+    return Center(
+        child: Icon(Icons.fastfood, color: Colors.grey[300], size: 40));
   }
 
   int _getOverallStatus(FoodItem f) {
@@ -301,6 +321,7 @@ class _FoodGridItem extends StatelessWidget {
       if (v >= w) return 1;
       return 0;
     }
+
     final pS = getS(f.potassium, 150, 200);
     final phS = getS(f.phosphorus, 100, 150);
     final naS = getS(f.sodium, 200, 300);
@@ -315,13 +336,16 @@ class _SkeletonItem extends StatefulWidget {
   State<_SkeletonItem> createState() => _SkeletonItemState();
 }
 
-class _SkeletonItemState extends State<_SkeletonItem> with SingleTickerProviderStateMixin {
+class _SkeletonItemState extends State<_SkeletonItem>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500))..repeat();
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500))
+      ..repeat();
   }
 
   @override
@@ -350,7 +374,8 @@ class _SkeletonItemState extends State<_SkeletonItem> with SingleTickerProviderS
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(20)),
                     ),
                   ),
                 ),
@@ -361,9 +386,11 @@ class _SkeletonItemState extends State<_SkeletonItem> with SingleTickerProviderS
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(height: 12, width: 100, color: Colors.grey[200]),
+                        Container(
+                            height: 12, width: 100, color: Colors.grey[200]),
                         const SizedBox(height: 8),
-                        Container(height: 10, width: 60, color: Colors.grey[200]),
+                        Container(
+                            height: 10, width: 60, color: Colors.grey[200]),
                       ],
                     ),
                   ),

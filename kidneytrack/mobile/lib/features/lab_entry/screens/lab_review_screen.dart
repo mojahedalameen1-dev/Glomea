@@ -7,7 +7,6 @@ import 'package:kidneytrack_mobile/core/widgets/inputs/app_text_field.dart';
 import 'package:kidneytrack_mobile/core/utils/dialogs.dart';
 import 'package:kidneytrack_mobile/features/lab_entry/providers/lab_entry_provider.dart';
 
-
 class LabReviewScreen extends ConsumerStatefulWidget {
   final Map<String, double?> extractedValues;
   final String rawText;
@@ -28,7 +27,6 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
   late Map<String, TextEditingController> _controllers;
   bool _isSaving = false;
   bool _isDirty = false;
-
 
   final List<Map<String, dynamic>> _indicators = [
     {'name': 'الكرياتينين', 'code': 'CREAT', 'unit': 'mg/dL'},
@@ -51,7 +49,6 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
     _isDirty = true;
   }
 
-
   @override
   void dispose() {
     for (var controller in _controllers.values) {
@@ -62,7 +59,7 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
 
   Future<void> _onConfirm() async {
     setState(() => _isSaving = true);
-    
+
     final Map<String, double> finalValues = {};
     final Map<String, String> units = {};
 
@@ -70,7 +67,7 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
       final code = ind['code'] as String;
       final text = _controllers[code]?.text ?? '';
       final val = double.tryParse(text.replaceAll('،', '.'));
-      
+
       if (val != null && val > 0) {
         finalValues[code] = val;
         units[code] = ind['unit'] as String;
@@ -83,14 +80,14 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
       }
 
       await ref.read(labEntryProvider.notifier).saveLabResults(
-        recordedAt: widget.recordedAt,
-        indicators: finalValues,
-        units: units,
-        imageUrl: null,
-      );
+            recordedAt: widget.recordedAt,
+            indicators: finalValues,
+            units: units,
+            imageUrl: null,
+          );
 
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('تم حفظ التحاليل المؤكدة بنجاح'),
@@ -98,7 +95,7 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
           behavior: SnackBarBehavior.floating,
         ),
       );
-      
+
       // Go back to the main history/dashboard
       context.pop(); // Pop review
       context.pop(); // Pop entry
@@ -144,44 +141,44 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
           ),
         ),
         body: SingleChildScrollView(
-
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('تحقق من كل قيمة قبل الحفظ', style: AppTextStyles.h2),
-            const SizedBox(height: 8),
-            Text(
-              'هذه القيم مستخرجة من ورقة المختبر آلياً. يرجى تعديلها إذا وجد أي خطأ.',
-              style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 24),
-            
-            ..._indicators.map((ind) => _buildReviewTile(ind)),
-            
-            const SizedBox(height: 32),
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: _isSaving ? null : _onConfirm,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                child: _isSaving
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : Text('تأكيد وحفظ النتائج', 
-                        style: AppTextStyles.h2.copyWith(color: Colors.white)),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('تحقق من كل قيمة قبل الحفظ', style: AppTextStyles.h2),
+              const SizedBox(height: 8),
+              Text(
+                'هذه القيم مستخرجة من ورقة المختبر آلياً. يرجى تعديلها إذا وجد أي خطأ.',
+                style: AppTextStyles.bodyM
+                    .copyWith(color: AppColors.textSecondary),
               ),
-            ),
-          ],
+              const SizedBox(height: 24),
+              ..._indicators.map((ind) => _buildReviewTile(ind)),
+              const SizedBox(height: 32),
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: _isSaving ? null : _onConfirm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                  ),
+                  child: _isSaving
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : Text('تأكيد وحفظ النتائج',
+                          style:
+                              AppTextStyles.h2.copyWith(color: Colors.white)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildReviewTile(Map<String, dynamic> ind) {
     final code = ind['code'] as String;
@@ -202,9 +199,9 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
           ),
         ],
         border: Border.all(
-          color: isMissing 
-            ? AppColors.textWarning.withValues(alpha: 0.4) 
-            : AppColors.borderBase.withValues(alpha: 0.5),
+          color: isMissing
+              ? AppColors.textWarning.withValues(alpha: 0.4)
+              : AppColors.borderBase.withValues(alpha: 0.5),
           width: isMissing ? 1.5 : 1,
         ),
       ),
@@ -216,24 +213,31 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(radius: 4, backgroundColor: AppColors.primary),
+                  const CircleAvatar(
+                      radius: 4, backgroundColor: AppColors.primary),
                   const SizedBox(width: 8),
-                  Text(ind['name'], style: AppTextStyles.label.copyWith(fontSize: 16)),
+                  Text(ind['name'],
+                      style: AppTextStyles.label.copyWith(fontSize: 16)),
                 ],
               ),
               if (isMissing)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.textWarning.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Row(
                     children: [
-                      Icon(Icons.warning_amber_rounded, color: AppColors.textWarning, size: 14),
+                      Icon(Icons.warning_amber_rounded,
+                          color: AppColors.textWarning, size: 14),
                       SizedBox(width: 4),
-                      Text('أدخلها يدوياً', 
-                        style: TextStyle(color: AppColors.textWarning, fontSize: 11, fontWeight: FontWeight.bold)),
+                      Text('أدخلها يدوياً',
+                          style: TextStyle(
+                              color: AppColors.textWarning,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -251,7 +255,9 @@ class _LabReviewScreenState extends ConsumerState<LabReviewScreen> {
             },
             suffixIcon: Padding(
               padding: const EdgeInsets.all(12),
-              child: Text(ind['unit'], style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+              child: Text(ind['unit'],
+                  style: AppTextStyles.bodyS
+                      .copyWith(color: AppColors.textSecondary)),
             ),
           ),
         ],

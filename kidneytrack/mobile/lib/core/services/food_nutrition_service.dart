@@ -111,8 +111,9 @@ class FoodNutritionService {
       phosphorus: _safeDouble(nutrients['phosphorus_100g']),
       sodium:
           sodiumGrams != null ? sodiumGrams * 1000 : null, // Convert g to mg
-      calcium: _safeDouble(nutrients['calcium_100g']) != null 
-          ? _safeDouble(nutrients['calcium_100g'])! * 1000 : null, // Convert g to mg
+      calcium: _safeDouble(nutrients['calcium_100g']) != null
+          ? _safeDouble(nutrients['calcium_100g'])! * 1000
+          : null, // Convert g to mg
       protein: _safeDouble(nutrients['proteins_100g']),
       sugars: _safeDouble(nutrients['sugars_100g']),
       calories: _safeDouble(nutrients['energy-kcal_100g']),

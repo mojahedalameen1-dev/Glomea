@@ -57,7 +57,8 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
               _buildProgressHeader(context, 1),
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -66,56 +67,77 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
                         _buildLanguageToggle(ref, activeLocale),
                         const SizedBox(height: 32),
                         Text(
-                          activeLocale.languageCode == 'en' ? 'Welcome to KidneyTrack' : 'مرحباً بك في KidneyTrack',
+                          activeLocale.languageCode == 'en'
+                              ? 'Welcome to KidneyTrack'
+                              : 'مرحباً بك في KidneyTrack',
                           style: AppTextStyles.h1,
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          activeLocale.languageCode == 'en' 
-                            ? 'Let\'s set up your profile to start tracking your health.' 
-                            : 'لنقم بإعداد ملفك الشخصي لبدء متابعة صحتك.',
-                          style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
+                          activeLocale.languageCode == 'en'
+                              ? 'Let\'s set up your profile to start tracking your health.'
+                              : 'لنقم بإعداد ملفك الشخصي لبدء متابعة صحتك.',
+                          style: AppTextStyles.bodyM
+                              .copyWith(color: AppColors.textSecondary),
                         ),
                         const SizedBox(height: 32),
-                        
                         AppTextField(
-                          label: activeLocale.languageCode == 'en' ? 'Full Name' : 'الاسم الكامل',
-                          hint: activeLocale.languageCode == 'en' ? 'Enter your name' : 'أدخل اسمك',
+                          label: activeLocale.languageCode == 'en'
+                              ? 'Full Name'
+                              : 'الاسم الكامل',
+                          hint: activeLocale.languageCode == 'en'
+                              ? 'Enter your name'
+                              : 'أدخل اسمك',
                           controller: _nameController,
-                          validator: (v) => (v == null || v.isEmpty) 
-                            ? (activeLocale.languageCode == 'en' ? 'Please enter your name' : 'يرجى إدخال اسمك') 
-                            : null,
+                          validator: (v) => (v == null || v.isEmpty)
+                              ? (activeLocale.languageCode == 'en'
+                                  ? 'Please enter your name'
+                                  : 'يرجى إدخال اسمك')
+                              : null,
                         ),
                         const SizedBox(height: 24),
-
                         AppTextField(
-                          label: activeLocale.languageCode == 'en' ? 'Age' : 'العمر',
+                          label: activeLocale.languageCode == 'en'
+                              ? 'Age'
+                              : 'العمر',
                           hint: 'e.g. 65',
                           controller: _ageController,
                           keyboardType: TextInputType.number,
                           validator: (v) {
-                            if (v == null || v.isEmpty) return activeLocale.languageCode == 'en' ? 'Age is required' : 'العمر مطلوب';
+                            if (v == null || v.isEmpty)
+                              return activeLocale.languageCode == 'en'
+                                  ? 'Age is required'
+                                  : 'العمر مطلوب';
                             final age = int.tryParse(v);
-                            if (age == null || age <= 0 || age > 120) return activeLocale.languageCode == 'en' ? 'Invalid age' : 'عمر غير صالح';
+                            if (age == null || age <= 0 || age > 120)
+                              return activeLocale.languageCode == 'en'
+                                  ? 'Invalid age'
+                                  : 'عمر غير صالح';
                             return null;
                           },
                         ),
                         const SizedBox(height: 24),
-
                         AppTextField(
-                          label: activeLocale.languageCode == 'en' ? 'Primary Physician' : 'اسم الطبيب المعالج',
-                          hint: activeLocale.languageCode == 'en' ? 'Dr. Smith' : 'د. محمد',
+                          label: activeLocale.languageCode == 'en'
+                              ? 'Primary Physician'
+                              : 'اسم الطبيب المعالج',
+                          hint: activeLocale.languageCode == 'en'
+                              ? 'Dr. Smith'
+                              : 'د. محمد',
                           controller: _physicianController,
-                          validator: (v) => (v == null || v.isEmpty) 
-                            ? (activeLocale.languageCode == 'en' ? 'Physician name is required' : 'يرجى إدخال اسم الطبيب') 
-                            : null,
+                          validator: (v) => (v == null || v.isEmpty)
+                              ? (activeLocale.languageCode == 'en'
+                                  ? 'Physician name is required'
+                                  : 'يرجى إدخال اسم الطبيب')
+                              : null,
                         ),
                         const SizedBox(height: 32),
-
                         Text(
                           '${activeLocale.languageCode == 'en' ? 'CKD Stage' : 'مرحلة القصور الكلوي'} *',
                           style: AppTextStyles.label.copyWith(
-                            color: _stageError ? AppColors.criticalRed : AppColors.textPrimary,
+                            color: _stageError
+                                ? AppColors.criticalRed
+                                : AppColors.textPrimary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -123,8 +145,11 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
                           Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              activeLocale.languageCode == 'en' ? '⚠ Please select your CKD stage' : '⚠ يرجى اختيار مرحلة القصور الكلوي',
-                              style: AppTextStyles.bodyS.copyWith(color: AppColors.criticalRed),
+                              activeLocale.languageCode == 'en'
+                                  ? '⚠ Please select your CKD stage'
+                                  : '⚠ يرجى اختيار مرحلة القصور الكلوي',
+                              style: AppTextStyles.bodyS
+                                  .copyWith(color: AppColors.criticalRed),
                             ),
                           ),
                         const SizedBox(height: 16),
@@ -150,7 +175,8 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
         children: [
           Text(
             '$step / 2',
-            style: AppTextStyles.bodyS.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
+            style: AppTextStyles.bodyS.copyWith(
+                fontWeight: FontWeight.bold, color: AppColors.primary),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -199,7 +225,8 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
     );
   }
 
-  Widget _buildLanguageButton(WidgetRef ref, String label, Locale locale, bool isActive) {
+  Widget _buildLanguageButton(
+      WidgetRef ref, String label, Locale locale, bool isActive) {
     return GestureDetector(
       onTap: () {
         ref.read(localizationProvider.notifier).setLocale(locale);
@@ -222,7 +249,8 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
     );
   }
 
-  Widget _buildStageSelector(BuildContext context, WidgetRef ref, OnboardingState state, AppLocalizations l10n) {
+  Widget _buildStageSelector(BuildContext context, WidgetRef ref,
+      OnboardingState state, AppLocalizations l10n) {
     final stages = [
       ('Stage 1', 'STAGE_1', l10n.stage1),
       ('Stage 2', 'STAGE_2', l10n.stage2),
@@ -245,16 +273,18 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
       itemBuilder: (context, index) {
         final stage = stages[index];
         final isSelected = state.data.kidneyStage == stage.$2;
-        
+
         return GestureDetector(
           onTap: () {
             setState(() => _stageError = false);
             ref.read(onboardingNotifierProvider.notifier).updateData(
-              state.data.copyWith(
-                kidneyStage: stage.$2,
-                dialysisStatus: stage.$2 == 'DIALYSIS' ? 'HEMODIALYSIS' : 'NON_DIALYSIS',
-              ),
-            );
+                  state.data.copyWith(
+                    kidneyStage: stage.$2,
+                    dialysisStatus: stage.$2 == 'DIALYSIS'
+                        ? 'HEMODIALYSIS'
+                        : 'NON_DIALYSIS',
+                  ),
+                );
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
@@ -262,7 +292,9 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
               color: isSelected ? AppColors.primary : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isSelected ? AppColors.primary : AppColors.borderBase.withValues(alpha: 0.2),
+                color: isSelected
+                    ? AppColors.primary
+                    : AppColors.borderBase.withValues(alpha: 0.2),
               ),
               boxShadow: isSelected ? AppShadows.elev1 : [],
             ),
@@ -300,20 +332,18 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
             debugPrint('Next Step button pressed');
             final stage = ref.read(onboardingNotifierProvider).data.kidneyStage;
             debugPrint('Current kidneyStage: $stage');
-            
+
             final isFormValid = _formKey.currentState!.validate();
             final isStageSelected = stage != null;
-            
+
             setState(() => _stageError = !isStageSelected);
-            
+
             if (!isFormValid || !isStageSelected) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                    activeLocale.languageCode == 'ar' 
-                      ? 'يرجى إكمال جميع الحقول المطلوبة واختيار المرحلة' 
-                      : 'Please complete all required fields and select a stage'
-                  ),
+                  content: Text(activeLocale.languageCode == 'ar'
+                      ? 'يرجى إكمال جميع الحقول المطلوبة واختيار المرحلة'
+                      : 'Please complete all required fields and select a stage'),
                   backgroundColor: AppColors.criticalRed,
                 ),
               );
@@ -322,13 +352,13 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
 
             debugPrint('Updating onboarding data...');
             ref.read(onboardingNotifierProvider.notifier).updateData(
-              ref.read(onboardingNotifierProvider).data.copyWith(
-                fullName: _nameController.text.trim(),
-                age: int.tryParse(_ageController.text),
-                physicianName: _physicianController.text.trim(),
-              ),
-            );
-            
+                  ref.read(onboardingNotifierProvider).data.copyWith(
+                        fullName: _nameController.text.trim(),
+                        age: int.tryParse(_ageController.text),
+                        physicianName: _physicianController.text.trim(),
+                      ),
+                );
+
             // Navigate AFTER the current frame completes.
             // updateData() triggers ref.watch rebuild which would
             // cancel a synchronous context.go(). Deferring to
@@ -343,12 +373,14 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             elevation: 0,
           ),
           child: Text(
             activeLocale.languageCode == 'en' ? 'Next Step' : 'الخطوة التالية',
-            style: AppTextStyles.h3.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            style: AppTextStyles.h3
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
       ),

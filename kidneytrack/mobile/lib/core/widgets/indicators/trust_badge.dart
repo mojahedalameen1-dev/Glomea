@@ -16,17 +16,19 @@ class TrustBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppDimensions.padS,
         vertical: AppDimensions.padXS,
       ),
       decoration: BoxDecoration(
-        color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1),
+        color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+            .withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusS),
         border: Border.all(
-          color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.2),
+          color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+              .withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -36,7 +38,8 @@ class TrustBadge extends StatelessWidget {
           Icon(
             verified ? Icons.verified_user : Icons.info_outline,
             size: 14,
-            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+            color:
+                isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
           ),
           const SizedBox(width: AppDimensions.padXS),
           Text(
@@ -45,7 +48,9 @@ class TrustBadge extends StatelessWidget {
               fontSize: 10,
               letterSpacing: 0.5,
               fontWeight: FontWeight.w700,
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+              color: isDark
+                  ? AppColors.textSecondaryDark
+                  : AppColors.textSecondary,
             ),
           ),
         ],

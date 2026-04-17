@@ -19,14 +19,14 @@ class WebShell extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: AppColors.bgPage,
-          drawer: isLargeScreen ? null : Drawer(
-            child: WebSidebar(navigationShell: navigationShell),
-          ),
+          drawer: isLargeScreen
+              ? null
+              : Drawer(
+                  child: WebSidebar(navigationShell: navigationShell),
+                ),
           body: Row(
             children: [
-              if (isLargeScreen)
-                WebSidebar(navigationShell: navigationShell),
-              
+              if (isLargeScreen) WebSidebar(navigationShell: navigationShell),
               Expanded(
                 child: Column(
                   children: [
@@ -38,20 +38,25 @@ class WebShell extends StatelessWidget {
                           children: [
                             Builder(
                               builder: (context) => IconButton(
-                                icon: const Icon(Icons.menu_rounded, color: AppColors.primary),
-                                onPressed: () => Scaffold.of(context).openDrawer(),
+                                icon: const Icon(Icons.menu_rounded,
+                                    color: AppColors.primary),
+                                onPressed: () =>
+                                    Scaffold.of(context).openDrawer(),
                               ),
                             ),
                             const Spacer(),
-                            const Icon(Icons.favorite_rounded, color: AppColors.primary),
+                            const Icon(Icons.favorite_rounded,
+                                color: AppColors.primary),
                             const SizedBox(width: 8),
-                            const Text('Glomea', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                            const Text('Glomea',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18)),
                             const Spacer(),
                             const SizedBox(width: 48), // Padding for balance
                           ],
                         ),
                       ),
-                    
+
                     Expanded(
                       child: navigationShell,
                     ),

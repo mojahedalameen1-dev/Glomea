@@ -3,7 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../../core/services/alert_triggers.dart';
 
-final dailyEntryProvider = StateNotifierProvider<DailyEntryNotifier, AsyncValue<void>>((ref) {
+final dailyEntryProvider =
+    StateNotifierProvider<DailyEntryNotifier, AsyncValue<void>>((ref) {
   return DailyEntryNotifier(ref);
 });
 
@@ -27,22 +28,21 @@ class DailyEntryNotifier extends StateNotifier<AsyncValue<void>> {
     state = const AsyncLoading();
     try {
       final supabase = Supabase.instance.client;
-      
-      await supabase
-        .from('daily_readings')
-        .upsert({
-          'patient_id':      patientId,
-          'reading_date':    DateTime.now().toIso8601String().substring(0, 10),
-          'weight_kg':       weightKg,
-          'systolic':        systolic,
-          'diastolic':       diastolic,
-          'blood_sugar':     bloodSugar,
+
+      await supabase.from('daily_readings').upsert(
+        {
+          'patient_id': patientId,
+          'reading_date': DateTime.now().toIso8601String().substring(0, 10),
+          'weight_kg': weightKg,
+          'systolic': systolic,
+          'diastolic': diastolic,
+          'blood_sugar': bloodSugar,
           'fluid_intake_ml': fluidIntakeMl,
-          'notes':           notes,
-          'potassium_mg':    potassiumMg,
-          'sodium_mg':       sodiumMg,
-          'protein_g':       proteinG,
-          'phosphorus_mg':   phosphorusMg,
+          'notes': notes,
+          'potassium_mg': potassiumMg,
+          'sodium_mg': sodiumMg,
+          'protein_g': proteinG,
+          'phosphorus_mg': phosphorusMg,
         },
         onConflict: 'patient_id,reading_date',
       );

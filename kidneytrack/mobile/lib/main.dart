@@ -76,7 +76,8 @@ class GlomeaApp extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.cloud_off, size: 64, color: AppColors.criticalRed),
+                  const Icon(Icons.cloud_off,
+                      size: 64, color: AppColors.criticalRed),
                   const SizedBox(height: 24),
                   Text(
                     locale.languageCode == 'ar'
@@ -103,7 +104,9 @@ class GlomeaApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'KidneyTrack',
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       routerConfig: ref.watch(routerProvider),
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,

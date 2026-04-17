@@ -20,7 +20,8 @@ abstract class HistoryLogCard extends StatelessWidget {
     bool isCritical = false,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final criticalColor = isDark ? AppColors.textCriticalDark : AppColors.textCritical;
+    final criticalColor =
+        isDark ? AppColors.textCriticalDark : AppColors.textCritical;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -28,9 +29,10 @@ abstract class HistoryLogCard extends StatelessWidget {
         color: isDark ? AppColors.bgSurfaceDark : Colors.white,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isCritical 
-            ? criticalColor.withValues(alpha: 0.5) 
-            : (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1),
+          color: isCritical
+              ? criticalColor.withValues(alpha: 0.5)
+              : (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+                  .withValues(alpha: 0.1),
           width: isCritical ? 2 : 1,
         ),
         boxShadow: isDark ? null : AppShadows.elev1,
@@ -48,12 +50,15 @@ abstract class HistoryLogCard extends StatelessWidget {
     required String label,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     final Color color = switch (severity) {
-      MedicalSeverity.normal => isDark ? AppColors.textSuccessDark : AppColors.textSuccess,
+      MedicalSeverity.normal =>
+        isDark ? AppColors.textSuccessDark : AppColors.textSuccess,
       MedicalSeverity.info => AppColors.primary,
-      MedicalSeverity.warning => isDark ? AppColors.textWarningDark : AppColors.textWarning,
-      MedicalSeverity.critical => isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+      MedicalSeverity.warning =>
+        isDark ? AppColors.textWarningDark : AppColors.textWarning,
+      MedicalSeverity.critical =>
+        isDark ? AppColors.textCriticalDark : AppColors.textCritical,
     };
 
     final IconData icon = switch (severity) {
@@ -97,13 +102,16 @@ class LabLogCard extends HistoryLogCard {
     final normalMax = (indicator['normalMax'] as num?)?.toDouble();
     final normalMin = (indicator['normalMin'] as num?)?.toDouble();
 
-    if ((criticalMax != null && val >= criticalMax) || (criticalMin != null && val <= criticalMin)) {
+    if ((criticalMax != null && val >= criticalMax) ||
+        (criticalMin != null && val <= criticalMin)) {
       return MedicalSeverity.critical;
     }
-    if ((warningMax != null && val >= warningMax) || (warningMin != null && val <= warningMin)) {
+    if ((warningMax != null && val >= warningMax) ||
+        (warningMin != null && val <= warningMin)) {
       return MedicalSeverity.warning;
     }
-    if ((normalMax != null && val > normalMax) || (normalMin != null && val < normalMin)) {
+    if ((normalMax != null && val > normalMax) ||
+        (normalMin != null && val < normalMin)) {
       return MedicalSeverity.info;
     }
     return MedicalSeverity.normal;
@@ -122,8 +130,9 @@ class LabLogCard extends HistoryLogCard {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final severity = _getSeverity();
-    final name = labIndicators[result.indicatorCode]?['nameAr'] ?? result.indicatorCode;
-    
+    final name =
+        labIndicators[result.indicatorCode]?['nameAr'] ?? result.indicatorCode;
+
     // Determine source
     final String sourceLabel = result.imageUrl != null ? 'موثق' : 'يدوي';
     final bool isVerified = result.imageUrl != null;
@@ -140,7 +149,9 @@ class LabLogCard extends HistoryLogCard {
               Text(
                 name,
                 style: AppTextStyles.h3.copyWith(
-                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimary,
                 ),
               ),
               TrustBadge(label: sourceLabel, verified: isVerified),
@@ -161,13 +172,17 @@ class LabLogCard extends HistoryLogCard {
                           text: result.value.toStringAsFixed(1),
                           style: AppTextStyles.metricValue.copyWith(
                             fontSize: 24,
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimary,
                           ),
                         ),
                         TextSpan(
                           text: ' ${result.unit}',
                           style: AppTextStyles.unit.copyWith(
-                            color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                            color: isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -177,7 +192,9 @@ class LabLogCard extends HistoryLogCard {
                   Text(
                     intl.DateFormat.jm('ar').format(result.recordedAt),
                     style: AppTextStyles.bodyS.copyWith(
-                      color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                      color: isDark
+                          ? AppColors.textSecondaryDark
+                          : AppColors.textSecondary,
                     ),
                   ),
                 ],
@@ -215,14 +232,18 @@ class VitalsLogCard extends HistoryLogCard {
               Text(
                 'المؤشرات اليومية',
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 intl.DateFormat.jm('ar').format(reading.date),
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -280,7 +301,9 @@ class VitalsLogCard extends HistoryLogCard {
             Text(
               label,
               style: AppTextStyles.label.copyWith(
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondary,
               ),
             ),
           ],
@@ -292,14 +315,18 @@ class VitalsLogCard extends HistoryLogCard {
               TextSpan(
                 text: value,
                 style: AppTextStyles.h3.copyWith(
-                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimary,
                 ),
               ),
               TextSpan(
                 text: ' $unit',
                 style: AppTextStyles.unit.copyWith(
                   fontSize: 10,
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -331,7 +358,8 @@ class MedicationLogCard extends HistoryLogCard {
               color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(Icons.medication_outlined, color: AppColors.primary, size: 24),
+            child: const Icon(Icons.medication_outlined,
+                color: AppColors.primary, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -341,13 +369,17 @@ class MedicationLogCard extends HistoryLogCard {
                 Text(
                   med?.name ?? 'دواء',
                   style: AppTextStyles.h3.copyWith(
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
                   ),
                 ),
                 Text(
                   med?.dose ?? '',
                   style: AppTextStyles.bodyS.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondary,
                   ),
                 ),
               ],
@@ -358,7 +390,8 @@ class MedicationLogCard extends HistoryLogCard {
             children: [
               _buildStatusIndicator(
                 context: context,
-                severity: isTaken ? MedicalSeverity.normal : MedicalSeverity.warning,
+                severity:
+                    isTaken ? MedicalSeverity.normal : MedicalSeverity.warning,
                 label: isTaken ? 'تم التناول' : 'فائت',
               ),
               const SizedBox(height: 4),
@@ -366,7 +399,9 @@ class MedicationLogCard extends HistoryLogCard {
                 intl.DateFormat.jm('ar').format(log.scheduledAt),
                 style: AppTextStyles.bodyS.copyWith(
                   fontSize: 10,
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -386,11 +421,14 @@ class ConsumptionLogCard extends HistoryLogCard {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final isFood = entry is FoodConsumption;
-    
+
     final String title = isFood ? entry.foodName : 'شرب ماء';
     final DateTime time = isFood ? entry.consumedAt : entry.loggedAt;
-    final String amount = isFood ? '${entry.gramsConsumed.toStringAsFixed(0)} جم' : '${entry.amountMl} مل';
-    final IconData icon = isFood ? Icons.restaurant_outlined : Icons.water_drop_outlined;
+    final String amount = isFood
+        ? '${entry.gramsConsumed.toStringAsFixed(0)} جم'
+        : '${entry.amountMl} مل';
+    final IconData icon =
+        isFood ? Icons.restaurant_outlined : Icons.water_drop_outlined;
 
     return _buildBaseContainer(
       context: context,
@@ -405,14 +443,18 @@ class ConsumptionLogCard extends HistoryLogCard {
                   title,
                   style: AppTextStyles.h3.copyWith(
                     fontSize: 16,
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
                   ),
                 ),
               ),
               Text(
                 intl.DateFormat.jm('ar').format(time),
                 style: AppTextStyles.bodyS.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
             ],
@@ -425,7 +467,9 @@ class ConsumptionLogCard extends HistoryLogCard {
                 amount,
                 style: AppTextStyles.label.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                  color: isDark
+                      ? AppColors.textSecondaryDark
+                      : AppColors.textSecondary,
                 ),
               ),
               if (isFood)
@@ -447,7 +491,8 @@ class ConsumptionLogCard extends HistoryLogCard {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1),
+        color: (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+            .withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(

@@ -34,33 +34,36 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
         centerTitle: false,
         actions: [
           IconButton(
-            onPressed: () => ref.read(medicationsProvider.notifier).loadMedications(),
+            onPressed: () =>
+                ref.read(medicationsProvider.notifier).loadMedications(),
             icon: const Icon(Icons.refresh_rounded),
           ),
         ],
       ),
-      body: state.isLoading 
-        ? const Center(child: CircularProgressIndicator())
-        : RefreshIndicator(
-            onRefresh: () => ref.read(medicationsProvider.notifier).loadMedications(),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   const TodayDosesWidget(),
-                   const SizedBox(height: 32),
-                   _buildSectionHeader(l10n.allMedications),
-                   const SizedBox(height: 16),
-                   _buildFilterChips(l10n),
-                   const SizedBox(height: 16),
-                   _buildMedicationList(state, l10n),
-                   const SizedBox(height: 80), // Space for FAB
-                ],
+      body: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+              onRefresh: () =>
+                  ref.read(medicationsProvider.notifier).loadMedications(),
+              child: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TodayDosesWidget(),
+                    const SizedBox(height: 32),
+                    _buildSectionHeader(l10n.allMedications),
+                    const SizedBox(height: 16),
+                    _buildFilterChips(l10n),
+                    const SizedBox(height: 16),
+                    _buildMedicationList(state, l10n),
+                    const SizedBox(height: 80), // Space for FAB
+                  ],
+                ),
               ),
             ),
-          ),
       floatingActionButton: SizedBox(
         width: 56,
         height: 56,
@@ -68,7 +71,8 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
           onPressed: () => context.push('/add-medication'),
           backgroundColor: AppColors.primary,
           elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
         ),
       ),
@@ -102,11 +106,12 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             label: Text(filter['label'] as String),
             selected: isSelected,
             onSelected: (val) {
-              if (val) setState(() => _selectedFilterKey = filter['key'] as String);
+              if (val)
+                setState(() => _selectedFilterKey = filter['key'] as String);
             },
             selectedColor: AppColors.primary,
-            backgroundColor: Theme.of(context).brightness == Brightness.dark 
-                ? AppColors.bgSurfaceDark 
+            backgroundColor: Theme.of(context).brightness == Brightness.dark
+                ? AppColors.bgSurfaceDark
                 : Colors.white,
             labelStyle: TextStyle(
               color: isSelected ? Colors.white : AppColors.textSecondary,
@@ -116,7 +121,9 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
               side: BorderSide(
-                color: isSelected ? AppColors.primary : AppColors.borderBase.withValues(alpha: 0.2),
+                color: isSelected
+                    ? AppColors.primary
+                    : AppColors.borderBase.withValues(alpha: 0.2),
               ),
             ),
             elevation: isSelected ? 2 : 0,
@@ -139,14 +146,17 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
     // Filter logic
     final filteredMeds = state.medications.where((med) {
       if (_selectedFilterKey == 'all') return true;
-      
+
       final logs = state.todayLogs.where((l) => l.medicationId == med.id);
       if (logs.isEmpty) return false;
 
-      if (_selectedFilterKey == 'taken') return logs.any((l) => l.status == 'taken');
-      if (_selectedFilterKey == 'missed') return logs.any((l) => l.status == 'missed');
-      if (_selectedFilterKey == 'pending') return logs.any((l) => l.status == 'pending');
-      
+      if (_selectedFilterKey == 'taken')
+        return logs.any((l) => l.status == 'taken');
+      if (_selectedFilterKey == 'missed')
+        return logs.any((l) => l.status == 'missed');
+      if (_selectedFilterKey == 'pending')
+        return logs.any((l) => l.status == 'pending');
+
       return true;
     }).toList();
 
@@ -180,8 +190,8 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(48),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark 
-            ? AppColors.bgSurfaceDark 
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.bgSurfaceDark
             : AppColors.bgSurface,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: AppColors.borderBase.withValues(alpha: 0.05)),
@@ -194,7 +204,8 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
               color: AppColors.primary.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 48, color: AppColors.primary.withValues(alpha: 0.3)),
+            child: Icon(icon,
+                size: 48, color: AppColors.primary.withValues(alpha: 0.3)),
           ),
           const SizedBox(height: 20),
           Text(

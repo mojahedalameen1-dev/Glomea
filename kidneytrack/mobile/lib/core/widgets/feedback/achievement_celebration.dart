@@ -57,11 +57,14 @@ class AchievementCelebrationOverlay extends StatelessWidget {
               // ✨ Particles (Simulated with icons)
               const Text('✨ 🌟 ✨', style: TextStyle(fontSize: 24))
                   .animate(onPlay: (c) => c.repeat())
-                  .scale(begin: const Offset(1,1), end: const Offset(2,2), duration: 1.seconds)
+                  .scale(
+                      begin: const Offset(1, 1),
+                      end: const Offset(2, 2),
+                      duration: 1.seconds)
                   .fadeOut(),
-              
+
               const Gap(20),
-              
+
               // Achievement Badge
               Container(
                 width: 160,
@@ -70,43 +73,51 @@ class AchievementCelebrationOverlay extends StatelessWidget {
                   color: Colors.white,
                   shape: BoxShape.circle,
                   boxShadow: [
-                    BoxShadow(color: AppColors.primary.withValues(alpha: 0.5), blurRadius: 40, spreadRadius: 10),
+                    BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.5),
+                        blurRadius: 40,
+                        spreadRadius: 10),
                   ],
                 ),
                 child: Center(
-                  child: Text(achievement.icon, style: const TextStyle(fontSize: 80)),
+                  child: Text(achievement.icon,
+                      style: const TextStyle(fontSize: 80)),
                 ),
-              ).animate()
-               .scale(duration: 600.ms, curve: Curves.elasticOut)
-               .rotate(begin: -0.2, end: 0, duration: 600.ms),
-              
+              )
+                  .animate()
+                  .scale(duration: 600.ms, curve: Curves.elasticOut)
+                  .rotate(begin: -0.2, end: 0, duration: 600.ms),
+
               const Gap(32),
-              
+
               Text(
                 'إنجاز جديد!',
-                style: AppTextStyles.h1.copyWith(color: AppColors.warningAmber, fontSize: 24),
+                style: AppTextStyles.h1
+                    .copyWith(color: AppColors.warningAmber, fontSize: 24),
               ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.3),
-              
+
               const Gap(12),
-              
+
               Text(
                 achievement.title,
-                style: AppTextStyles.h1.copyWith(color: Colors.white, fontSize: 32),
+                style: AppTextStyles.h1
+                    .copyWith(color: Colors.white, fontSize: 32),
               ).animate().fadeIn(delay: 600.ms).scale(),
-              
+
               const Gap(16),
-              
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 48),
                 child: Text(
                   achievement.description,
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.bodyM.copyWith(color: Colors.white.withValues(alpha: 0.8), fontSize: 18),
+                  style: AppTextStyles.bodyM.copyWith(
+                      color: Colors.white.withValues(alpha: 0.8), fontSize: 18),
                 ),
               ).animate().fadeIn(delay: 800.ms),
-              
+
               const Gap(64),
-              
+
               Text(
                 'انقر للإغلاق',
                 style: AppTextStyles.bodyS.copyWith(color: Colors.white54),

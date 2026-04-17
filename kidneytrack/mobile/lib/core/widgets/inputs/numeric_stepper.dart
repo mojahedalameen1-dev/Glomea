@@ -35,7 +35,8 @@ class NumericStepper extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.bgSurface,
             borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-            border: Border.all(color: AppColors.borderBase.withValues(alpha: 0.1)),
+            border:
+                Border.all(color: AppColors.borderBase.withValues(alpha: 0.1)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +54,9 @@ class NumericStepper extends StatelessWidget {
                   children: [
                     Text(
                       value.toStringAsFixed(step == step.toInt() ? 0 : 1),
-                      style: AppTextStyles.h2.copyWith(color: AppColors.primary, decoration: TextDecoration.underline),
+                      style: AppTextStyles.h2.copyWith(
+                          color: AppColors.primary,
+                          decoration: TextDecoration.underline),
                     ),
                     const SizedBox(width: 4),
                     Text(unit, style: AppTextStyles.bodyS),
@@ -73,7 +76,8 @@ class NumericStepper extends StatelessWidget {
   }
 
   void _showManualInputDialog(BuildContext context) {
-    final controller = TextEditingController(text: value.toStringAsFixed(step == step.toInt() ? 0 : 1));
+    final controller = TextEditingController(
+        text: value.toStringAsFixed(step == step.toInt() ? 0 : 1));
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -88,7 +92,9 @@ class NumericStepper extends StatelessWidget {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('إلغاء')),
           TextButton(
             onPressed: () {
               final newValue = double.tryParse(controller.text);

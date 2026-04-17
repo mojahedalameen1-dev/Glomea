@@ -40,7 +40,8 @@ class Medication {
       frequency: json['frequency'],
       times: List<String>.from(json['times']),
       startDate: DateTime.parse(json['start_date']),
-      endDate: json['end_date'] != null ? DateTime.parse(json['end_date']) : null,
+      endDate:
+          json['end_date'] != null ? DateTime.parse(json['end_date']) : null,
       notes: json['notes'],
       isActive: json['is_active'] ?? true,
       medicationKey: json['medication_key'],
@@ -71,8 +72,9 @@ class Medication {
   String get nextDoseTime {
     if (times.isEmpty) return '--:--';
     final now = DateTime.now();
-    final currentTime = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
-    
+    final currentTime =
+        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+
     final sortedTimes = List<String>.from(times)..sort();
     for (final time in sortedTimes) {
       if (time.compareTo(currentTime) > 0) {

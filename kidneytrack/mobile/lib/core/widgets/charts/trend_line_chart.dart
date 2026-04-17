@@ -34,7 +34,8 @@ class TrendLineChart extends StatelessWidget {
       return const Center(
         child: Padding(
           padding: EdgeInsets.all(40.0),
-          child: Text('لا توجد بيانات كافية للرسم البياني', style: TextStyle(color: Colors.grey)),
+          child: Text('لا توجد بيانات كافية للرسم البياني',
+              style: TextStyle(color: Colors.grey)),
         ),
       );
     }
@@ -56,8 +57,10 @@ class TrendLineChart extends StatelessWidget {
 
     // Add some padding to Y axis
     final rangeY = calculatedMaxY - calculatedMinY;
-    final finalMinY = minY ?? (calculatedMinY - (rangeY > 0 ? rangeY * 0.2 : 10));
-    final finalMaxY = maxY ?? (calculatedMaxY + (rangeY > 0 ? rangeY * 0.2 : 10));
+    final finalMinY =
+        minY ?? (calculatedMinY - (rangeY > 0 ? rangeY * 0.2 : 10));
+    final finalMaxY =
+        maxY ?? (calculatedMaxY + (rangeY > 0 ? rangeY * 0.2 : 10));
 
     // Area Fill logic (using betweenBarsData for better accuracy)
     final List<BetweenBarsData> betweenBarsData = [];
@@ -79,7 +82,8 @@ class TrendLineChart extends StatelessWidget {
               tooltipRoundedRadius: 8,
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map((spot) {
-                  final date = DateTime.fromMillisecondsSinceEpoch(spot.x.toInt());
+                  final date =
+                      DateTime.fromMillisecondsSinceEpoch(spot.x.toInt());
                   final formattedDate = intl.DateFormat('d/M').format(date);
                   return LineTooltipItem(
                     '$formattedDate\n',
@@ -95,7 +99,8 @@ class TrendLineChart extends StatelessWidget {
                       ),
                       TextSpan(
                         text: ' $yAxisLabel',
-                        style: const TextStyle(color: Colors.white70, fontSize: 10),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 10),
                       ),
                     ],
                   );
@@ -118,28 +123,34 @@ class TrendLineChart extends StatelessWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
-                  if (value == meta.min || value == meta.max) return const SizedBox.shrink();
+                  if (value == meta.min || value == meta.max)
+                    return const SizedBox.shrink();
                   return Text(
                     value.toStringAsFixed(0),
-                    style: const TextStyle(color: Color(0xFF818CAB), fontSize: 10),
+                    style:
+                        const TextStyle(color: Color(0xFF818CAB), fontSize: 10),
                     textAlign: TextAlign.center,
                   );
                 },
                 reservedSize: 32,
               ),
             ),
-            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            leftTitles:
+                const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
-                  final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+                  final date =
+                      DateTime.fromMillisecondsSinceEpoch(value.toInt());
                   return Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
                       intl.DateFormat('d/M').format(date),
-                      style: const TextStyle(color: Color(0xFF818CAB), fontSize: 10),
+                      style: const TextStyle(
+                          color: Color(0xFF818CAB), fontSize: 10),
                     ),
                   );
                 },
@@ -156,13 +167,14 @@ class TrendLineChart extends StatelessWidget {
           extraLinesData: ExtraLinesData(
             horizontalLines: targetLines ?? [],
           ),
-          lineBarsData: lines.map((line) => line.copyWith(
-            dotData: FlDotData(show: showAllDots),
-          )).toList(),
+          lineBarsData: lines
+              .map((line) => line.copyWith(
+                    dotData: FlDotData(show: showAllDots),
+                  ))
+              .toList(),
           betweenBarsData: betweenBarsData,
         ),
       ),
     );
   }
 }
-

@@ -4,7 +4,7 @@ class FoodItem {
   final String brand;
   final String? imageUrl;
   final double? servingSize;
-  
+
   final double? potassium;
   final double? phosphorus;
   final double? sodium;
@@ -14,7 +14,7 @@ class FoodItem {
   final double? calories;
   final double? carbohydrates;
   final double? totalFat;
-  
+
   final String dataSource; // 'sfda', 'off', 'manual'
   final Map<String, double?>? labelValues; // For conflict detection
 

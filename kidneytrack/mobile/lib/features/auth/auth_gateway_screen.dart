@@ -43,25 +43,30 @@ class AuthGatewayScreen extends StatelessWidget {
                 ],
               ),
               child: const Center(
-                child: Icon(Icons.spa_rounded, size: 60, color: AppColors.primary),
+                child:
+                    Icon(Icons.spa_rounded, size: 60, color: AppColors.primary),
               ),
-            ).animate().scale(duration: 800.ms, curve: Curves.easeOutBack).rotate(begin: -0.2, end: 0),
-            
+            )
+                .animate()
+                .scale(duration: 800.ms, curve: Curves.easeOutBack)
+                .rotate(begin: -0.2, end: 0),
+
             const SizedBox(height: 40),
             Text(
               'أهلاً بك في جلوميا',
               style: AppTextStyles.h1.copyWith(fontSize: 28),
             ).animate().fadeIn(delay: 200.ms).slideY(begin: 0.5, end: 0),
-            
+
             const SizedBox(height: 12),
             Text(
               'كل ما تحتاجه للعناية بكليتيك في مكان واحد',
-              style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
+              style:
+                  AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.5, end: 0),
-            
+
             const Spacer(),
-            
+
             // Action Buttons
             SizedBox(
               width: double.infinity,
@@ -71,15 +76,17 @@ class AuthGatewayScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
                   elevation: 0,
                 ),
-                child: Text('إنشاء حساب جديد', style: AppTextStyles.h3.copyWith(color: Colors.white)),
+                child: Text('إنشاء حساب جديد',
+                    style: AppTextStyles.h3.copyWith(color: Colors.white)),
               ),
             ).animate().fadeIn(delay: 600.ms).slideX(begin: -0.2, end: 0),
-            
+
             const SizedBox(height: 16),
-            
+
             SizedBox(
               width: double.infinity,
               height: 60,
@@ -87,12 +94,14 @@ class AuthGatewayScreen extends StatelessWidget {
                 onPressed: () => GoRouter.of(context).push('/login'),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.primary, width: 2),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
                 ),
-                child: Text('تسجيل الدخول', style: AppTextStyles.h3.copyWith(color: AppColors.primary)),
+                child: Text('تسجيل الدخول',
+                    style: AppTextStyles.h3.copyWith(color: AppColors.primary)),
               ),
             ).animate().fadeIn(delay: 800.ms).slideX(begin: 0.2, end: 0),
-            
+
             const SizedBox(height: 40),
           ],
         ),

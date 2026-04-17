@@ -95,7 +95,7 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
           .eq('id', session.user.id)
           .maybeSingle()
           .timeout(const Duration(seconds: 15));
-      
+
       if (data == null) {
         return Patient.quick(
           id: session.user.id,
@@ -114,10 +114,11 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
     }
   }
 
-  Future<String?> register({required String email, required String password}) async {
+  Future<String?> register(
+      {required String email, required String password}) async {
     try {
       final res = await _supabase.auth.signUp(email: email, password: password);
-      
+
       if (res.user != null) {
         if (res.session != null) {
           return null; // نجاح مباشر
@@ -152,14 +153,15 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
 
   Future<void> logout() async {
     await _supabase.auth.signOut();
-    
+
     // مسح الـ Cache المحلي عند الخروج لمنع تسريب البيانات
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_patientCacheKey);
     await prefs.remove(_onboardingKey);
-    
+
     state = const AsyncValue.data(null);
   }
+
   Future<String?> updatePatient(Map<String, dynamic> data) async {
     try {
       final user = _supabase.auth.currentUser;
@@ -179,7 +181,8 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
         payload['phone_number'] = payload.remove('phoneNumber');
       }
       if (payload.containsKey('notificationsEnabled')) {
-        payload['notifications_enabled'] = payload.remove('notificationsEnabled');
+        payload['notifications_enabled'] =
+            payload.remove('notificationsEnabled');
       }
 
       // 2) تأكيد أن id موجود دائماً في الـ payload
@@ -195,7 +198,10 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
 
       // 4) إزالة أي null متبقي (باستثناء firstName و lastName و id)
       payload.removeWhere((key, value) =>
-          value == null && key != 'firstName' && key != 'lastName' && key != 'id');
+          value == null &&
+          key != 'firstName' &&
+          key != 'lastName' &&
+          key != 'id');
 
       // 5) استخدام UPSERT بدلاً من UPDATE لمعالجة كلا الحالتين:
       //    - مستخدم جديد ليس له سجل بعد → INSERT
@@ -205,7 +211,7 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
       // 6) مزامنة حالة الـ Onboarding مع بيانات المستخدم (Metadata) - محاولة أفضل (Best-effort)
       if (payload['onboardingComplete'] == true) {
         await _cacheOnboarding(true);
-        
+
         // تحديث الـ metadata في Auth بشكل غير معطل (Non-blocking)
         unawaited(() async {
           try {
@@ -227,9 +233,11 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
       debugPrint('updatePatient DB error: ${e.code} - ${e.message}');
       // 23505: unique_violation
       if (e.code == '23505') {
-        if (e.message.contains('Patient_phone_key') || e.message.contains('phone')) {
+        if (e.message.contains('Patient_phone_key') ||
+            e.message.contains('phone')) {
           return 'رقم الهاتف هذا مسجل مسبقاً لمستخدم آخر.';
-        } else if (e.message.contains('Patient_email_key') || e.message.contains('email')) {
+        } else if (e.message.contains('Patient_email_key') ||
+            e.message.contains('email')) {
           return 'البريد الإلكتروني هذا مسجل مسبقاً لمستخدم آخر.';
         }
         return 'بعض البيانات المدخلة مسجلة مسبقاً لمستخدم آخر.';
@@ -240,7 +248,6 @@ class AuthNotifier extends AsyncNotifier<Patient?> {
       return 'فشل تحديث البيانات. يرجى مراجعة اتصال الإنترنت.';
     }
   }
-
 }
 
 final authNotifierProvider = AsyncNotifierProvider<AuthNotifier, Patient?>(() {

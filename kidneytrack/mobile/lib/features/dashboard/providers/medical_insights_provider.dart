@@ -25,8 +25,9 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
   final supabase = Supabase.instance.client;
 
   // Fetch recent readings (last 7 days for common indicators)
-  final sevenDaysAgo = DateTime.now().subtract(const Duration(days: 7)).toIso8601String();
-  
+  final sevenDaysAgo =
+      DateTime.now().subtract(const Duration(days: 7)).toIso8601String();
+
   final labData = await supabase
       .from('LabResult')
       .select()
@@ -34,9 +35,8 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
       .gte('recordedAt', sevenDaysAgo)
       .order('recordedAt', ascending: false);
 
-  final List<LabResult> readings = (labData as List)
-      .map((json) => LabResult.fromJson(json))
-      .toList();
+  final List<LabResult> readings =
+      (labData as List).map((json) => LabResult.fromJson(json)).toList();
 
   // Helper to get latest value for a code
   double? getLatest(String code) {
@@ -71,12 +71,13 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
   // Assuming BP is stored in LabResult with codes 'SYS' and 'DIA' for this implementation
   final sysReadings = readings.where((r) => r.indicatorCode == 'SYS').toList();
   final diaReadings = readings.where((r) => r.indicatorCode == 'DIA').toList();
-  
+
   List<BPReading> bpReadings = [];
   for (var sys in sysReadings) {
     // Find matching diastolic by timestamp (approximate or exact)
     try {
-      final dia = diaReadings.firstWhere((d) => d.recordedAt.day == sys.recordedAt.day);
+      final dia =
+          diaReadings.firstWhere((d) => d.recordedAt.day == sys.recordedAt.day);
       bpReadings.add(BPReading(
         systolic: sys.value.toInt(),
         diastolic: dia.value.toInt(),
@@ -93,7 +94,8 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
 
   // 4. Potassium Status
   final todayPotassium = readings
-      .where((r) => r.indicatorCode == 'K' && r.recordedAt.day == DateTime.now().day)
+      .where((r) =>
+          r.indicatorCode == 'K' && r.recordedAt.day == DateTime.now().day)
       .fold(0.0, (sum, r) => sum + r.value);
 
   final potassiumStatus = MedicalCalculatorService.calculatePotassiumStatus(
@@ -108,12 +110,14 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
       .toList()
       .reversed
       .toList();
-      
-  final isDeterioration = MedicalCalculatorService.detectEarlyDeterioration(creatinineHistory);
+
+  final isDeterioration =
+      MedicalCalculatorService.detectEarlyDeterioration(creatinineHistory);
 
   return MedicalInsights(
     egfr: egfr,
-    kidneyStage: egfr != null ? MedicalCalculatorService.getKidneyStage(egfr) : null,
+    kidneyStage:
+        egfr != null ? MedicalCalculatorService.getKidneyStage(egfr) : null,
     fluidOverload: fluidOverload,
     bpAnalysis: bpAnalysis,
     potassiumStatus: potassiumStatus,

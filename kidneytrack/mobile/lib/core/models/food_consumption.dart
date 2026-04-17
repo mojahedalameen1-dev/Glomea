@@ -4,19 +4,19 @@ class FoodConsumption {
   final String foodName;
   final String brand;
   final double gramsConsumed;
-  
+
   // Nutrients for this specific consumption (calculated based on grams)
   final double potassium;
   final double phosphorus;
   final double sodium;
   final double protein;
   final double calories;
-  
+
   final double? calcium;
   final double? sugars;
   final double? carbohydrates;
   final double? totalFat;
-  
+
   final String dataSource; // 'sfda', 'off', 'manual'
   final DateTime consumedAt;
 

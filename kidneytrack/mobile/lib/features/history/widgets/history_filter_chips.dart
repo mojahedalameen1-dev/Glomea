@@ -44,7 +44,8 @@ class HistoryFilterChips extends StatelessWidget {
     return SizedBox(
       height: 60,
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: AppDimensions.padStatic20),
+        padding:
+            const EdgeInsets.symmetric(horizontal: AppDimensions.padStatic20),
         scrollDirection: Axis.horizontal,
         itemCount: HistoryCategory.values.length,
         separatorBuilder: (_, __) => const SizedBox(width: 10),
@@ -58,9 +59,11 @@ class HistoryFilterChips extends StatelessWidget {
               avatar: Icon(
                 category.icon,
                 size: 18,
-                color: isSelected 
-                  ? Colors.white 
-                  : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondary),
+                color: isSelected
+                    ? Colors.white
+                    : (isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondary),
               ),
               label: Text(category.label),
               selected: isSelected,
@@ -70,15 +73,18 @@ class HistoryFilterChips extends StatelessWidget {
               showCheckmark: false,
               labelStyle: AppTextStyles.label.copyWith(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected 
-                  ? Colors.white 
-                  : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary),
+                color: isSelected
+                    ? Colors.white
+                    : (isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary),
               ),
               backgroundColor: isDark ? AppColors.bgSurfaceDark : Colors.white,
               side: BorderSide(
-                color: isSelected 
-                  ? AppColors.primary 
-                  : (isDark ? AppColors.borderBaseDark : AppColors.borderBase).withValues(alpha: 0.1),
+                color: isSelected
+                    ? AppColors.primary
+                    : (isDark ? AppColors.borderBaseDark : AppColors.borderBase)
+                        .withValues(alpha: 0.1),
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppDimensions.radiusL),

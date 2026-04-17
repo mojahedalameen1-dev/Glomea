@@ -52,9 +52,9 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
       // For now, let's allow up to totalCups + 4 overflow
       if (_localCompleted >= widget.totalCups + 4) return;
     }
-    
+
     HapticFeedback.lightImpact();
-    
+
     // 1. Optimistic UI update
     setState(() {
       _localCompleted++;
@@ -72,28 +72,31 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
 
   void _showUndoSnackBar() {
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const Icon(Icons.check_circle, color: Colors.white, size: 20),
-            const SizedBox(width: 8),
-            Text('تم إضافة كوب ($_lastCupSize مل)'),
-          ],
-        ),
-        action: SnackBarAction(
-          label: 'تراجع',
-          textColor: Colors.orangeAccent,
-          onPressed: () {
-            setState(() {
-              _localCompleted--;
-            });
-            // Don't call backend
-          },
-        ),
-        duration: const Duration(seconds: 4),
-      ),
-    ).closed.then((reason) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.check_circle, color: Colors.white, size: 20),
+                const SizedBox(width: 8),
+                Text('تم إضافة كوب ($_lastCupSize مل)'),
+              ],
+            ),
+            action: SnackBarAction(
+              label: 'تراجع',
+              textColor: Colors.orangeAccent,
+              onPressed: () {
+                setState(() {
+                  _localCompleted--;
+                });
+                // Don't call backend
+              },
+            ),
+            duration: const Duration(seconds: 4),
+          ),
+        )
+        .closed
+        .then((reason) {
       // 4. Persistence call (only if not undone)
       if (reason != SnackBarClosedReason.action && mounted) {
         if (widget.onAddCup != null) {
@@ -136,7 +139,8 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
               ),
               if (isCompleted && _localCompleted <= widget.totalCups)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.borderBase.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
@@ -144,16 +148,20 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.check_circle_rounded, color: AppColors.textSuccess, size: 16),
+                      const Icon(Icons.check_circle_rounded,
+                          color: AppColors.textSuccess, size: 16),
                       const Gap(4),
-                      Text('مكتمل', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSuccess, fontWeight: FontWeight.bold)),
+                      Text('مكتمل',
+                          style: AppTextStyles.bodyS.copyWith(
+                              color: AppColors.textSuccess,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ).animate().scale(curve: Curves.easeOutBack, duration: 400.ms),
             ],
           ),
           const Gap(16),
-          
+
           // Progress Bar
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -161,43 +169,51 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
               value: min(1.0, _localCompleted / widget.totalCups),
               minHeight: 6,
               backgroundColor: AppColors.borderBase.withValues(alpha: 0.5),
-              valueColor: AlwaysStoppedAnimation<Color>((_localCompleted > widget.totalCups) ? AppColors.textCritical : AppColors.primary),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  (_localCompleted > widget.totalCups)
+                      ? AppColors.textCritical
+                      : AppColors.primary),
             ),
           ),
-          
+
           const Gap(24),
-          
+
           Wrap(
             spacing: 12,
             runSpacing: 16,
             alignment: WrapAlignment.start,
-            children: List.generate(max(widget.totalCups, _localCompleted), (index) {
+            children:
+                List.generate(max(widget.totalCups, _localCompleted), (index) {
               bool isFull = index < _localCompleted;
               bool isAnimating = index == _animatingIndex;
               bool isNext = index == _localCompleted && !isCompleted;
               bool isDanger = index >= widget.totalCups && isFull;
-              
+
               return GestureDetector(
-                onTap: (index == _localCompleted && !isAnimating) ? _onAddIntakeRequest : null,
+                onTap: (index == _localCompleted && !isAnimating)
+                    ? _onAddIntakeRequest
+                    : null,
                 child: AnimatedWaterCup(
                   isFull: isFull,
                   fillLevel: isFull ? 1.0 : (isAnimating ? 1.0 : 0.0),
                   isAnimating: isAnimating,
                   shouldPulse: isNext,
                   isDanger: isDanger,
-                ).animate(
-                  target: isNext ? 1 : 0,
-                  onPlay: (c) => c.repeat(reverse: true),
-                ).scale(
-                  begin: const Offset(1, 1),
-                  end: const Offset(1.05, 1.05),
-                  duration: 800.ms,
-                  curve: Curves.easeInOut,
-                ),
+                )
+                    .animate(
+                      target: isNext ? 1 : 0,
+                      onPlay: (c) => c.repeat(reverse: true),
+                    )
+                    .scale(
+                      begin: const Offset(1, 1),
+                      end: const Offset(1.05, 1.05),
+                      duration: 800.ms,
+                      curve: Curves.easeInOut,
+                    ),
               );
             }),
           ),
-          
+
           const Gap(24),
           Row(
             children: [
@@ -205,14 +221,25 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('شربت $_localCompleted أكواب من أصل ${widget.totalCups}', style: AppTextStyles.bodyM),
+                    Text(
+                        'شربت $_localCompleted أكواب من أصل ${widget.totalCups}',
+                        style: AppTextStyles.bodyM),
                     if (!isCompleted)
-                      Text('باقي $remaining مل لإنهاء هدفك 💪', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+                      Text('باقي $remaining مل لإنهاء هدفك 💪',
+                          style: AppTextStyles.bodyS
+                              .copyWith(color: AppColors.textSecondary)),
                     if (isCompleted && _localCompleted == widget.totalCups)
-                      Text('رائع! أنهيت هدفك المائي اليوم 🎉', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSuccess, fontWeight: FontWeight.bold))
-                        .animate(onPlay: (c) => c.repeat(reverse: true)).shimmer(duration: 2.seconds),
+                      Text('رائع! أنهيت هدفك المائي اليوم 🎉',
+                              style: AppTextStyles.bodyS.copyWith(
+                                  color: AppColors.textSuccess,
+                                  fontWeight: FontWeight.bold))
+                          .animate(onPlay: (c) => c.repeat(reverse: true))
+                          .shimmer(duration: 2.seconds),
                     if (_localCompleted > widget.totalCups)
-                      Text('تجاوزت الحد المسموح به!', style: AppTextStyles.bodyS.copyWith(color: AppColors.textCritical, fontWeight: FontWeight.bold)),
+                      Text('تجاوزت الحد المسموح به!',
+                          style: AppTextStyles.bodyS.copyWith(
+                              color: AppColors.textCritical,
+                              fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -228,11 +255,17 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
               decoration: BoxDecoration(
                 color: isDark ? AppColors.bgCriticalDark : AppColors.bgCritical,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: isDark ? AppColors.borderCriticalDark : AppColors.borderCritical.withValues(alpha: 0.5)),
+                border: Border.all(
+                    color: isDark
+                        ? AppColors.borderCriticalDark
+                        : AppColors.borderCritical.withValues(alpha: 0.5)),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.report_problem_rounded, color: isDark ? AppColors.textCriticalDark : AppColors.textCritical),
+                  Icon(Icons.report_problem_rounded,
+                      color: isDark
+                          ? AppColors.textCriticalDark
+                          : AppColors.textCritical),
                   const Gap(12),
                   Expanded(
                     child: Column(
@@ -241,7 +274,9 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
                         Text(
                           '⚠️ تحذير: احتباس السوائل',
                           style: AppTextStyles.label.copyWith(
-                            color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+                            color: isDark
+                                ? AppColors.textCriticalDark
+                                : AppColors.textCritical,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -249,7 +284,9 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
                         Text(
                           'لقد تجاوزت الحد اليومي المسموح به من السوائل. يرجى الانتباه لأي تورم في الأطراف واستشارة الطبيب.',
                           style: AppTextStyles.bodyS.copyWith(
-                            color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+                            color: isDark
+                                ? AppColors.textCriticalDark
+                                : AppColors.textCritical,
                           ),
                         ),
                       ],
@@ -259,7 +296,7 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
               ),
             ).animate().flipV(duration: 500.ms).shake(),
           ],
-          
+
           const Gap(24),
           SizedBox(
             width: double.infinity,
@@ -272,7 +309,8 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
                 backgroundColor: AppColors.primaryLight,
                 foregroundColor: AppColors.primary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
               ),
             ),
           ),
@@ -300,10 +338,11 @@ class _FluidCupsWidgetState extends State<FluidCupsWidget> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-             const Icon(Icons.local_drink_outlined, size: 16, color: AppColors.primary),
-             const Gap(4),
-             Text('$_lastCupSize مل', style: AppTextStyles.bodyS),
-             const Icon(Icons.arrow_drop_down, size: 16),
+            const Icon(Icons.local_drink_outlined,
+                size: 16, color: AppColors.primary),
+            const Gap(4),
+            Text('$_lastCupSize مل', style: AppTextStyles.bodyS),
+            const Icon(Icons.arrow_drop_down, size: 16),
           ],
         ),
       ),
@@ -331,7 +370,8 @@ class AnimatedWaterCup extends StatefulWidget {
   State<AnimatedWaterCup> createState() => _AnimatedWaterCupState();
 }
 
-class _AnimatedWaterCupState extends State<AnimatedWaterCup> with SingleTickerProviderStateMixin {
+class _AnimatedWaterCupState extends State<AnimatedWaterCup>
+    with SingleTickerProviderStateMixin {
   late AnimationController _waveController;
 
   @override
@@ -353,7 +393,9 @@ class _AnimatedWaterCupState extends State<AnimatedWaterCup> with SingleTickerPr
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 0, end: widget.fillLevel),
-      duration: widget.isAnimating ? const Duration(milliseconds: 1500) : const Duration(milliseconds: 400),
+      duration: widget.isAnimating
+          ? const Duration(milliseconds: 1500)
+          : const Duration(milliseconds: 400),
       curve: Curves.easeInOutBack,
       builder: (context, fillValue, child) {
         return Container(
@@ -363,9 +405,9 @@ class _AnimatedWaterCupState extends State<AnimatedWaterCup> with SingleTickerPr
             color: AppColors.bgSurface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: widget.isDanger 
-                ? AppColors.textCritical 
-                : (widget.isFull ? AppColors.primary : AppColors.borderBase),
+              color: widget.isDanger
+                  ? AppColors.textCritical
+                  : (widget.isFull ? AppColors.primary : AppColors.borderBase),
               width: 2,
             ),
           ),
@@ -390,7 +432,8 @@ class _AnimatedWaterCupState extends State<AnimatedWaterCup> with SingleTickerPr
                   ),
                 if (widget.isFull && !widget.isAnimating)
                   const Icon(Icons.check, color: Colors.white, size: 20)
-                      .animate().scale(curve: Curves.elasticOut),
+                      .animate()
+                      .scale(curve: Curves.elasticOut),
               ],
             ),
           ),
@@ -414,56 +457,59 @@ class WaterWavePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (fillLevel <= 0.0) return;
-    
+
     final waterHeight = size.height * (1 - fillLevel);
-    
+
     final path = Path();
     path.moveTo(0, waterHeight);
-    
+
     for (double x = 0; x <= size.width; x++) {
       final y = waterHeight + sin((x / size.width * 2 * pi) + waveOffset) * 4;
       path.lineTo(x, y);
     }
-    
+
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
     path.close();
-    
+
     final gradient = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: isDanger
-        ? [
-            const Color(0xFFE57373).withValues(alpha: 0.8),
-            const Color(0xFFD32F2F).withValues(alpha: 0.95),
-          ]
-        : [
-            const Color(0xFF4FC3F7).withValues(alpha: 0.8),
-            const Color(0xFF0288D1).withValues(alpha: 0.95),
-          ],
+          ? [
+              const Color(0xFFE57373).withValues(alpha: 0.8),
+              const Color(0xFFD32F2F).withValues(alpha: 0.95),
+            ]
+          : [
+              const Color(0xFF4FC3F7).withValues(alpha: 0.8),
+              const Color(0xFF0288D1).withValues(alpha: 0.95),
+            ],
     );
-    
+
     final paint = Paint()
-      ..shader = gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-      
+      ..shader =
+          gradient.createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+
     canvas.drawPath(path, paint);
-    
+
     _drawBubbles(canvas, size, fillLevel);
   }
 
   void _drawBubbles(Canvas canvas, Size size, double fillLevel) {
     if (fillLevel < 0.2) return;
     final paint = Paint()..color = Colors.white.withValues(alpha: 0.3);
-    
+
     final b1Y = size.height - ((waveOffset * 10) % (size.height * fillLevel));
     canvas.drawCircle(Offset(size.width * 0.3, b1Y), 2, paint);
-    
-    final b2Y = size.height - (((waveOffset + 1) * 15) % (size.height * fillLevel));
+
+    final b2Y =
+        size.height - (((waveOffset + 1) * 15) % (size.height * fillLevel));
     canvas.drawCircle(Offset(size.width * 0.7, b2Y), 1.5, paint);
   }
 
   @override
   bool shouldRepaint(covariant WaterWavePainter oldDelegate) {
-    return oldDelegate.fillLevel != fillLevel || oldDelegate.waveOffset != waveOffset;
+    return oldDelegate.fillLevel != fillLevel ||
+        oldDelegate.waveOffset != waveOffset;
   }
 }

@@ -19,9 +19,9 @@ class MedicalDisclaimer extends StatelessWidget {
           'هذه المعلومات للتوعية فقط ولا تغني عن استشارة طبيبك المختص',
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: color ?? Colors.grey[600],
-            fontSize: 10,
-          ),
+                color: color ?? Colors.grey[600],
+                fontSize: 10,
+              ),
         ),
       );
     }

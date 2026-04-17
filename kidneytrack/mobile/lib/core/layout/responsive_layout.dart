@@ -20,7 +20,7 @@ class ResponsiveLayout extends StatelessWidget {
         if (kIsWeb || constraints.maxWidth >= 600) {
           return WebShell(navigationShell: navigationShell);
         }
-        
+
         // Otherwise use the standard Mobile Bottom Navigation
         return BottomNavShell(navigationShell: navigationShell);
       },

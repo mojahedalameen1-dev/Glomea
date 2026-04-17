@@ -7,13 +7,13 @@ import '../../../core/theme/app_types.dart';
 final dashboardSummaryProvider = FutureProvider.autoDispose((ref) async {
   final authState = ref.watch(authNotifierProvider);
   final patient = authState.valueOrNull;
-  
+
   if (patient == null) {
     throw Exception('المريض غير مسجل دخول');
   }
 
   final supabase = Supabase.instance.client;
-  
+
   try {
     // 1. Fetch Lab Results
     final labResults = await supabase
@@ -24,18 +24,20 @@ final dashboardSummaryProvider = FutureProvider.autoDispose((ref) async {
 
     final List<Map<String, dynamic>> metrics = [];
     final resultsList = labResults as List;
-    
-    void addMetric(String code, String name, double safeMin, double safeMax, double warningMin, double warningMax) {
-      final relevant = resultsList.where((r) => r['indicatorCode'] == code).toList();
+
+    void addMetric(String code, String name, double safeMin, double safeMax,
+        double warningMin, double warningMax) {
+      final relevant =
+          resultsList.where((r) => r['indicatorCode'] == code).toList();
       if (relevant.isNotEmpty) {
         final latest = relevant.first;
         final latestValue = (latest['value'] as num).toDouble();
-        
+
         IndicatorStatus status = IndicatorStatus.safe;
         if (latestValue > warningMax) {
-           status = IndicatorStatus.critical;
+          status = IndicatorStatus.critical;
         } else if (latestValue > safeMax) {
-           status = IndicatorStatus.warning;
+          status = IndicatorStatus.warning;
         }
 
         metrics.add({
@@ -43,7 +45,12 @@ final dashboardSummaryProvider = FutureProvider.autoDispose((ref) async {
           'value': latestValue,
           'code': code,
           'status': status.name,
-          'sparkline': relevant.take(7).map((r) => (r['value'] as num).toDouble()).toList().reversed.toList(),
+          'sparkline': relevant
+              .take(7)
+              .map((r) => (r['value'] as num).toDouble())
+              .toList()
+              .reversed
+              .toList(),
           'thresholds': ThresholdRange(
             safeMin: safeMin,
             safeMax: safeMax,

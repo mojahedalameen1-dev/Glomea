@@ -36,7 +36,8 @@ class HistoryScreen extends ConsumerStatefulWidget {
   ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTickerProviderStateMixin {
+class _HistoryScreenState extends ConsumerState<HistoryScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _showTimeline = true;
   HistoryCategory _selectedCategory = HistoryCategory.all;
@@ -55,7 +56,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
   void initState() {
     super.initState();
     // Initial length depends on existing data
-    final hasNutrients = ref.read(nutrientDataExistsProvider).valueOrNull ?? false;
+    final hasNutrients =
+        ref.read(nutrientDataExistsProvider).valueOrNull ?? false;
     _tabController = TabController(length: hasNutrients ? 6 : 5, vsync: this);
   }
 
@@ -68,13 +70,13 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     // Safety check for dynamic tabs
     // Sync TabController when data availability changes
     ref.listen(nutrientDataExistsProvider, (prev, next) {
       final nutrientDataExists = next.valueOrNull ?? false;
       final totalTabs = nutrientDataExists ? 6 : 5;
-      
+
       if (_tabController.length != totalTabs) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (!mounted) return;
@@ -90,7 +92,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
       }
     });
 
-    final nutrientDataExists = ref.watch(nutrientDataExistsProvider).valueOrNull ?? false;
+    final nutrientDataExists =
+        ref.watch(nutrientDataExistsProvider).valueOrNull ?? false;
 
     final l10n = AppLocalizations.of(context)!;
 
@@ -105,61 +108,82 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
             tooltip: _showTimeline ? l10n.showCharts : l10n.showTimeline,
           ),
         ],
-        bottom: !_showTimeline 
-          ? TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
-              labelStyle: AppTextStyles.label.copyWith(fontWeight: FontWeight.bold),
-              unselectedLabelStyle: AppTextStyles.label,
-              tabs: [
-                Tab(text: l10n.weightFluid),
-                Tab(text: l10n.bloodPressure),
-                Tab(text: l10n.kidneyLabs),
-                Tab(text: l10n.heartSugar),
-                Tab(text: l10n.mineralsVitamins),
-                if (nutrientDataExists) Tab(text: l10n.nutritionSummary),
-              ],
-            )
-          : PreferredSize(
-              preferredSize: const Size.fromHeight(60),
-              child: Column(
-                children: [
-                  HistoryFilterChips(
-                    selected: _selectedCategory,
-                    onSelected: (cat) => setState(() => _selectedCategory = cat),
-                  ),
+        bottom: !_showTimeline
+            ? TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                labelStyle:
+                    AppTextStyles.label.copyWith(fontWeight: FontWeight.bold),
+                unselectedLabelStyle: AppTextStyles.label,
+                tabs: [
+                  Tab(text: l10n.weightFluid),
+                  Tab(text: l10n.bloodPressure),
+                  Tab(text: l10n.kidneyLabs),
+                  Tab(text: l10n.heartSugar),
+                  Tab(text: l10n.mineralsVitamins),
+                  if (nutrientDataExists) Tab(text: l10n.nutritionSummary),
                 ],
+              )
+            : PreferredSize(
+                preferredSize: const Size.fromHeight(60),
+                child: Column(
+                  children: [
+                    HistoryFilterChips(
+                      selected: _selectedCategory,
+                      onSelected: (cat) =>
+                          setState(() => _selectedCategory = cat),
+                    ),
+                  ],
+                ),
               ),
+      ),
+      body: _showTimeline
+          ? _buildTimelineView()
+          : TabBarView(
+              controller: _tabController,
+              children: [
+                _buildWeightFluidTab(),
+                _buildBloodPressureTab(),
+                _buildLabGroupTab(['K', 'CREAT', 'UREA', 'NA'], 2),
+                _buildLabGroupTab(
+                    ['hba1c', 'total_cholesterol', 'ldl', 'triglycerides'], 3),
+                _buildLabGroupTab(
+                    ['calcium', 'vitamin_d', 'phosphorus_blood', 'urine_acr'],
+                    4),
+                if (nutrientDataExists) _buildNutritionTab(),
+              ],
             ),
-      ),
-      body: _showTimeline ? _buildTimelineView() : TabBarView(
-        controller: _tabController,
-        children: [
-          _buildWeightFluidTab(),
-    _buildBloodPressureTab(),
-    _buildLabGroupTab(['K', 'CREAT', 'UREA', 'NA'], 2),
-    _buildLabGroupTab(['hba1c', 'total_cholesterol', 'ldl', 'triglycerides'], 3),
-    _buildLabGroupTab(['calcium', 'vitamin_d', 'phosphorus_blood', 'urine_acr'], 4),
-    if (nutrientDataExists) _buildNutritionTab(),
-        ],
-      ),
     );
   }
 
   Widget _buildTimelineView() {
-    final creatinine = ref.watch(labHistoryProvider((indicatorCode: 'CREAT', filter: _currentFilter)));
-    final potassium = ref.watch(labHistoryProvider((indicatorCode: 'K', filter: _currentFilter)));
-    final urea = ref.watch(labHistoryProvider((indicatorCode: 'UREA', filter: _currentFilter)));
-    final sodium = ref.watch(labHistoryProvider((indicatorCode: 'NA', filter: _currentFilter)));
-    
-    final dailyReadings = ref.watch(dailyReadingsHistoryProvider(_currentFilter));
+    final creatinine = ref.watch(
+        labHistoryProvider((indicatorCode: 'CREAT', filter: _currentFilter)));
+    final potassium = ref.watch(
+        labHistoryProvider((indicatorCode: 'K', filter: _currentFilter)));
+    final urea = ref.watch(
+        labHistoryProvider((indicatorCode: 'UREA', filter: _currentFilter)));
+    final sodium = ref.watch(
+        labHistoryProvider((indicatorCode: 'NA', filter: _currentFilter)));
+
+    final dailyReadings =
+        ref.watch(dailyReadingsHistoryProvider(_currentFilter));
     final fluids = ref.watch(fluidIntakeHistoryProvider(_currentFilter));
     final meds = ref.watch(medicationHistoryProvider(_currentFilter));
     final foods = ref.watch(foodHistoryProvider(_currentFilter));
 
     // Check loading/error
-    final allProviders = [creatinine, potassium, urea, sodium, dailyReadings, fluids, meds, foods];
+    final allProviders = [
+      creatinine,
+      potassium,
+      urea,
+      sodium,
+      dailyReadings,
+      fluids,
+      meds,
+      foods
+    ];
     if (allProviders.any((p) => p.isLoading)) {
       return ListView.builder(
         itemCount: 5,
@@ -185,31 +209,43 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
 
     for (final p in [creatinine, potassium, urea, sodium]) {
-      p.whenData((list) => events.addAll(list.map((l) => HistoryEvent(date: l.recordedAt, data: l, category: HistoryCategory.labs))));
+      p.whenData((list) => events.addAll(list.map((l) => HistoryEvent(
+          date: l.recordedAt, data: l, category: HistoryCategory.labs))));
     }
-    
+
     // Add Vitals
-    dailyReadings.whenData((list) => events.addAll(list.map((r) => HistoryEvent(date: r.date, data: r, category: HistoryCategory.vitals))));
-    
+    dailyReadings.whenData((list) => events.addAll(list.map((r) => HistoryEvent(
+        date: r.date, data: r, category: HistoryCategory.vitals))));
+
     // Add Fluids & Food
-    fluids.whenData((list) => events.addAll(list.map((f) => HistoryEvent(date: f.consumedAt, data: f, category: HistoryCategory.food))));
-    foods.whenData((list) => events.addAll(list.map((f) => HistoryEvent(date: f.consumedAt, data: f, category: HistoryCategory.food))));
-    
+    fluids.whenData((list) => events.addAll(list.map((f) => HistoryEvent(
+        date: f.consumedAt, data: f, category: HistoryCategory.food))));
+    foods.whenData((list) => events.addAll(list.map((f) => HistoryEvent(
+        date: f.consumedAt, data: f, category: HistoryCategory.food))));
+
     // Add Meds
-    meds.whenData((list) => events.addAll(list.map((m) => HistoryEvent(date: m.scheduledAt, data: m, category: HistoryCategory.medications))));
-    
+    meds.whenData((list) => events.addAll(list.map((m) => HistoryEvent(
+        date: m.scheduledAt, data: m, category: HistoryCategory.medications))));
+
     // Search Filter
     final query = widget.searchQuery?.toLowerCase().trim();
     final searchedEvents = query == null || query.isEmpty
         ? events
         : events.where((e) {
-            final name = labIndicators[e.data is LabResult ? (e.data as LabResult).indicatorCode : '']?[isAr ? 'nameAr' : 'nameEn']?.toString().toLowerCase() ?? '';
-            final msg = (e.data is LabResult) ? (e.data as LabResult).indicatorCode.toLowerCase() : '';
+            final name = labIndicators[e.data is LabResult
+                        ? (e.data as LabResult).indicatorCode
+                        : '']?[isAr ? 'nameAr' : 'nameEn']
+                    ?.toString()
+                    .toLowerCase() ??
+                '';
+            final msg = (e.data is LabResult)
+                ? (e.data as LabResult).indicatorCode.toLowerCase()
+                : '';
             return name.contains(query) || msg.contains(query);
           }).toList();
     // Category Filter
-    final filteredEvents = _selectedCategory == HistoryCategory.all 
-        ? searchedEvents 
+    final filteredEvents = _selectedCategory == HistoryCategory.all
+        ? searchedEvents
         : searchedEvents.where((e) => e.category == _selectedCategory).toList();
 
     // Sort descending
@@ -217,9 +253,11 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
 
     if (filteredEvents.isEmpty) {
       if (_selectedCategory == HistoryCategory.all) {
-        return HistoryEmptyFilterView(onClearFilters: () {}); 
+        return HistoryEmptyFilterView(onClearFilters: () {});
       }
-      return HistoryEmptyFilterView(onClearFilters: () => setState(() => _selectedCategory = HistoryCategory.all));
+      return HistoryEmptyFilterView(
+          onClearFilters: () =>
+              setState(() => _selectedCategory = HistoryCategory.all));
     }
 
     // Group by Date for Lazy Rendering
@@ -236,9 +274,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
             itemBuilder: (context, index) {
               final event = filteredEvents[index];
               final prevEvent = index > 0 ? filteredEvents[index - 1] : null;
-              final isNewDate = prevEvent == null || 
-                  intl.DateFormat('yyyy-MM-dd').format(event.date) != 
-                  intl.DateFormat('yyyy-MM-dd').format(prevEvent.date);
+              final isNewDate = prevEvent == null ||
+                  intl.DateFormat('yyyy-MM-dd').format(event.date) !=
+                      intl.DateFormat('yyyy-MM-dd').format(prevEvent.date);
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,13 +309,15 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                 color: isSelected ? Colors.white : AppColors.textPrimary,
                 fontSize: 12,
               ),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
             ),
           );
         }).toList(),
       ),
     );
   }
+
   Widget _buildDateHeader(DateTime date) {
     final l10n = AppLocalizations.of(context)!;
     final localeCode = Localizations.localeOf(context).languageCode;
@@ -340,13 +380,16 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                 final patient = patientAsync.value;
                 final dryWeight = patient?.dryWeightKg ?? 70.0;
 
-                final weightSpots = data.where((r) => r.weightKg != null).map((r) => 
-                  FlSpot(r.date.millisecondsSinceEpoch.toDouble(), r.weightKg!)
-                ).toList();
+                final weightSpots = data
+                    .where((r) => r.weightKg != null)
+                    .map((r) => FlSpot(
+                        r.date.millisecondsSinceEpoch.toDouble(), r.weightKg!))
+                    .toList();
 
-                final dryWeightSpots = data.map((r) => 
-                  FlSpot(r.date.millisecondsSinceEpoch.toDouble(), dryWeight)
-                ).toList();
+                final dryWeightSpots = data
+                    .map((r) => FlSpot(
+                        r.date.millisecondsSinceEpoch.toDouble(), dryWeight))
+                    .toList();
 
                 return TrendLineChart(
                   lines: [
@@ -370,7 +413,10 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                       color: Colors.teal.withValues(alpha: 0.3),
                       strokeWidth: 1,
                       dashArray: [5, 5],
-                      label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.dryWeight, style: const TextStyle(fontSize: 9)),
+                      label: HorizontalLineLabel(
+                          show: true,
+                          labelResolver: (_) => l10n.dryWeight,
+                          style: const TextStyle(fontSize: 9)),
                     ),
                   ],
                   showAreaFill: true,
@@ -389,11 +435,12 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
             child: fluidTrendAsync.when(
               data: (data) {
                 if (data.isEmpty) return Center(child: Text(l10n.noFluidData));
-                
+
                 final sortedKeys = data.keys.toList()..sort();
-                final spots = sortedKeys.map((d) => 
-                  FlSpot(d.millisecondsSinceEpoch.toDouble(), data[d]!)
-                ).toList();
+                final spots = sortedKeys
+                    .map((d) =>
+                        FlSpot(d.millisecondsSinceEpoch.toDouble(), data[d]!))
+                    .toList();
 
                 const goal = 1500.0; // Default or from profile
 
@@ -412,7 +459,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                       color: Colors.cyan.withValues(alpha: 0.4),
                       strokeWidth: 2,
                       dashArray: [8, 4],
-                      label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.goalMl(goal.toInt())),
+                      label: HorizontalLineLabel(
+                          show: true,
+                          labelResolver: (_) => l10n.goalMl(goal.toInt())),
                     ),
                   ],
                   yAxisLabel: l10n.unitMl,
@@ -445,16 +494,20 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
             title: l10n.bpTrend,
             child: readingsAsync.when(
               data: (data) {
-                final bpData = data.where((r) => r.systolic != null && r.diastolic != null).toList();
+                final bpData = data
+                    .where((r) => r.systolic != null && r.diastolic != null)
+                    .toList();
                 if (bpData.isEmpty) return Center(child: Text(l10n.noBpData));
 
-                final sysSpots = bpData.map((r) => 
-                  FlSpot(r.date.millisecondsSinceEpoch.toDouble(), r.systolic!.toDouble())
-                ).toList();
+                final sysSpots = bpData
+                    .map((r) => FlSpot(r.date.millisecondsSinceEpoch.toDouble(),
+                        r.systolic!.toDouble()))
+                    .toList();
 
-                final diaSpots = bpData.map((r) => 
-                  FlSpot(r.date.millisecondsSinceEpoch.toDouble(), r.diastolic!.toDouble())
-                ).toList();
+                final diaSpots = bpData
+                    .map((r) => FlSpot(r.date.millisecondsSinceEpoch.toDouble(),
+                        r.diastolic!.toDouble()))
+                    .toList();
 
                 return TrendLineChart(
                   lines: [
@@ -474,13 +527,20 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                       y: (patient?.targetSystolic ?? 130).toDouble(),
                       color: Colors.red.withValues(alpha: 0.3),
                       dashArray: [8, 4],
-                      label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.targetSystolicLabel, style: const TextStyle(fontSize: 8)),
+                      label: HorizontalLineLabel(
+                          show: true,
+                          labelResolver: (_) => l10n.targetSystolicLabel,
+                          style: const TextStyle(fontSize: 8)),
                     ),
                     HorizontalLine(
                       y: (patient?.targetDiastolic ?? 80).toDouble(),
                       color: Colors.orange.withValues(alpha: 0.3),
                       dashArray: [8, 4],
-                      label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.targetDiastolicLabel, style: const TextStyle(fontSize: 8), alignment: Alignment.bottomRight),
+                      label: HorizontalLineLabel(
+                          show: true,
+                          labelResolver: (_) => l10n.targetDiastolicLabel,
+                          style: const TextStyle(fontSize: 8),
+                          alignment: Alignment.bottomRight),
                     ),
                   ],
                   yAxisLabel: 'mmHg',
@@ -509,57 +569,77 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
         _buildFilterRow(tabIndex),
         const SizedBox(height: 16),
         ...codes.map((code) => Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: _buildCard(
-            title: labIndicators[code]?[isAr ? 'nameAr' : 'nameEn'] ?? code,
-            child: ref.watch(labHistoryProvider((indicatorCode: code, filter: filter))).when(
-              data: (results) {
-                if (results.isEmpty) return Center(child: Padding(padding: const EdgeInsets.all(16.0), child: Text(l10n.noResults)));
-                final unit = labIndicators[code]?['unit'] ?? '';
-                final spots = results.map((r) => 
-                  FlSpot(r.recordedAt.millisecondsSinceEpoch.toDouble(), r.value)
-                ).toList();
+              padding: const EdgeInsets.only(bottom: 16),
+              child: _buildCard(
+                title: labIndicators[code]?[isAr ? 'nameAr' : 'nameEn'] ?? code,
+                child: ref
+                    .watch(labHistoryProvider(
+                        (indicatorCode: code, filter: filter)))
+                    .when(
+                      data: (results) {
+                        if (results.isEmpty)
+                          return Center(
+                              child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(l10n.noResults)));
+                        final unit = labIndicators[code]?['unit'] ?? '';
+                        final spots = results
+                            .map((r) => FlSpot(
+                                r.recordedAt.millisecondsSinceEpoch.toDouble(),
+                                r.value))
+                            .toList();
 
-                final List<HorizontalLine> horizontalLines = [];
-                final normalMin = labIndicators[code]?['normalMin'];
-                final normalMax = labIndicators[code]?['normalMax'];
-                
-                if (normalMin != null) {
-                  horizontalLines.add(HorizontalLine(
-                    y: (normalMin as num).toDouble(),
-                    color: Colors.red.withValues(alpha: 0.2),
-                    dashArray: [4, 4],
-                    label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.minLimit, style: const TextStyle(fontSize: 8)),
-                  ));
-                }
-                if (normalMax != null) {
-                  horizontalLines.add(HorizontalLine(
-                    y: (normalMax as num).toDouble(),
-                    color: Colors.red.withValues(alpha: 0.2),
-                    dashArray: [4, 4],
-                    label: HorizontalLineLabel(show: true, labelResolver: (_) => l10n.maxLimit, style: const TextStyle(fontSize: 8)),
-                  ));
-                }
+                        final List<HorizontalLine> horizontalLines = [];
+                        final normalMin = labIndicators[code]?['normalMin'];
+                        final normalMax = labIndicators[code]?['normalMax'];
 
-                return TrendLineChart(
-                  lines: [
-                    LineChartBarData(
-                      spots: spots,
-                      color: tabIndex == 2 ? Colors.purple : (tabIndex == 3 ? Colors.deepOrange : Colors.green),
-                      barWidth: 3,
-                      isCurved: true,
+                        if (normalMin != null) {
+                          horizontalLines.add(HorizontalLine(
+                            y: (normalMin as num).toDouble(),
+                            color: Colors.red.withValues(alpha: 0.2),
+                            dashArray: [4, 4],
+                            label: HorizontalLineLabel(
+                                show: true,
+                                labelResolver: (_) => l10n.minLimit,
+                                style: const TextStyle(fontSize: 8)),
+                          ));
+                        }
+                        if (normalMax != null) {
+                          horizontalLines.add(HorizontalLine(
+                            y: (normalMax as num).toDouble(),
+                            color: Colors.red.withValues(alpha: 0.2),
+                            dashArray: [4, 4],
+                            label: HorizontalLineLabel(
+                                show: true,
+                                labelResolver: (_) => l10n.maxLimit,
+                                style: const TextStyle(fontSize: 8)),
+                          ));
+                        }
+
+                        return TrendLineChart(
+                          lines: [
+                            LineChartBarData(
+                              spots: spots,
+                              color: tabIndex == 2
+                                  ? Colors.purple
+                                  : (tabIndex == 3
+                                      ? Colors.deepOrange
+                                      : Colors.green),
+                              barWidth: 3,
+                              isCurved: true,
+                            ),
+                          ],
+                          targetLines: horizontalLines,
+                          yAxisLabel: unit,
+                          tooltipValueFormatter: (v) => v.toStringAsFixed(1),
+                        );
+                      },
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (e, _) => Text('Error: $e'),
                     ),
-                  ],
-                  targetLines: horizontalLines,
-                  yAxisLabel: unit,
-                  tooltipValueFormatter: (v) => v.toStringAsFixed(1),
-                );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Text('Error: $e'),
-            ),
-          ),
-        )),
+              ),
+            )),
       ],
     );
   }
@@ -583,7 +663,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
                 color: isSelected ? Colors.white : AppColors.textPrimary,
                 fontSize: 12,
               ),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
             ),
           );
         }).toList(),
@@ -599,21 +680,27 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
       decoration: BoxDecoration(
         color: isDark ? AppColors.bgSurfaceDark : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: isDark ? Border.all(color: AppColors.borderBaseDark.withValues(alpha: 0.1)) : null,
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: isDark
+            ? Border.all(color: AppColors.borderBaseDark.withValues(alpha: 0.1))
+            : null,
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: AppTextStyles.h3.copyWith(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          )),
+          Text(title,
+              style: AppTextStyles.h3.copyWith(
+                color:
+                    isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+              )),
           const SizedBox(height: 16),
           child,
         ],
@@ -682,10 +769,15 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> with SingleTicker
         data: (data) {
           final spots = data
               .where((r) => valueSelector(r) != null)
-              .map((r) => FlSpot(r.date.millisecondsSinceEpoch.toDouble(), valueSelector(r)!))
+              .map((r) => FlSpot(
+                  r.date.millisecondsSinceEpoch.toDouble(), valueSelector(r)!))
               .toList();
 
-          if (spots.isEmpty) return Center(child: Padding(padding: const EdgeInsets.all(16.0), child: Text(AppLocalizations.of(context)!.noResults)));
+          if (spots.isEmpty)
+            return Center(
+                child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(AppLocalizations.of(context)!.noResults)));
 
           return TrendLineChart(
             lines: [

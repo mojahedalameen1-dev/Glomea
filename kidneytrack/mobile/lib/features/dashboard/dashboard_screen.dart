@@ -42,17 +42,27 @@ class DashboardScreen extends ConsumerWidget {
       backgroundColor: isDark ? AppColors.premiumBgDark : AppColors.premiumBg,
       body: summaryAsync.when(
         loading: () => const DashboardSkeleton(),
-        error: (err, stack) => _buildErrorState(context, ref, l10n.dashboardLoadingSummary, () => ref.invalidate(dashboardSummaryProvider)),
+        error: (err, stack) => _buildErrorState(
+            context,
+            ref,
+            l10n.dashboardLoadingSummary,
+            () => ref.invalidate(dashboardSummaryProvider)),
         data: (data) => insightsAsync.when(
           loading: () => const DashboardSkeleton(),
-          error: (err, stack) => _buildErrorState(context, ref, l10n.dashboardCalculatingMetrics, () => ref.invalidate(medicalInsightsProvider)),
-          data: (insights) => _buildContent(context, ref, data, insights, patient),
+          error: (err, stack) => _buildErrorState(
+              context,
+              ref,
+              l10n.dashboardCalculatingMetrics,
+              () => ref.invalidate(medicalInsightsProvider)),
+          data: (insights) =>
+              _buildContent(context, ref, data, insights, patient),
         ),
       ),
     );
   }
 
-  Widget _buildErrorState(BuildContext context, WidgetRef ref, String task, VoidCallback onRetry) {
+  Widget _buildErrorState(
+      BuildContext context, WidgetRef ref, String task, VoidCallback onRetry) {
     final l10n = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
@@ -60,9 +70,11 @@ class DashboardScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline_rounded, size: 64, color: AppColors.textCritical),
+            const Icon(Icons.error_outline_rounded,
+                size: 64, color: AppColors.textCritical),
             const Gap(16),
-            Text(l10n.errorLoadingData(task), style: AppTextStyles.h3, textAlign: TextAlign.center),
+            Text(l10n.errorLoadingData(task),
+                style: AppTextStyles.h3, textAlign: TextAlign.center),
             const Gap(8),
             Text(
               l10n.checkInternetRetry,
@@ -77,8 +89,10 @@ class DashboardScreen extends ConsumerWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
               ),
             ),
           ],
@@ -87,7 +101,8 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, WidgetRef ref, dynamic data, dynamic insights, dynamic patient) {
+  Widget _buildContent(BuildContext context, WidgetRef ref, dynamic data,
+      dynamic insights, dynamic patient) {
     final metrics = data['metrics'] as List?;
     final isEmpty = metrics == null || metrics.isEmpty;
     final firstName = patient?.firstName?.trim();
@@ -100,7 +115,6 @@ class DashboardScreen extends ConsumerWidget {
           firstName: firstName,
           unreadCount: ref.watch(unreadAlertsCountProvider).valueOrNull ?? 0,
         ),
-        
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async {
@@ -112,7 +126,7 @@ class DashboardScreen extends ConsumerWidget {
               physics: const BouncingScrollPhysics(),
               children: [
                 const Gap(24),
-                
+
                 if (insights.isEarlyDeterioration) ...[
                   EarlyDeteriorationAlert(
                     message: l10n.deteriorationMessage,
@@ -126,15 +140,16 @@ class DashboardScreen extends ConsumerWidget {
                 FluidOverloadCard(
                   overloadKg: insights.fluidOverload?.overloadKg,
                   dryWeight: patient?.dryWeightKg,
-                  currentWeight: insights.fluidOverload != null 
-                      ? (insights.fluidOverload.overloadKg + (patient?.dryWeightKg ?? 0)) 
+                  currentWeight: insights.fluidOverload != null
+                      ? (insights.fluidOverload.overloadKg +
+                          (patient?.dryWeightKg ?? 0))
                       : patient?.weightKg,
                 ),
                 const Gap(24),
-                
+
                 // Key Metrics Grid (Premium)
                 _buildPremiumStatusGrid(context, insights, isDark),
-                
+
                 const Gap(16),
                 PotassiumDailyCard(status: insights.potassiumStatus),
 
@@ -153,136 +168,184 @@ class DashboardScreen extends ConsumerWidget {
 
                 // Drug Interactions
                 ref.watch(drugInteractionsProvider).maybeWhen(
-                  data: (interactions) {
-                    if (interactions.isEmpty) return const SizedBox.shrink();
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: interactions.map((inter) => Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: isDark ? AppColors.bgCriticalDark : AppColors.bgCritical,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: isDark ? AppColors.borderCriticalDark : AppColors.borderCritical.withValues(alpha: 0.5),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.medical_information, 
-                                    color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
-                                  ),
-                                  const Gap(8),
-                                  Text(
-                                    l10n.drugInteractionWarning, 
-                                    style: AppTextStyles.label.copyWith(
-                                      color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
+                      data: (interactions) {
+                        if (interactions.isEmpty)
+                          return const SizedBox.shrink();
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: interactions
+                              .map((inter) => Padding(
+                                    padding: const EdgeInsets.only(bottom: 16),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: isDark
+                                            ? AppColors.bgCriticalDark
+                                            : AppColors.bgCritical,
+                                        borderRadius: BorderRadius.circular(16),
+                                        border: Border.all(
+                                          color: isDark
+                                              ? AppColors.borderCriticalDark
+                                              : AppColors.borderCritical
+                                                  .withValues(alpha: 0.5),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.medical_information,
+                                                color: isDark
+                                                    ? AppColors.textCriticalDark
+                                                    : AppColors.textCritical,
+                                              ),
+                                              const Gap(8),
+                                              Text(
+                                                l10n.drugInteractionWarning,
+                                                style: AppTextStyles.label
+                                                    .copyWith(
+                                                  color: isDark
+                                                      ? AppColors
+                                                          .textCriticalDark
+                                                      : AppColors.textCritical,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Gap(8),
+                                          Text(
+                                            inter.safetyMessage,
+                                            style: AppTextStyles.bodyM.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: isDark
+                                                  ? AppColors.textCriticalDark
+                                                  : AppColors.textCritical,
+                                            ),
+                                          ),
+                                          const Gap(12),
+                                          Divider(
+                                            color: isDark
+                                                ? AppColors.borderBaseDark
+                                                : AppColors.borderCritical
+                                                    .withValues(alpha: 0.3),
+                                            height: 1,
+                                          ),
+                                          const Gap(8),
+                                          Text(
+                                            l10n.medicalDisclaimer,
+                                            style: AppTextStyles.bodyS.copyWith(
+                                              color: isDark
+                                                  ? AppColors.textCriticalDark
+                                                  : AppColors.textCritical,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              const Gap(8),
-                              Text(
-                                inter.safetyMessage, 
-                                style: AppTextStyles.bodyM.copyWith(
-                                  fontWeight: FontWeight.bold, 
-                                  color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
-                                ),
-                              ),
-                              const Gap(12),
-                              Divider(
-                                color: isDark ? AppColors.borderBaseDark : AppColors.borderCritical.withValues(alpha: 0.3),
-                                height: 1,
-                              ),
-                              const Gap(8),
-                              Text(
-                                l10n.medicalDisclaimer, 
-                                style: AppTextStyles.bodyS.copyWith(
-                                  color: isDark ? AppColors.textCriticalDark : AppColors.textCritical,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )).toList(),
-                    );
-                  },
-                  orElse: () => const SizedBox.shrink(),
-                ),
+                                  ))
+                              .toList(),
+                        );
+                      },
+                      orElse: () => const SizedBox.shrink(),
+                    ),
 
                 // Unified Alerts
                 ref.watch(unifiedAlertsProvider).maybeWhen(
-                  data: (alerts) {
-                    final unreadSafetyAlerts = alerts
-                        .where((a) => !a.isRead && (a.severity == AlertSeverity.critical || a.severity == AlertSeverity.warning))
-                        .take(2)
-                        .toList();
+                      data: (alerts) {
+                        final unreadSafetyAlerts = alerts
+                            .where((a) =>
+                                !a.isRead &&
+                                (a.severity == AlertSeverity.critical ||
+                                    a.severity == AlertSeverity.warning))
+                            .take(2)
+                            .toList();
 
-                    if (unreadSafetyAlerts.isEmpty) return const SizedBox.shrink();
+                        if (unreadSafetyAlerts.isEmpty)
+                          return const SizedBox.shrink();
 
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: unreadSafetyAlerts.map((alert) {
-                        final isCritical = alert.severity == AlertSeverity.critical;
-                        final bg = isCritical 
-                            ? (isDark ? AppColors.bgCriticalDark : AppColors.bgCritical)
-                            : (isDark ? AppColors.bgWarningDark : AppColors.bgWarning);
-                        final border = isCritical
-                            ? (isDark ? AppColors.borderCriticalDark : AppColors.borderCritical)
-                            : (isDark ? AppColors.borderWarningDark : AppColors.borderWarning);
-                        final text = isCritical
-                            ? (isDark ? AppColors.textCriticalDark : AppColors.textCritical)
-                            : (isDark ? AppColors.textWarningDark : AppColors.textWarning);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: unreadSafetyAlerts.map((alert) {
+                            final isCritical =
+                                alert.severity == AlertSeverity.critical;
+                            final bg = isCritical
+                                ? (isDark
+                                    ? AppColors.bgCriticalDark
+                                    : AppColors.bgCritical)
+                                : (isDark
+                                    ? AppColors.bgWarningDark
+                                    : AppColors.bgWarning);
+                            final border = isCritical
+                                ? (isDark
+                                    ? AppColors.borderCriticalDark
+                                    : AppColors.borderCritical)
+                                : (isDark
+                                    ? AppColors.borderWarningDark
+                                    : AppColors.borderWarning);
+                            final text = isCritical
+                                ? (isDark
+                                    ? AppColors.textCriticalDark
+                                    : AppColors.textCritical)
+                                : (isDark
+                                    ? AppColors.textWarningDark
+                                    : AppColors.textWarning);
 
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          child: InkWell(
-                            onTap: () => context.push('/alerts'),
-                            child: Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: bg,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(color: border.withValues(alpha: 0.5)),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: InkWell(
+                                onTap: () => context.push('/alerts'),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: bg,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                        color: border.withValues(alpha: 0.5)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Icon(
-                                        isCritical ? Icons.warning_amber_rounded : Icons.info_outline,
-                                        color: text,
-                                        size: 20,
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            isCritical
+                                                ? Icons.warning_amber_rounded
+                                                : Icons.info_outline,
+                                            color: text,
+                                            size: 20,
+                                          ),
+                                          const Gap(8),
+                                          Text(
+                                            isCritical
+                                                ? l10n.importantAlert
+                                                : l10n.safetyAlert,
+                                            style: AppTextStyles.label
+                                                .copyWith(color: text),
+                                          ),
+                                        ],
                                       ),
                                       const Gap(8),
                                       Text(
-                                        isCritical ? l10n.importantAlert : l10n.safetyAlert,
-                                        style: AppTextStyles.label.copyWith(color: text),
+                                        alert.messageAr,
+                                        style: AppTextStyles.bodyM.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: text),
                                       ),
                                     ],
                                   ),
-                                  const Gap(8),
-                                  Text(
-                                    alert.messageAr,
-                                    style: AppTextStyles.bodyM.copyWith(fontWeight: FontWeight.bold, color: text),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
-                    );
-                  },
-                  orElse: () => const SizedBox.shrink(),
-                ),
+                      },
+                      orElse: () => const SizedBox.shrink(),
+                    ),
 
                 SectionHeader(title: l10n.todayNutrition),
                 const Gap(16),
@@ -301,7 +364,8 @@ class DashboardScreen extends ConsumerWidget {
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
@@ -314,7 +378,8 @@ class DashboardScreen extends ConsumerWidget {
                         indicatorName: m['name'],
                         value: (m['value'] as num).toDouble(),
                         unit: 'mmol/L',
-                        status: IndicatorStatus.values.firstWhere((e) => e.name == m['status']),
+                        status: IndicatorStatus.values
+                            .firstWhere((e) => e.name == m['status']),
                         sparklineData: (m['sparkline'] as List).cast<double>(),
                         thresholds: m['thresholds'] as ThresholdRange,
                         onTap: () => context.push('/history/${m['code']}'),
@@ -333,7 +398,8 @@ class DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildPremiumStatusGrid(BuildContext context, dynamic insights, bool isDark) {
+  Widget _buildPremiumStatusGrid(
+      BuildContext context, dynamic insights, bool isDark) {
     final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
@@ -363,7 +429,7 @@ class DashboardScreen extends ConsumerWidget {
 
   Widget _buildQuickGlanceRow(List? metrics, bool isDark) {
     if (metrics == null || metrics.isEmpty) return const SizedBox.shrink();
-    
+
     return Container(
       height: 70,
       margin: const EdgeInsets.only(top: 12),
@@ -375,28 +441,33 @@ class DashboardScreen extends ConsumerWidget {
           final m = metrics[index];
           final isCritical = m['status'] == 'critical';
           final color = isCritical ? AppColors.textCritical : AppColors.primary;
-          
+
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
               color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isDark ? AppColors.borderBaseDark : color.withValues(alpha: 0.2),
+                color: isDark
+                    ? AppColors.borderBaseDark
+                    : color.withValues(alpha: 0.2),
               ),
             ),
             child: Row(
               children: [
                 Text(
-                  m['name'], 
+                  m['name'],
                   style: AppTextStyles.label.copyWith(
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
                   ),
                 ),
                 const Gap(8),
                 Icon(
                   isCritical ? Icons.trending_up : Icons.trending_flat,
-                  color: isDark && isCritical ? AppColors.textCriticalDark : color,
+                  color:
+                      isDark && isCritical ? AppColors.textCriticalDark : color,
                   size: 16,
                 ),
               ],
@@ -415,7 +486,9 @@ class DashboardScreen extends ConsumerWidget {
         color: isDark ? AppColors.bgWarningDark : AppColors.bgWarning,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: isDark ? AppColors.borderWarningDark : AppColors.borderWarning.withValues(alpha: 0.5),
+          color: isDark
+              ? AppColors.borderWarningDark
+              : AppColors.borderWarning.withValues(alpha: 0.5),
         ),
       ),
       child: Row(
@@ -427,9 +500,11 @@ class DashboardScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  l10n.consecutiveDays(days), 
+                  l10n.consecutiveDays(days),
                   style: AppTextStyles.label.copyWith(
-                    color: isDark ? AppColors.textWarningDark : AppColors.textWarning,
+                    color: isDark
+                        ? AppColors.textWarningDark
+                        : AppColors.textWarning,
                     fontSize: 18,
                   ),
                 ),
@@ -439,17 +514,22 @@ class DashboardScreen extends ConsumerWidget {
                   child: LinearProgressIndicator(
                     value: 0.7,
                     minHeight: 8,
-                    backgroundColor: isDark ? AppColors.borderBaseDark : Colors.white,
+                    backgroundColor:
+                        isDark ? AppColors.borderBaseDark : Colors.white,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      isDark ? AppColors.textWarningDark : const Color(0xFFF97316),
+                      isDark
+                          ? AppColors.textWarningDark
+                          : const Color(0xFFF97316),
                     ),
                   ),
                 ),
                 const Gap(6),
                 Text(
-                  l10n.streakEncouragement, 
+                  l10n.streakEncouragement,
                   style: AppTextStyles.bodyS.copyWith(
-                    color: isDark ? AppColors.textWarningDark : AppColors.textWarning,
+                    color: isDark
+                        ? AppColors.textWarningDark
+                        : AppColors.textWarning,
                   ),
                 ),
               ],
@@ -477,11 +557,15 @@ class NutrientProgressCard extends ConsumerWidget {
     final authState = ref.watch(authNotifierProvider);
     final patient = authState.valueOrNull;
     final totals = ref.watch(dailyNutrientTotalsProvider);
-    
-    final potLimit = patient?.potassiumLimitMg ?? HealthConstants.defaultPotassiumLimitMg;
-    final phoLimit = patient?.phosphorusLimitMg ?? HealthConstants.defaultPhosphorusLimitMg;
-    final sodLimit = patient?.sodiumLimitMg ?? HealthConstants.defaultSodiumLimitMg;
-    final proLimit = patient?.proteinLimitG ?? HealthConstants.defaultProteinLimitG;
+
+    final potLimit =
+        patient?.potassiumLimitMg ?? HealthConstants.defaultPotassiumLimitMg;
+    final phoLimit =
+        patient?.phosphorusLimitMg ?? HealthConstants.defaultPhosphorusLimitMg;
+    final sodLimit =
+        patient?.sodiumLimitMg ?? HealthConstants.defaultSodiumLimitMg;
+    final proLimit =
+        patient?.proteinLimitG ?? HealthConstants.defaultProteinLimitG;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -489,7 +573,9 @@ class NutrientProgressCard extends ConsumerWidget {
         color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-          color: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
+          color: isDark
+              ? AppColors.borderBaseDark
+              : AppColors.borderBase.withValues(alpha: 0.1),
         ),
         boxShadow: isDark ? null : AppShadows.elev1,
       ),
@@ -551,20 +637,21 @@ class _NutrientRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final ratio = (limit > 0) ? (current / limit).clamp(0.0, 1.0) : 0.0;
-    
+
     final l10n = AppLocalizations.of(context)!;
     // Status Logic for No-Color-Only
     final isExceeded = current > limit;
     final isApproaching = !isExceeded && ratio >= 0.75;
-    
+
     IconData statusIcon;
     String statusText;
     Color statusColor;
-    
+
     if (isExceeded) {
       statusIcon = Icons.block_flipped;
       statusText = l10n.statusExceeded;
-      statusColor = isDark ? AppColors.textCriticalDark : AppColors.textCritical;
+      statusColor =
+          isDark ? AppColors.textCriticalDark : AppColors.textCritical;
     } else if (isApproaching) {
       statusIcon = Icons.warning_amber_rounded;
       statusText = l10n.statusApproaching;
@@ -588,7 +675,7 @@ class _NutrientRow extends StatelessWidget {
                 Text(label, style: AppTextStyles.label.copyWith(fontSize: 14)),
                 const Gap(8),
                 Text(
-                  '($statusText)', 
+                  '($statusText)',
                   style: AppTextStyles.bodyS.copyWith(
                     color: statusColor,
                     fontWeight: FontWeight.bold,
@@ -598,9 +685,11 @@ class _NutrientRow extends StatelessWidget {
               ],
             ),
             Text(
-              '${current.toStringAsFixed(0)} / ${limit.toStringAsFixed(0)} $unit', 
+              '${current.toStringAsFixed(0)} / ${limit.toStringAsFixed(0)} $unit',
               style: AppTextStyles.bodyS.copyWith(
-                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                color: isDark
+                    ? AppColors.textSecondaryDark
+                    : AppColors.textSecondary,
               ),
             ),
           ],
@@ -612,8 +701,11 @@ class _NutrientRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: LinearProgressIndicator(
                 value: ratio,
-                backgroundColor: isDark ? AppColors.borderBaseDark : AppColors.borderBase.withValues(alpha: 0.1),
-                valueColor: AlwaysStoppedAnimation(isExceeded ? statusColor : color),
+                backgroundColor: isDark
+                    ? AppColors.borderBaseDark
+                    : AppColors.borderBase.withValues(alpha: 0.1),
+                valueColor:
+                    AlwaysStoppedAnimation(isExceeded ? statusColor : color),
                 minHeight: 10,
               ),
             ),

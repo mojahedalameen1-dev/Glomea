@@ -35,9 +35,11 @@ class _WebNavItemState extends State<WebNavItem> {
           margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           decoration: BoxDecoration(
-            color: widget.isActive 
-                ? Colors.white.withValues(alpha: 0.15) 
-                : (_isHovered ? Colors.white.withValues(alpha: 0.05) : Colors.transparent),
+            color: widget.isActive
+                ? Colors.white.withValues(alpha: 0.15)
+                : (_isHovered
+                    ? Colors.white.withValues(alpha: 0.05)
+                    : Colors.transparent),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
@@ -53,7 +55,8 @@ class _WebNavItemState extends State<WebNavItem> {
                   widget.label,
                   style: AppTextStyles.bodyL.copyWith(
                     color: widget.isActive ? Colors.white : Colors.white70,
-                    fontWeight: widget.isActive ? FontWeight.bold : FontWeight.normal,
+                    fontWeight:
+                        widget.isActive ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
               ),
@@ -70,6 +73,9 @@ class _WebNavItemState extends State<WebNavItem> {
           ),
         ),
       ),
-    ).animate().fadeIn(duration: 400.ms).slideX(begin: 0.1, end: 0, duration: 400.ms);
+    )
+        .animate()
+        .fadeIn(duration: 400.ms)
+        .slideX(begin: 0.1, end: 0, duration: 400.ms);
   }
 }

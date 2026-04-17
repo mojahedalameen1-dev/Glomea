@@ -15,17 +15,23 @@ class StatusBadge extends StatelessWidget {
 
   Color get color {
     switch (status) {
-      case IndicatorStatus.safe: return AppColors.safeGreen;
-      case IndicatorStatus.warning: return AppColors.warningAmber;
-      case IndicatorStatus.critical: return AppColors.criticalRed;
+      case IndicatorStatus.safe:
+        return AppColors.safeGreen;
+      case IndicatorStatus.warning:
+        return AppColors.warningAmber;
+      case IndicatorStatus.critical:
+        return AppColors.criticalRed;
     }
   }
 
   String get label {
     switch (status) {
-      case IndicatorStatus.safe: return 'آمن';
-      case IndicatorStatus.warning: return 'تحذير';
-      case IndicatorStatus.critical: return 'خطر';
+      case IndicatorStatus.safe:
+        return 'آمن';
+      case IndicatorStatus.warning:
+        return 'تحذير';
+      case IndicatorStatus.critical:
+        return 'خطر';
     }
   }
 

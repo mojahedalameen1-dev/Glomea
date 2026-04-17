@@ -46,13 +46,13 @@ class MedicationLogTile extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark 
-            ? AppColors.bgSurfaceDark 
+        color: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.bgSurfaceDark
             : surfaceColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Theme.of(context).brightness == Brightness.dark 
-              ? AppColors.borderBaseDark.withValues(alpha: 0.1) 
+          color: Theme.of(context).brightness == Brightness.dark
+              ? AppColors.borderBaseDark.withValues(alpha: 0.1)
               : borderColor,
         ),
       ),
@@ -107,12 +107,15 @@ class MedicationLogTile extends ConsumerWidget {
               ),
               if (!isTaken)
                 ElevatedButton(
-                  onPressed: () => ref.read(medicationsProvider.notifier).markAsTaken(log.id),
+                  onPressed: () => ref
+                      .read(medicationsProvider.notifier)
+                      .markAsTaken(log.id),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     minimumSize: const Size(80, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

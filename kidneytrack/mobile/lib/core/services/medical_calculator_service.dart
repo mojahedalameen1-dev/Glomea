@@ -14,9 +14,10 @@ class MedicalCalculatorService {
     final creatRatio = creatinineMgDl / k;
 
     double egfr = (142 *
-        pow(min(creatRatio, 1.0), a) *
-        pow(max(creatRatio, 1.0), -1.200) *
-        pow(0.9938, ageYears.toDouble())).toDouble();
+            pow(min(creatRatio, 1.0), a) *
+            pow(max(creatRatio, 1.0), -1.200) *
+            pow(0.9938, ageYears.toDouble()))
+        .toDouble();
 
     if (gender.toLowerCase() == 'female') egfr *= 1.012;
     return egfr;
@@ -26,23 +27,38 @@ class MedicalCalculatorService {
   static KidneyStageInfo getKidneyStage(double egfr) {
     if (egfr >= 90) {
       return KidneyStageInfo(
-          stage: 'G1', label: 'طبيعي أو مرتفع', color: Colors.green, risk: 'low');
+          stage: 'G1',
+          label: 'طبيعي أو مرتفع',
+          color: Colors.green,
+          risk: 'low');
     }
     if (egfr >= 60) {
       return KidneyStageInfo(
-          stage: 'G2', label: 'انخفاض خفيف', color: Colors.lightGreen, risk: 'low');
+          stage: 'G2',
+          label: 'انخفاض خفيف',
+          color: Colors.lightGreen,
+          risk: 'low');
     }
     if (egfr >= 45) {
       return KidneyStageInfo(
-          stage: 'G3a', label: 'انخفاض خفيف-متوسط', color: Colors.yellow, risk: 'moderate');
+          stage: 'G3a',
+          label: 'انخفاض خفيف-متوسط',
+          color: Colors.yellow,
+          risk: 'moderate');
     }
     if (egfr >= 30) {
       return KidneyStageInfo(
-          stage: 'G3b', label: 'انخفاض متوسط-شديد', color: Colors.orange, risk: 'high');
+          stage: 'G3b',
+          label: 'انخفاض متوسط-شديد',
+          color: Colors.orange,
+          risk: 'high');
     }
     if (egfr >= 15) {
       return KidneyStageInfo(
-          stage: 'G4', label: 'انخفاض شديد', color: Colors.deepOrange, risk: 'very_high');
+          stage: 'G4',
+          label: 'انخفاض شديد',
+          color: Colors.deepOrange,
+          risk: 'very_high');
     }
     return KidneyStageInfo(
         stage: 'G5', label: 'فشل كلوي', color: Colors.red, risk: 'critical');
@@ -106,8 +122,10 @@ class MedicalCalculatorService {
     final trend = _calculateTrend(
         weeklyReadings.map((r) => r.systolic.toDouble()).toList());
 
-    final controlRate = weeklyReadings.where((r) =>
-            r.systolic <= targetSystolic && r.diastolic <= targetDiastolic).length /
+    final controlRate = weeklyReadings
+            .where((r) =>
+                r.systolic <= targetSystolic && r.diastolic <= targetDiastolic)
+            .length /
         weeklyReadings.length *
         100;
 

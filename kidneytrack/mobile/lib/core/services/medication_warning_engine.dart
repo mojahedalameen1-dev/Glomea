@@ -10,6 +10,7 @@ class MedicationRiskResult {
   final WarningType warningType;
   final String riskKey;
   final String medicationName;
+
   /// UI-ready message. Built by WarningTextMapper.
   final String safetyMessage;
 
@@ -27,6 +28,7 @@ class DrugNutrientInteractionResult {
   final WarningType warningType;
   final String nutrientType;
   final String medicationNames;
+
   /// UI-ready message. Built by WarningTextMapper.
   final String safetyMessage;
 

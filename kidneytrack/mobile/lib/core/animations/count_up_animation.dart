@@ -21,7 +21,8 @@ class CountUpText extends StatefulWidget {
   State<CountUpText> createState() => _CountUpTextState();
 }
 
-class _CountUpTextState extends State<CountUpText> with SingleTickerProviderStateMixin {
+class _CountUpTextState extends State<CountUpText>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -39,7 +40,8 @@ class _CountUpTextState extends State<CountUpText> with SingleTickerProviderStat
   void didUpdateWidget(CountUpText oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.endValue != widget.endValue) {
-      _animation = Tween<double>(begin: _animation.value, end: widget.endValue).animate(
+      _animation =
+          Tween<double>(begin: _animation.value, end: widget.endValue).animate(
         CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
       );
       _controller.reset();
@@ -57,9 +59,9 @@ class _CountUpTextState extends State<CountUpText> with SingleTickerProviderStat
     final formatter = NumberFormat.decimalPattern();
     formatter.minimumFractionDigits = widget.decimals;
     formatter.maximumFractionDigits = widget.decimals;
-    
+
     String text = formatter.format(value);
-    
+
     if (widget.useArabicNumerals) {
       const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       const arabic = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];

@@ -101,12 +101,18 @@ class Patient {
       dialysisStatus: json['dialysisStatus'],
       egfrLevel: json['egfrLevel']?.toDouble(),
       fluidLimitMl: json['fluidLimitMl'] ?? HealthConstants.defaultFluidLimitMl,
-      potassiumLimitMg: json['potassiumLimitMg'] ?? HealthConstants.defaultPotassiumLimitMg,
-      phosphorusLimitMg: json['phosphorusLimitMg'] ?? HealthConstants.defaultPhosphorusLimitMg,
-      sodiumLimitMg: json['sodiumLimitMg'] ?? HealthConstants.defaultSodiumLimitMg,
-      proteinLimitG: json['proteinLimitG'] ?? HealthConstants.defaultProteinLimitG,
-      targetSystolic: json['targetSystolic'] ?? HealthConstants.defaultTargetSystolic,
-      targetDiastolic: json['targetDiastolic'] ?? HealthConstants.defaultTargetDiastolic,
+      potassiumLimitMg:
+          json['potassiumLimitMg'] ?? HealthConstants.defaultPotassiumLimitMg,
+      phosphorusLimitMg:
+          json['phosphorusLimitMg'] ?? HealthConstants.defaultPhosphorusLimitMg,
+      sodiumLimitMg:
+          json['sodiumLimitMg'] ?? HealthConstants.defaultSodiumLimitMg,
+      proteinLimitG:
+          json['proteinLimitG'] ?? HealthConstants.defaultProteinLimitG,
+      targetSystolic:
+          json['targetSystolic'] ?? HealthConstants.defaultTargetSystolic,
+      targetDiastolic:
+          json['targetDiastolic'] ?? HealthConstants.defaultTargetDiastolic,
       onboardingComplete: json['onboardingComplete'] ?? false,
       notificationsEnabled: json['notifications_enabled'] ?? true,
       avatarUrl: json['avatarUrl'],
@@ -167,7 +173,7 @@ class Patient {
     }
     if (kidneyStage != null) map['kidneyStage'] = kidneyStage;
     if (dialysisStatus != null) map['dialysisStatus'] = dialysisStatus;
-    
+
     // حقول الحدود والأهداف
     map['fluidLimitMl'] = fluidLimitMl;
     map['potassiumLimitMg'] = potassiumLimitMg;

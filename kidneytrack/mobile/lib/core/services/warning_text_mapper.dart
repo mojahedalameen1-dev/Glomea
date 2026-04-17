@@ -51,7 +51,7 @@ class WarningTextMapper {
   static String getDisclaimer(AppLocalizations l10n) => l10n.medicalDisclaimer;
 
   /// Appends the mandatory CKD disclaimer to any warning message.
-  static String withDisclaimer(AppLocalizations l10n, String message) => 
+  static String withDisclaimer(AppLocalizations l10n, String message) =>
       '$message ${l10n.medicalDisclaimer}.';
 
   /// Returns true if a disclaimer must be shown for this severity level.

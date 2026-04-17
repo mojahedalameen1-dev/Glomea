@@ -22,7 +22,8 @@ class CriticalAlertOverlay extends StatefulWidget {
     required this.onDismiss,
   });
 
-  static void show(BuildContext context, {
+  static void show(
+    BuildContext context, {
     required String indicatorName,
     required double value,
     required String unit,
@@ -46,7 +47,8 @@ class CriticalAlertOverlay extends StatefulWidget {
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
           position: Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero)
-              .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutBack)),
+              .animate(CurvedAnimation(
+                  parent: animation, curve: Curves.easeOutBack)),
           child: child,
         );
       },
@@ -94,25 +96,32 @@ class _CriticalAlertOverlayState extends State<CriticalAlertOverlay> {
                   shape: BoxShape.circle,
                 ),
                 child: const Text('🫁', style: TextStyle(fontSize: 48)),
-              ).animate(onPlay: (c) => c.repeat(reverse: true))
-               .scale(begin: const Offset(1,1), end: const Offset(1.15, 1.15), duration: 800.ms)
-               .shimmer(color: AppColors.criticalRed.withValues(alpha: 0.3)),
-              
+              )
+                  .animate(onPlay: (c) => c.repeat(reverse: true))
+                  .scale(
+                      begin: const Offset(1, 1),
+                      end: const Offset(1.15, 1.15),
+                      duration: 800.ms)
+                  .shimmer(color: AppColors.criticalRed.withValues(alpha: 0.3)),
+
               const Gap(24),
               Text(
                 '⚡ تنبيه عاجل',
-                style: AppTextStyles.h1.copyWith(color: AppColors.criticalRed, fontSize: 24),
+                style: AppTextStyles.h1
+                    .copyWith(color: AppColors.criticalRed, fontSize: 24),
               ).animate().shake(hz: 4),
-              
+
               const Gap(16),
               Text(
                 'مستوى ${widget.indicatorName}',
-                style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodyS
+                    .copyWith(color: AppColors.textSecondary),
               ),
-              
+
               const Gap(16),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColors.criticalRed, width: 2),
                   borderRadius: BorderRadius.circular(16),
@@ -121,13 +130,15 @@ class _CriticalAlertOverlayState extends State<CriticalAlertOverlay> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     GlomeaAnimations.countUp(
-                      value: widget.value, 
-                      style: AppTextStyles.h1.copyWith(fontSize: 32, color: AppColors.criticalRed),
+                      value: widget.value,
+                      style: AppTextStyles.h1
+                          .copyWith(fontSize: 32, color: AppColors.criticalRed),
                     ),
                     const Gap(8),
                     Text(widget.unit, style: AppTextStyles.bodyS),
                     const Gap(8),
-                    const Icon(Icons.arrow_upward, color: AppColors.criticalRed),
+                    const Icon(Icons.arrow_upward,
+                        color: AppColors.criticalRed),
                   ],
                 ),
               ),
@@ -140,8 +151,9 @@ class _CriticalAlertOverlayState extends State<CriticalAlertOverlay> {
                   color: AppColors.criticalRed,
                   borderRadius: BorderRadius.circular(4),
                 ),
-              ).animate(onPlay: (c) => c.repeat())
-               .shimmer(color: Colors.white.withValues(alpha: 0.5), duration: 1.seconds),
+              ).animate(onPlay: (c) => c.repeat()).shimmer(
+                  color: Colors.white.withValues(alpha: 0.5),
+                  duration: 1.seconds),
 
               const Gap(24),
               Text(
@@ -163,10 +175,12 @@ class _CriticalAlertOverlayState extends State<CriticalAlertOverlay> {
                     backgroundColor: AppColors.criticalRed,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 18),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
                     elevation: 0,
                   ),
-                  child: const Text('فهمت وسأتابع وضعي ✓', style: TextStyle(fontWeight: FontWeight.bold)),
+                  child: const Text('فهمت وسأتابع وضعي ✓',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ),
             ],

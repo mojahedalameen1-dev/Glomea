@@ -25,13 +25,13 @@ class AppScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? AppColors.bgPage,
-      appBar: title != null 
-        ? AppBar(
-            title: Text(title!),
-            actions: actions,
-            leading: showBackButton ? const BackButton() : null,
-          )
-        : null,
+      appBar: title != null
+          ? AppBar(
+              title: Text(title!),
+              actions: actions,
+              leading: showBackButton ? const BackButton() : null,
+            )
+          : null,
       body: SafeArea(
         child: body,
       ),

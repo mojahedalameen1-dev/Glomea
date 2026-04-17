@@ -25,13 +25,15 @@ class HealthIQCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.premiumCardDark : Colors.white,
         borderRadius: BorderRadius.circular(32),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: stage.color.withValues(alpha: 0.08),
-            blurRadius: 30,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: stage.color.withValues(alpha: 0.08),
+                  blurRadius: 30,
+                  offset: const Offset(0, 10),
+                ),
+              ],
       ),
       child: Row(
         children: [
@@ -42,7 +44,9 @@ class HealthIQCard extends StatelessWidget {
                 Text(
                   'مؤشر صحة الكلى',
                   style: AppTextStyles.label.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.premiumTextSub,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.premiumTextSub,
                   ),
                 ),
                 const Gap(8),
@@ -55,7 +59,8 @@ class HealthIQCard extends StatelessWidget {
                 ),
                 const Gap(12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: stage.color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),

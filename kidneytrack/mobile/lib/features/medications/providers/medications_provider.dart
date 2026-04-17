@@ -151,7 +151,8 @@ class MedicationsNotifier extends StateNotifier<MedicationsState> {
       final parts = time.split(':');
       await NotificationService.scheduleDaily(
         id: _stableNotificationId(med.id, i),
-        title: '\u{1F48A} \u0648\u0642\u062a \u0627\u0644\u062f\u0648\u0627\u0621',
+        title:
+            '\u{1F48A} \u0648\u0642\u062a \u0627\u0644\u062f\u0648\u0627\u0621',
         body: '${med.name} \u2014 ${med.dose}',
         hour: int.parse(parts[0]),
         minute: int.parse(parts[1]),
@@ -163,8 +164,8 @@ class MedicationsNotifier extends StateNotifier<MedicationsState> {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final startOfDay = today.toIso8601String();
-    final endOfDay =
-        DateTime(today.year, today.month, today.day, 23, 59, 59).toIso8601String();
+    final endOfDay = DateTime(today.year, today.month, today.day, 23, 59, 59)
+        .toIso8601String();
 
     // Check for existing logs today to prevent duplicates on retry
     final existing = await _supabase
@@ -174,9 +175,8 @@ class MedicationsNotifier extends StateNotifier<MedicationsState> {
         .gte('scheduled_at', startOfDay)
         .lte('scheduled_at', endOfDay);
 
-    final existingTimes = (existing as List)
-        .map((e) => e['scheduled_at'] as String)
-        .toSet();
+    final existingTimes =
+        (existing as List).map((e) => e['scheduled_at'] as String).toSet();
 
     final List<Map<String, dynamic>> logs = [];
     for (final timeStr in med.times) {

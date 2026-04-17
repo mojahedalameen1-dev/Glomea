@@ -35,7 +35,11 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
           IconButton(
             icon: const Icon(Icons.done_all),
             onPressed: () async {
-              final user = ref.read(unifiedAlertsProvider).valueOrNull?.firstOrNull?.patientId;
+              final user = ref
+                  .read(unifiedAlertsProvider)
+                  .valueOrNull
+                  ?.firstOrNull
+                  ?.patientId;
               if (user != null) {
                 await UnifiedAlertService.markAllRead(user);
                 ref.invalidate(unifiedAlertsProvider);
@@ -52,13 +56,17 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
           Expanded(
             child: alertsAsync.when(
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stack) => Center(child: Text('خطأ في جلب التنبيهات: $err')),
+              error: (err, stack) =>
+                  Center(child: Text('خطأ في جلب التنبيهات: $err')),
               data: (alerts) {
                 final filteredAlerts = alerts.where((a) {
                   if (_filter == 'الكل') return true;
-                  if (_filter == 'حرجة') return a.severity == AlertSeverity.critical;
-                  if (_filter == 'تحذير') return a.severity == AlertSeverity.warning;
-                  if (_filter == 'معلومات') return a.severity == AlertSeverity.info;
+                  if (_filter == 'حرجة')
+                    return a.severity == AlertSeverity.critical;
+                  if (_filter == 'تحذير')
+                    return a.severity == AlertSeverity.warning;
+                  if (_filter == 'معلومات')
+                    return a.severity == AlertSeverity.info;
                   return false;
                 }).toList();
 
@@ -68,7 +76,8 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
                   padding: const EdgeInsets.all(16),
                   itemCount: filteredAlerts.length,
                   separatorBuilder: (context, index) => const Gap(12),
-                  itemBuilder: (context, index) => _AlertCard(alert: filteredAlerts[index]),
+                  itemBuilder: (context, index) =>
+                      _AlertCard(alert: filteredAlerts[index]),
                 );
               },
             ),
@@ -92,9 +101,17 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: isSelected ? AppColors.primary : Colors.transparent, width: 2)),
+                border: Border(
+                    bottom: BorderSide(
+                        color:
+                            isSelected ? AppColors.primary : Colors.transparent,
+                        width: 2)),
               ),
-              child: Text(_filters[i], style: AppTextStyles.bodyM.copyWith(color: isSelected ? AppColors.primary : AppColors.textSecondary)),
+              child: Text(_filters[i],
+                  style: AppTextStyles.bodyM.copyWith(
+                      color: isSelected
+                          ? AppColors.primary
+                          : AppColors.textSecondary)),
             ),
           );
         },
@@ -121,8 +138,10 @@ class _AlertCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isCritical = alert.severity == AlertSeverity.critical;
     final isWarning = alert.severity == AlertSeverity.warning;
-    final color = isCritical ? AppColors.textCritical : (isWarning ? AppColors.textWarning : AppColors.textInfo);
-    
+    final color = isCritical
+        ? AppColors.textCritical
+        : (isWarning ? AppColors.textWarning : AppColors.textInfo);
+
     return InkWell(
       onTap: () async {
         if (!alert.isRead) {
@@ -134,10 +153,14 @@ class _AlertCard extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: alert.isRead ? AppColors.bgSurface : color.withValues(alpha: 0.05),
+          color: alert.isRead
+              ? AppColors.bgSurface
+              : color.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: alert.isRead ? AppColors.borderBase : color.withValues(alpha: 0.3),
+            color: alert.isRead
+                ? AppColors.borderBase
+                : color.withValues(alpha: 0.3),
             width: alert.isRead ? 1 : 2,
           ),
         ),
@@ -173,7 +196,8 @@ class _AlertCard extends ConsumerWidget {
                       const Spacer(),
                       Text(
                         DateFormat('yyyy/MM/dd HH:mm').format(alert.createdAt),
-                        style: AppTextStyles.bodyS.copyWith(color: Colors.grey[500]),
+                        style: AppTextStyles.bodyS
+                            .copyWith(color: Colors.grey[500]),
                       ),
                     ],
                   ),
@@ -181,11 +205,13 @@ class _AlertCard extends ConsumerWidget {
                   Text(
                     alert.messageAr,
                     style: AppTextStyles.bodyM.copyWith(
-                      fontWeight: alert.isRead ? FontWeight.normal : FontWeight.bold,
+                      fontWeight:
+                          alert.isRead ? FontWeight.normal : FontWeight.bold,
                       height: 1.4,
                     ),
                   ),
-                  if (!alert.isRead && alert.severity != AlertSeverity.info) ...[
+                  if (!alert.isRead &&
+                      alert.severity != AlertSeverity.info) ...[
                     const Gap(12),
                     Text(
                       AppLocalizations.of(context)!.medicalDisclaimer,
@@ -207,21 +233,31 @@ class _AlertCard extends ConsumerWidget {
 
   IconData _getIcon(AlertCategory category) {
     switch (category) {
-      case AlertCategory.nutrition: return Icons.restaurant_rounded;
-      case AlertCategory.medical: return Icons.medical_services_rounded;
-      case AlertCategory.lab: return Icons.biotech_rounded;
-      case AlertCategory.fluid: return Icons.water_drop_rounded;
-      case AlertCategory.vital: return Icons.favorite_rounded;
+      case AlertCategory.nutrition:
+        return Icons.restaurant_rounded;
+      case AlertCategory.medical:
+        return Icons.medical_services_rounded;
+      case AlertCategory.lab:
+        return Icons.biotech_rounded;
+      case AlertCategory.fluid:
+        return Icons.water_drop_rounded;
+      case AlertCategory.vital:
+        return Icons.favorite_rounded;
     }
   }
 
   String _getCategoryLabel(AlertCategory category) {
     switch (category) {
-      case AlertCategory.nutrition: return 'تنبيه تغذية';
-      case AlertCategory.medical: return 'تنبيه دوائي';
-      case AlertCategory.lab: return 'نتائج مخبرية';
-      case AlertCategory.fluid: return 'إدارة السوائل';
-      case AlertCategory.vital: return 'مؤشرات حيوية';
+      case AlertCategory.nutrition:
+        return 'تنبيه تغذية';
+      case AlertCategory.medical:
+        return 'تنبيه دوائي';
+      case AlertCategory.lab:
+        return 'نتائج مخبرية';
+      case AlertCategory.fluid:
+        return 'إدارة السوائل';
+      case AlertCategory.vital:
+        return 'مؤشرات حيوية';
     }
   }
 }

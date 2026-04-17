@@ -20,9 +20,11 @@ void main() {
       await tester.pumpAndSettle();
 
       // STEP 1 — Login كطبيب
-      await TestHelpers.fillField(tester, 'البريد الإلكتروني', MockData.doctorEmail);
-      await TestHelpers.fillField(tester, 'كلمة المرور', MockData.doctorPassword);
-      
+      await TestHelpers.fillField(
+          tester, 'البريد الإلكتروني', MockData.doctorEmail);
+      await TestHelpers.fillField(
+          tester, 'كلمة المرور', MockData.doctorPassword);
+
       await tester.tap(find.text('تسجيل الدخول'));
       await tester.pumpAndSettle(const Duration(seconds: 2));
 

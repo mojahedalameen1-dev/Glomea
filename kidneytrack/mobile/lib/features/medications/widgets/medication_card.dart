@@ -20,22 +20,26 @@ class MedicationCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final risksMapAsync = ref.watch(medicationRisksProvider);
-    final List<MedicationRiskResult> dynamicRisks = risksMapAsync.valueOrNull?[medication.id] ?? [];
+    final List<MedicationRiskResult> dynamicRisks =
+        risksMapAsync.valueOrNull?[medication.id] ?? [];
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    final hasHardcodedWarning = medication.isNephrotoxic || 
-                        medication.needsDoseAdjustment || 
-                        (medication.renalWarning != null && medication.renalWarning!.isNotEmpty);
-                        
+    final hasHardcodedWarning = medication.isNephrotoxic ||
+        medication.needsDoseAdjustment ||
+        (medication.renalWarning != null &&
+            medication.renalWarning!.isNotEmpty);
+
     final showWarning = hasHardcodedWarning || dynamicRisks.isNotEmpty;
 
     Color indicatorColor = AppColors.primary;
     String severityLabel = '';
-    if (dynamicRisks.any((r) => r.severity == Severity.critical) || medication.isNephrotoxic) {
+    if (dynamicRisks.any((r) => r.severity == Severity.critical) ||
+        medication.isNephrotoxic) {
       indicatorColor = AppColors.textCritical;
       severityLabel = l10n.highRisk;
-    } else if (dynamicRisks.any((r) => r.severity == Severity.warning) || medication.needsDoseAdjustment) {
+    } else if (dynamicRisks.any((r) => r.severity == Severity.warning) ||
+        medication.needsDoseAdjustment) {
       indicatorColor = AppColors.textWarning;
       severityLabel = l10n.medicalWarning;
     }
@@ -46,8 +50,8 @@ class MedicationCard extends ConsumerWidget {
         color: isDark ? AppColors.bgSurfaceDark : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: showWarning 
-              ? indicatorColor.withValues(alpha: 0.3) 
+          color: showWarning
+              ? indicatorColor.withValues(alpha: 0.3)
               : AppColors.borderBase.withValues(alpha: 0.1),
           width: showWarning ? 1.5 : 1,
         ),
@@ -87,7 +91,8 @@ class MedicationCard extends ConsumerWidget {
                                 children: [
                                   Text(
                                     medication.name,
-                                    style: AppTextStyles.h3.copyWith(fontSize: 18),
+                                    style:
+                                        AppTextStyles.h3.copyWith(fontSize: 18),
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
@@ -101,12 +106,14 @@ class MedicationCard extends ConsumerWidget {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            _buildFrequencyBadge(context, medication.frequency, l10n),
+                            _buildFrequencyBadge(
+                                context, medication.frequency, l10n),
                           ],
                         ),
                         if (severityLabel.isNotEmpty) ...[
                           const SizedBox(height: 12),
-                          _SeverityBadge(label: severityLabel, color: indicatorColor),
+                          _SeverityBadge(
+                              label: severityLabel, color: indicatorColor),
                         ],
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 12),
@@ -119,12 +126,16 @@ class MedicationCard extends ConsumerWidget {
                         if (dynamicRisks.isNotEmpty) ...[
                           const SizedBox(height: 12),
                           ...dynamicRisks.map((risk) => _buildWarningBox(
-                            risk.severity == Severity.critical ? AppColors.textCritical : AppColors.textWarning,
-                            risk.safetyMessage,
-                          )),
-                        ] else if (showWarning && medication.renalWarning != null) ...[
+                                risk.severity == Severity.critical
+                                    ? AppColors.textCritical
+                                    : AppColors.textWarning,
+                                risk.safetyMessage,
+                              )),
+                        ] else if (showWarning &&
+                            medication.renalWarning != null) ...[
                           const SizedBox(height: 12),
-                          _buildWarningBox(indicatorColor, medication.renalWarning!),
+                          _buildWarningBox(
+                              indicatorColor, medication.renalWarning!),
                         ],
                         if (medication.notes?.isNotEmpty ?? false) ...[
                           const SizedBox(height: 12),
@@ -145,7 +156,8 @@ class MedicationCard extends ConsumerWidget {
     );
   }
 
-  Widget _buildFrequencyBadge(BuildContext context, String frequency, AppLocalizations l10n) {
+  Widget _buildFrequencyBadge(
+      BuildContext context, String frequency, AppLocalizations l10n) {
     final label = frequency == 'daily' ? l10n.frequencyDaily : frequency;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -168,7 +180,8 @@ class MedicationCard extends ConsumerWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: AppColors.textSecondary.withValues(alpha: 0.6)),
+        Icon(icon,
+            size: 16, color: AppColors.textSecondary.withValues(alpha: 0.6)),
         const SizedBox(width: 8),
         Expanded(
           child: Text(

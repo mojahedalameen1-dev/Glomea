@@ -7,7 +7,8 @@ import '../services/medication_warning_engine.dart';
 import '../models/system_medication.dart';
 import 'localization_provider.dart';
 
-final activeSystemMedicationsProvider = FutureProvider<List<SystemMedication>>((ref) async {
+final activeSystemMedicationsProvider =
+    FutureProvider<List<SystemMedication>>((ref) async {
   final systemMedsAsync = ref.watch(systemMedicationsProvider);
   if (systemMedsAsync.valueOrNull == null) return [];
   final systemMeds = systemMedsAsync.value!;
@@ -20,7 +21,8 @@ final activeSystemMedicationsProvider = FutureProvider<List<SystemMedication>>((
   List<SystemMedication> activeSystemMeds = [];
   for (var uMed in userMeds) {
     if (uMed.medicationKey != null) {
-      final match = systemMeds.where((sm) => sm.key == uMed.medicationKey).firstOrNull;
+      final match =
+          systemMeds.where((sm) => sm.key == uMed.medicationKey).firstOrNull;
       if (match != null) {
         activeSystemMeds.add(match);
       }
@@ -29,7 +31,8 @@ final activeSystemMedicationsProvider = FutureProvider<List<SystemMedication>>((
   return activeSystemMeds;
 });
 
-final drugInteractionsProvider = FutureProvider<List<DrugNutrientInteractionResult>>((ref) async {
+final drugInteractionsProvider =
+    FutureProvider<List<DrugNutrientInteractionResult>>((ref) async {
   final patientAsync = ref.watch(authNotifierProvider);
   if (patientAsync.valueOrNull == null) return [];
   final patient = patientAsync.value!;
@@ -43,10 +46,12 @@ final drugInteractionsProvider = FutureProvider<List<DrugNutrientInteractionResu
   final totals = await ref.watch(dailyNutrientTotalsProvider.future);
   final l10n = ref.watch(appLocalizationsProvider);
 
-  return MedicationWarningEngine.evaluateDrugNutrientInteractions(activeSystemMeds, totals, patient, l10n);
+  return MedicationWarningEngine.evaluateDrugNutrientInteractions(
+      activeSystemMeds, totals, patient, l10n);
 });
 
-final medicationRisksProvider = FutureProvider<Map<String, List<MedicationRiskResult>>>((ref) async {
+final medicationRisksProvider =
+    FutureProvider<Map<String, List<MedicationRiskResult>>>((ref) async {
   final patientAsync = ref.watch(authNotifierProvider);
   if (patientAsync.valueOrNull == null) return {};
   final patient = patientAsync.value!;
@@ -65,9 +70,11 @@ final medicationRisksProvider = FutureProvider<Map<String, List<MedicationRiskRe
 
   for (var uMed in userMeds) {
     if (uMed.medicationKey != null) {
-      final match = systemMeds.where((sm) => sm.key == uMed.medicationKey).firstOrNull;
+      final match =
+          systemMeds.where((sm) => sm.key == uMed.medicationKey).firstOrNull;
       if (match != null) {
-        final riskList = MedicationWarningEngine.evaluateMedicationRisks(match, patient, l10n);
+        final riskList = MedicationWarningEngine.evaluateMedicationRisks(
+            match, patient, l10n);
         if (riskList.isNotEmpty) {
           risks[uMed.id] = riskList; // Mapped by user medication ID
         }

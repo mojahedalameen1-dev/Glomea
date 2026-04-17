@@ -81,7 +81,8 @@ class _AppTextFieldState extends State<AppTextField> {
           style: AppTextStyles.bodyM,
           decoration: InputDecoration(
             hintText: widget.hint,
-            hintStyle: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
+            hintStyle:
+                AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
             filled: true,
             fillColor: AppColors.bgSurface,
             prefixIcon: widget.prefixIcon,
@@ -101,11 +102,13 @@ class _AppTextFieldState extends State<AppTextField> {
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-              borderSide: BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
+              borderSide: BorderSide(
+                  color: AppColors.borderBase.withValues(alpha: 0.1)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-              borderSide: BorderSide(color: AppColors.borderBase.withValues(alpha: 0.1)),
+              borderSide: BorderSide(
+                  color: AppColors.borderBase.withValues(alpha: 0.1)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppDimensions.radiusM),

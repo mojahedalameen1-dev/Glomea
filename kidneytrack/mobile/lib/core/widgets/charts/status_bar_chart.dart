@@ -27,7 +27,8 @@ class StatusBarChart extends StatelessWidget {
           child: BarChart(
             BarChartData(
               alignment: BarChartAlignment.spaceAround,
-              maxY: 100, // Normalized for multiple indicators if needed, or scaled
+              maxY:
+                  100, // Normalized for multiple indicators if needed, or scaled
               barTouchData: BarTouchData(
                 touchTooltipData: BarTouchTooltipData(
                   getTooltipColor: (_) => Colors.white,
@@ -56,24 +57,30 @@ class StatusBarChart extends StatelessWidget {
                     reservedSize: 30,
                   ),
                 ),
-                leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                leftTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
               ),
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
               barGroups: List.generate(7, (dayIndex) {
                 return BarChartGroupData(
                   x: dayIndex,
-                  barRods: List.generate(indicatorNames.length, (indicatorIndex) {
+                  barRods:
+                      List.generate(indicatorNames.length, (indicatorIndex) {
                     final name = indicatorNames[indicatorIndex];
                     final values = weeklyData[name]!;
-                    final value = dayIndex < values.length ? values[dayIndex] : 0.0;
+                    final value =
+                        dayIndex < values.length ? values[dayIndex] : 0.0;
                     return BarChartRodData(
                       toY: value,
                       color: indicatorColors[name] ?? AppColors.primary,
                       width: 12,
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                      borderRadius:
+                          const BorderRadius.vertical(top: Radius.circular(8)),
                     );
                   }),
                 );

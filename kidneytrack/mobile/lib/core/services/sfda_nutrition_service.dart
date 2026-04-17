@@ -5,15 +5,19 @@ class SfdaNutritionService {
   final Dio _dio = Dio();
 
   // SFDA API Credentials
-  static const String _consumerKey = 'VvRXiZUcU0xAzctmlMNcO8SAwDAnjXy8SdtmrTMBxH8pmR5R';
-  static const String _consumerSecret = 'Cb3QlvNioSf9ddR7Cwt3VyiYNAwGsY8ssxVxM3Ql3v88PAHKcxCUUoxqEXOHOSnA';
+  static const String _consumerKey =
+      'VvRXiZUcU0xAzctmlMNcO8SAwDAnjXy8SdtmrTMBxH8pmR5R';
+  static const String _consumerSecret =
+      'Cb3QlvNioSf9ddR7Cwt3VyiYNAwGsY8ssxVxM3Ql3v88PAHKcxCUUoxqEXOHOSnA';
 
   // SFDA API Endpoints from Documentation
   static const String _baseUrl = 'https://api.sfda.gov.sa';
   static const String _tokenPath = '/token';
   // Note: Using the specific environment path from the screenshot
-  static const String _barcodePath = '/food/v1/Food-Products-environment/products/barcode/';
-  static const String _searchPath = '/food/v1/Food-Products-environment/products/search/';
+  static const String _barcodePath =
+      '/food/v1/Food-Products-environment/products/barcode/';
+  static const String _searchPath =
+      '/food/v1/Food-Products-environment/products/search/';
 
   String? _accessToken;
   DateTime? _tokenExpiry;
@@ -43,7 +47,9 @@ class SfdaNutritionService {
   }
 
   Future<String?> _getToken() async {
-    if (_accessToken == null || _tokenExpiry == null || DateTime.now().isAfter(_tokenExpiry!)) {
+    if (_accessToken == null ||
+        _tokenExpiry == null ||
+        DateTime.now().isAfter(_tokenExpiry!)) {
       await _refreshAccessToken();
     }
     return _accessToken;
@@ -68,12 +74,16 @@ class SfdaNutritionService {
         final data = response.data;
         // The API returns a response object, usually with a 'data' or 'product' field
         // Based on the screenshot, we look for the Product info
-        final productData = data['data'] ?? data; 
+        final productData = data['data'] ?? data;
 
         return FoodItem(
           id: barcode,
-          name: productData['product_name_ar'] ?? productData['product_name_en'] ?? 'منتج غير معروف',
-          brand: productData['brand_name_ar'] ?? productData['brand_name_en'] ?? '',
+          name: productData['product_name_ar'] ??
+              productData['product_name_en'] ??
+              'منتج غير معروف',
+          brand: productData['brand_name_ar'] ??
+              productData['brand_name_en'] ??
+              '',
           imageUrl: productData['image_url'],
           // Detailed mapping for kidney patients from SFDA fields
           potassium: _toDouble(productData['potassium_content']),
@@ -82,7 +92,8 @@ class SfdaNutritionService {
           calcium: _toDouble(productData['calcium_content']),
           protein: _toDouble(productData['protein_content']),
           sugars: _toDouble(productData['sugar_content']),
-          calories: _toDouble(productData['calories']) ?? _toDouble(productData['energy']),
+          calories: _toDouble(productData['calories']) ??
+              _toDouble(productData['energy']),
           carbohydrates: _toDouble(productData['carbohydrate_content']),
           totalFat: _toDouble(productData['fat_content']),
           servingSize: _toDouble(productData['serving_size']) ?? 100.0,
@@ -123,7 +134,9 @@ class SfdaNutritionService {
   FoodItem _mapToFoodItem(String id, Map productData) {
     return FoodItem(
       id: id,
-      name: productData['product_name_ar'] ?? productData['product_name_en'] ?? 'منتج غير معروف',
+      name: productData['product_name_ar'] ??
+          productData['product_name_en'] ??
+          'منتج غير معروف',
       brand: productData['brand_name_ar'] ?? productData['brand_name_en'] ?? '',
       imageUrl: productData['image_url'],
       potassium: _toDouble(productData['potassium_content']),
@@ -132,7 +145,8 @@ class SfdaNutritionService {
       calcium: _toDouble(productData['calcium_content']),
       protein: _toDouble(productData['protein_content']),
       sugars: _toDouble(productData['sugar_content']),
-      calories: _toDouble(productData['calories']) ?? _toDouble(productData['energy']),
+      calories: _toDouble(productData['calories']) ??
+          _toDouble(productData['energy']),
       carbohydrates: _toDouble(productData['carbohydrate_content']),
       totalFat: _toDouble(productData['fat_content']),
       servingSize: _toDouble(productData['serving_size']) ?? 100.0,

@@ -13,7 +13,7 @@ void main() {
       stopwatch.stop();
 
       // Check load time (should be reasonable)
-      // Note: In integration tests, timing might be affected by the environment, 
+      // Note: In integration tests, timing might be affected by the environment,
       // but we document the check here.
       expect(stopwatch.elapsed.inSeconds, lessThan(10)); // Total boot + splash
 
@@ -27,7 +27,7 @@ void main() {
     testWidgets('Accessibility: Text sizes and Button targets', (tester) async {
       await TestHelpers.startApp(tester);
       await TestHelpers.waitForSplash(tester);
-      
+
       // Check for buttons min size (48x48)
       // This is a programmatic check that can be done using WidgetTester
       final nextButton = find.text('التالي').first;

@@ -3,7 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/models/fluid_intake.dart';
 import '../../auth/providers/auth_provider.dart';
 
-final fluidProvider = StateNotifierProvider<FluidNotifier, AsyncValue<List<FluidIntake>>>((ref) {
+final fluidProvider =
+    StateNotifierProvider<FluidNotifier, AsyncValue<List<FluidIntake>>>((ref) {
   return FluidNotifier(ref);
 });
 
@@ -33,7 +34,7 @@ class FluidNotifier extends StateNotifier<AsyncValue<List<FluidIntake>>> {
         fetchHistory();
       }
     });
-    
+
     // محاولة جلب البيانات إذا كانت الجلسة موجودة مسبقاً
     if (_ref.read(authNotifierProvider).value != null) {
       fetchHistory();
@@ -50,8 +51,9 @@ class FluidNotifier extends StateNotifier<AsyncValue<List<FluidIntake>>> {
           .select()
           .eq('patientId', patient.id)
           .order('loggedAt', ascending: false);
-      
-      final list = (data as List).map((json) => FluidIntake.fromJson(json)).toList();
+
+      final list =
+          (data as List).map((json) => FluidIntake.fromJson(json)).toList();
       state = AsyncValue.data(list);
     } catch (e, st) {
       state = AsyncValue.error(e, st);

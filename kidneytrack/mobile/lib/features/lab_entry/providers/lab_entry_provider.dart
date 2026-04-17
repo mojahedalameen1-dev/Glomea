@@ -2,7 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/providers/auth_provider.dart';
 
-final labEntryProvider = StateNotifierProvider<LabEntryNotifier, AsyncValue<void>>((ref) {
+final labEntryProvider =
+    StateNotifierProvider<LabEntryNotifier, AsyncValue<void>>((ref) {
   return LabEntryNotifier(ref);
 });
 
@@ -19,13 +20,13 @@ class LabEntryNotifier extends StateNotifier<AsyncValue<void>> {
     String? imageUrl,
   }) async {
     state = const AsyncValue.loading();
-    
+
     try {
       final patient = _ref.read(authNotifierProvider).value;
       if (patient == null) throw Exception('User not authenticated');
 
       final List<Map<String, dynamic>> dataToInsert = [];
-      
+
       indicators.forEach((code, value) {
         if (value > 0) {
           dataToInsert.add({
@@ -47,7 +48,7 @@ class LabEntryNotifier extends StateNotifier<AsyncValue<void>> {
       }
 
       await _supabase.from('LabResult').insert(dataToInsert).select();
-      
+
       state = const AsyncValue.data(null);
     } catch (e, st) {
       state = AsyncValue.error(e, st);

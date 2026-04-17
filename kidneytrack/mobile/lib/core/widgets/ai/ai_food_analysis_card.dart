@@ -38,7 +38,7 @@ class _AiFoodAnalysisCardState extends State<AiFoodAnalysisCard> {
     if (_isLoading) {
       return _buildShimmer();
     }
-    
+
     if (_analysis == null || _analysis!.trim().isEmpty) {
       return const SizedBox.shrink();
     }

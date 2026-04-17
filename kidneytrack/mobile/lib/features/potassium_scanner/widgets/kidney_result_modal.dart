@@ -135,7 +135,8 @@ class _KidneyResultModalState extends ConsumerState<KidneyResultModal> {
                     const MedicalDisclaimer(),
                     const Gap(24),
                     _buildSectionTitle(
-                        l10n.nutritionalAnalysisPerGrams(_selectedGrams.toStringAsFixed(0)),
+                        l10n.nutritionalAnalysisPerGrams(
+                            _selectedGrams.toStringAsFixed(0)),
                         isDark),
                     const Gap(12),
                     _buildNutrientRow(
@@ -749,8 +750,8 @@ class _KidneyResultModalState extends ConsumerState<KidneyResultModal> {
     final patientId = ref.read(authNotifierProvider).valueOrNull?.id;
     if (patientId == null) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.pleaseLoginFirst)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l10n.pleaseLoginFirst)));
       }
       return;
     }

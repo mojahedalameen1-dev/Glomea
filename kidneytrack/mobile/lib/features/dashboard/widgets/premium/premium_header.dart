@@ -20,11 +20,11 @@ class PremiumDashboardHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final hasName = firstName != null && firstName!.isNotEmpty;
-    
+
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 60, 24, 24),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.premiumBgDark : AppColors.premiumBg,
+        color: isDark ? AppColors.bgPageDark : AppColors.bgPage,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,14 +52,17 @@ class PremiumDashboardHeader extends ConsumerWidget {
                       Text(
                         _getGreeting(),
                         style: AppTextStyles.bodyS.copyWith(
-                          color: isDark ? AppColors.textSecondaryDark : AppColors.premiumTextSub,
+                          color: isDark
+                              ? AppColors.textSecondaryDark
+                              : AppColors.premiumTextSub,
                         ),
                       ),
                       Text(
                         hasName ? firstName! : 'المريض',
                         style: AppTextStyles.h2.copyWith(
-                          fontSize: 20,
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.premiumTextMain,
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimary,
                         ),
                       ),
                     ],
@@ -88,19 +91,22 @@ class PremiumDashboardHeader extends ConsumerWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.premiumCardDark : Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: isDark ? null : [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
+        boxShadow: isDark
+            ? null
+            : [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
+              ],
       ),
       child: TextField(
         onSubmitted: (value) {
           if (value.trim().isNotEmpty) {
             // Functional search mapping
-            context.push('/history?search=${Uri.encodeComponent(value.trim())}');
+            context
+                .push('/history?search=${Uri.encodeComponent(value.trim())}');
           }
         },
         decoration: InputDecoration(
@@ -110,7 +116,8 @@ class PremiumDashboardHeader extends ConsumerWidget {
           ),
           prefixIcon: const Icon(Icons.search, color: AppColors.primary),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         ),
       ),
     );

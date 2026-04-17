@@ -78,8 +78,8 @@ class AlertTriggers {
         alerts.add(Alert(
           type: 'bp_above_target',
           message: 'ضغط دمك ($systolic/$diastolic) أعلى من هدفك '
-                   '(${patient.targetSystolic}/${patient.targetDiastolic}) — '
-                   'استرِح وقِس مجدداً بعد 10 دقائق، وأبلغ طبيبك إذا استمر',
+              '(${patient.targetSystolic}/${patient.targetDiastolic}) — '
+              'استرِح وقِس مجدداً بعد 10 دقائق، وأبلغ طبيبك إذا استمر',
           severity: 'high',
         ));
       }
@@ -89,8 +89,9 @@ class AlertTriggers {
     if (dailySodiumMg != null && dailySodiumMg > patient.sodiumLimitMg) {
       alerts.add(Alert(
         type: 'sodium_limit_exceeded',
-        message: '⚠️ تجاوزت حد الصوديوم المسموح به اليوم (${patient.sodiumLimitMg} ملجم) — '
-                 'تجنب الأطعمة المملحة لبقية اليوم للحفاظ على استقرار ضغطك سوائلك',
+        message:
+            '⚠️ تجاوزت حد الصوديوم المسموح به اليوم (${patient.sodiumLimitMg} ملجم) — '
+            'تجنب الأطعمة المملحة لبقية اليوم للحفاظ على استقرار ضغطك سوائلك',
         severity: 'medium',
       ));
     }
@@ -116,7 +117,7 @@ class AlertTriggers {
         channelId: 'glomea_channel',
       );
     }
-    
+
     return alerts;
   }
 
@@ -130,12 +131,15 @@ class AlertTriggers {
       if (current > limit) {
         activeOverloads.add(nutrientKey);
         final alertType = '${nutrientKey.toUpperCase()}_OVERLOAD';
-        final message = '⚠️ تجاوزت الحد المسموح به من $labelAr اليوم. يرجى الحذر! للتوعية فقط ولا يغني عن استشارة الطبيب.';
+        final message =
+            '⚠️ تجاوزت الحد المسموح به من $labelAr اليوم. يرجى الحذر! للتوعية فقط ولا يغني عن استشارة الطبيب.';
 
         // UnifiedAlertService handles deduplication via day_bucket unique index
         await UnifiedAlertService.logAlert(
           patientId: patient.id,
-          category: nutrientKey == 'fluid' ? AlertCategory.fluid : AlertCategory.nutrition,
+          category: nutrientKey == 'fluid'
+              ? AlertCategory.fluid
+              : AlertCategory.nutrition,
           severity: AlertSeverity.warning,
           alertType: alertType,
           messageAr: message,
@@ -145,11 +149,16 @@ class AlertTriggers {
       }
     }
 
-    await evaluateLimit('potassium', 'البوتاسيوم', totals['potassium'] ?? 0, patient.potassiumLimitMg.toDouble());
-    await evaluateLimit('phosphorus', 'الفوسفور', totals['phosphorus'] ?? 0, patient.phosphorusLimitMg.toDouble());
-    await evaluateLimit('sodium', 'الصوديوم', totals['sodium'] ?? 0, patient.sodiumLimitMg.toDouble());
-    await evaluateLimit('protein', 'البروتين', totals['protein'] ?? 0, patient.proteinLimitG.toDouble());
-    await evaluateLimit('fluid', 'السوائل', totals['fluid'] ?? 0, patient.fluidLimitMl.toDouble());
+    await evaluateLimit('potassium', 'البوتاسيوم', totals['potassium'] ?? 0,
+        patient.potassiumLimitMg.toDouble());
+    await evaluateLimit('phosphorus', 'الفوسفور', totals['phosphorus'] ?? 0,
+        patient.phosphorusLimitMg.toDouble());
+    await evaluateLimit('sodium', 'الصوديوم', totals['sodium'] ?? 0,
+        patient.sodiumLimitMg.toDouble());
+    await evaluateLimit('protein', 'البروتين', totals['protein'] ?? 0,
+        patient.proteinLimitG.toDouble());
+    await evaluateLimit('fluid', 'السوائل', totals['fluid'] ?? 0,
+        patient.fluidLimitMl.toDouble());
 
     return activeOverloads;
   }
@@ -176,4 +185,3 @@ class AlertTriggers {
     ),
   ];
 }
-

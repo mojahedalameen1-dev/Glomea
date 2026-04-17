@@ -121,27 +121,43 @@ const Map<String, Map<String, dynamic>> labIndicators = {
 
 String getLocalizedLabName(String indicatorCode, AppLocalizations l10n) {
   switch (indicatorCode) {
-    case 'CREAT': return l10n.labCreatinine;
-    case 'K': return l10n.labPotassium;
-    case 'UREA': return l10n.labUrea;
-    case 'NA': return l10n.labSodium;
-    case 'HGB': return l10n.labHemoglobin;
-    case 'PHOS': return l10n.labPhosphorus;
-    case 'hba1c': return l10n.labHbA1c;
-    case 'total_cholesterol': return l10n.labTotalCholesterol;
-    case 'ldl': return l10n.labLDL;
-    case 'triglycerides': return l10n.labTriglycerides;
-    case 'calcium': return l10n.labCalcium;
-    case 'vitamin_d': return l10n.labVitaminD;
-    case 'phosphorus_blood': return l10n.labBloodPhosphorus;
-    case 'urine_acr': return l10n.labUrineACR;
-    default: return indicatorCode;
+    case 'CREAT':
+      return l10n.labCreatinine;
+    case 'K':
+      return l10n.labPotassium;
+    case 'UREA':
+      return l10n.labUrea;
+    case 'NA':
+      return l10n.labSodium;
+    case 'HGB':
+      return l10n.labHemoglobin;
+    case 'PHOS':
+      return l10n.labPhosphorus;
+    case 'hba1c':
+      return l10n.labHbA1c;
+    case 'total_cholesterol':
+      return l10n.labTotalCholesterol;
+    case 'ldl':
+      return l10n.labLDL;
+    case 'triglycerides':
+      return l10n.labTriglycerides;
+    case 'calcium':
+      return l10n.labCalcium;
+    case 'vitamin_d':
+      return l10n.labVitaminD;
+    case 'phosphorus_blood':
+      return l10n.labBloodPhosphorus;
+    case 'urine_acr':
+      return l10n.labUrineACR;
+    default:
+      return indicatorCode;
   }
 }
 
 /// Returns a user-facing localized warning message for [indicatorCode] at [value],
 /// or null if the value is within the normal range.
-String? getLabWarning(String indicatorCode, double value, AppLocalizations l10n) {
+String? getLabWarning(
+    String indicatorCode, double value, AppLocalizations l10n) {
   final indicator = labIndicators[indicatorCode];
   if (indicator == null) return null;
 

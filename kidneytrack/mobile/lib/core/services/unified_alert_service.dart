@@ -45,7 +45,8 @@ class UnifiedAlertService {
           'is_read': false,
           'day_bucket': DateTime.now().toIso8601String().substring(0, 10),
         },
-        onConflict: 'patient_id, alert_type, COALESCE(related_entity_id, \'\'), day_bucket',
+        onConflict:
+            'patient_id, alert_type, COALESCE(related_entity_id, \'\'), day_bucket',
         ignoreDuplicates: true, // no-op if same key exists today — anti-spam
       );
 

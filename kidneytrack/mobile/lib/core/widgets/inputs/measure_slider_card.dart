@@ -58,8 +58,9 @@ class MeasureSliderCard extends StatelessWidget {
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
                       Text(
-                        subtitle!, 
-                        style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary, fontSize: 12),
+                        subtitle!,
+                        style: AppTextStyles.bodyS.copyWith(
+                            color: AppColors.textSecondary, fontSize: 12),
                       ),
                     ],
                   ],
@@ -69,7 +70,8 @@ class MeasureSliderCard extends StatelessWidget {
                 onTap: onTapValue,
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(12),
@@ -79,21 +81,22 @@ class MeasureSliderCard extends StatelessWidget {
                       Text(
                         _formatValue(value),
                         style: AppTextStyles.h1.copyWith(
-                          fontSize: 32, 
+                          fontSize: 32,
                           color: AppColors.primary,
                           height: 1,
                         ),
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        unit, 
+                        unit,
                         style: AppTextStyles.bodyM.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(width: 8),
-                      const Icon(Icons.edit_rounded, size: 16, color: AppColors.primary),
+                      const Icon(Icons.edit_rounded,
+                          size: 16, color: AppColors.primary),
                     ],
                   ),
                 ),
@@ -127,8 +130,12 @@ class MeasureSliderCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('${min.toInt()} $unit', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
-                Text('${max.toInt()} $unit', style: AppTextStyles.bodyS.copyWith(color: AppColors.textSecondary)),
+                Text('${min.toInt()} $unit',
+                    style: AppTextStyles.bodyS
+                        .copyWith(color: AppColors.textSecondary)),
+                Text('${max.toInt()} $unit',
+                    style: AppTextStyles.bodyS
+                        .copyWith(color: AppColors.textSecondary)),
               ],
             ),
           ),

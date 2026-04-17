@@ -53,7 +53,8 @@ class AppRouter {
 
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-  static GoRouter createRouter(Ref ref, {String initialLocation = authGateway}) {
+  static GoRouter createRouter(Ref ref,
+      {String initialLocation = authGateway}) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
       initialLocation: initialLocation,
@@ -94,7 +95,8 @@ class AppRouter {
 
           if (!isOnboarded) {
             if (isOnBoarding) {
-              debugPrint('Router: User not onboarded, allowing onboarding route');
+              debugPrint(
+                  'Router: User not onboarded, allowing onboarding route');
               return null;
             }
             debugPrint('Router: User not onboarded, forcing step1');
@@ -109,9 +111,13 @@ class AppRouter {
       },
       routes: [
         GoRoute(path: intro, builder: (context, state) => const IntroScreen()),
-        GoRoute(path: authGateway, builder: (context, state) => const AuthGatewayScreen()),
+        GoRoute(
+            path: authGateway,
+            builder: (context, state) => const AuthGatewayScreen()),
         GoRoute(path: login, builder: (context, state) => const LoginScreen()),
-        GoRoute(path: register, builder: (context, state) => const RegisterScreen()),
+        GoRoute(
+            path: register,
+            builder: (context, state) => const RegisterScreen()),
 
         GoRoute(
           path: onboarding,
@@ -138,8 +144,9 @@ class AppRouter {
               routes: [
                 GoRoute(
                   path: dashboard,
-                  builder: (context, state) =>
-                      kIsWeb ? const WebDashboardScreen() : const DashboardScreen(),
+                  builder: (context, state) => kIsWeb
+                      ? const WebDashboardScreen()
+                      : const DashboardScreen(),
                 )
               ],
             ),
@@ -165,17 +172,23 @@ class AppRouter {
             ),
             StatefulShellBranch(
               routes: [
-                GoRoute(path: alerts, builder: (context, state) => const AlertsScreen())
+                GoRoute(
+                    path: alerts,
+                    builder: (context, state) => const AlertsScreen())
               ],
             ),
             StatefulShellBranch(
               routes: [
-                GoRoute(path: medications, builder: (context, state) => const MedicationsScreen())
+                GoRoute(
+                    path: medications,
+                    builder: (context, state) => const MedicationsScreen())
               ],
             ),
             StatefulShellBranch(
               routes: [
-                GoRoute(path: profile, builder: (context, state) => const ProfileScreen())
+                GoRoute(
+                    path: profile,
+                    builder: (context, state) => const ProfileScreen())
               ],
             ),
           ],

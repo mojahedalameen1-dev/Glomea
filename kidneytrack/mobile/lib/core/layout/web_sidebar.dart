@@ -38,12 +38,14 @@ class WebSidebar extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.favorite_rounded, color: AppColors.primary, size: 28),
+                  child: const Icon(Icons.favorite_rounded,
+                      color: AppColors.primary, size: 28),
                 ),
                 const SizedBox(width: 16),
                 Text(
                   'Glomea',
-                  style: AppTextStyles.h1.copyWith(color: Colors.white, letterSpacing: 1.2),
+                  style: AppTextStyles.h1
+                      .copyWith(color: Colors.white, letterSpacing: 1.2),
                 ),
               ],
             ),
@@ -87,12 +89,12 @@ class WebSidebar extends StatelessWidget {
                     isActive: navigationShell.currentIndex == 4,
                     onTap: () => _onTap(context, 4),
                   ),
-                  
+
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                     child: Divider(color: Colors.white24),
                   ),
-                  
+
                   // Additional Quick Actions for Web
                   WebNavItem(
                     icon: Icons.biotech_rounded,
@@ -106,7 +108,10 @@ class WebSidebar extends StatelessWidget {
                     isActive: false,
                     onTap: () => context.push('/daily_entry'),
                   ),
-                ].animate(interval: 50.ms).fadeIn(duration: 400.ms).slideX(begin: 0.1, end: 0),
+                ]
+                    .animate(interval: 50.ms)
+                    .fadeIn(duration: 400.ms)
+                    .slideX(begin: 0.1, end: 0),
               ),
             ),
           ),

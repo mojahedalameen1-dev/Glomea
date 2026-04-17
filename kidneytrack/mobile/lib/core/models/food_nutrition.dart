@@ -7,7 +7,7 @@ class FoodNutrition {
   final double phosphorusPer100g;
   final double sodiumPer100g;
   final double proteinPer100g;
-  
+
   final IndicatorStatus potassiumLevel;
   final IndicatorStatus phosphorusLevel;
   final IndicatorStatus sodiumLevel;
@@ -57,10 +57,8 @@ class FoodNutrition {
   }
 
   static IndicatorStatus _parseStatus(String? status) {
-    return IndicatorStatus.values.firstWhere(
-      (e) => e.name == status, 
-      orElse: () => IndicatorStatus.safe
-    );
+    return IndicatorStatus.values.firstWhere((e) => e.name == status,
+        orElse: () => IndicatorStatus.safe);
   }
 
   static IndicatorStatus calculatePotassiumLevel(double val) {
@@ -92,7 +90,7 @@ class ResultConfig {
   final String lottieAsset;
   final String label;
   final String medicalTip;
-  final dynamic color; 
+  final dynamic color;
 
   ResultConfig({
     required this.lottieAsset,

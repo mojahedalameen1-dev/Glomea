@@ -50,7 +50,7 @@ class SuccessScreen extends StatelessWidget {
                         curve: Curves.elasticOut,
                         begin: const Offset(0, 0),
                       ),
-                  
+
                   // Halo effect
                   Container(
                     width: 120,
@@ -59,11 +59,14 @@ class SuccessScreen extends StatelessWidget {
                       border: Border.all(color: AppColors.safeGreen, width: 2),
                       shape: BoxShape.circle,
                     ),
-                  ).animate(delay: 400.ms).scale(
+                  )
+                      .animate(delay: 400.ms)
+                      .scale(
                         duration: 800.ms,
                         begin: const Offset(0.8, 0.8),
                         end: const Offset(1.5, 1.5),
-                      ).fadeOut(),
+                      )
+                      .fadeOut(),
                 ],
               ),
             ),
@@ -75,7 +78,8 @@ class SuccessScreen extends StatelessWidget {
               child: Text(
                 message,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary),
+                style: AppTextStyles.bodyM
+                    .copyWith(color: AppColors.textSecondary),
               ),
             ),
             const SizedBox(height: 48),
@@ -84,9 +88,11 @@ class SuccessScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 minimumSize: const Size(200, 56),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
               ),
-              child: const Text('المواصلة', style: TextStyle(color: Colors.white, fontSize: 18)),
+              child: const Text('المواصلة',
+                  style: TextStyle(color: Colors.white, fontSize: 18)),
             ).animate(delay: 1.seconds).fadeIn().slideY(begin: 0.2),
           ],
         ),

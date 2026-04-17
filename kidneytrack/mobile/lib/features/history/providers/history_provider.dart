@@ -8,8 +8,8 @@ import '../../medications/models/medication_log.dart';
 import '../../auth/providers/auth_provider.dart';
 
 enum HistoryFilter {
-  week,    // last 7 days
-  month,   // last 30 days
+  week, // last 7 days
+  month, // last 30 days
   threeMonths,
   sixMonths,
   year,
@@ -20,27 +20,28 @@ extension HistoryFilterX on HistoryFilter {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     return switch (this) {
-      HistoryFilter.week        => today.subtract(const Duration(days: 7)),
-      HistoryFilter.month       => today.subtract(const Duration(days: 30)),
+      HistoryFilter.week => today.subtract(const Duration(days: 7)),
+      HistoryFilter.month => today.subtract(const Duration(days: 30)),
       HistoryFilter.threeMonths => today.subtract(const Duration(days: 90)),
-      HistoryFilter.sixMonths   => today.subtract(const Duration(days: 180)),
-      HistoryFilter.year        => today.subtract(const Duration(days: 365)),
+      HistoryFilter.sixMonths => today.subtract(const Duration(days: 180)),
+      HistoryFilter.year => today.subtract(const Duration(days: 365)),
     };
   }
 
   String get label {
     return switch (this) {
-      HistoryFilter.week        => 'أسبوع',
-      HistoryFilter.month       => 'شهر',
+      HistoryFilter.week => 'أسبوع',
+      HistoryFilter.month => 'شهر',
       HistoryFilter.threeMonths => '٣ أشهر',
-      HistoryFilter.sixMonths   => '٦ أشهر',
-      HistoryFilter.year        => 'سنة',
+      HistoryFilter.sixMonths => '٦ أشهر',
+      HistoryFilter.year => 'سنة',
     };
   }
 }
 
 /// Provider for lab results (generic)
-final labHistoryProvider = FutureProvider.family<List<LabResult>, ({String indicatorCode, HistoryFilter filter})>((ref, arg) async {
+final labHistoryProvider = FutureProvider.family<List<LabResult>,
+    ({String indicatorCode, HistoryFilter filter})>((ref, arg) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return [];
@@ -57,7 +58,9 @@ final labHistoryProvider = FutureProvider.family<List<LabResult>, ({String indic
 });
 
 /// Provider for daily readings (weight, BP, sugar)
-final dailyReadingsHistoryProvider = FutureProvider.family<List<DailyReading>, HistoryFilter>((ref, filter) async {
+final dailyReadingsHistoryProvider =
+    FutureProvider.family<List<DailyReading>, HistoryFilter>(
+        (ref, filter) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return [];
@@ -73,7 +76,9 @@ final dailyReadingsHistoryProvider = FutureProvider.family<List<DailyReading>, H
 });
 
 /// Provider for fluid intake logs
-final fluidIntakeHistoryProvider = FutureProvider.family<List<FluidIntake>, HistoryFilter>((ref, filter) async {
+final fluidIntakeHistoryProvider =
+    FutureProvider.family<List<FluidIntake>, HistoryFilter>(
+        (ref, filter) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return [];
@@ -89,7 +94,9 @@ final fluidIntakeHistoryProvider = FutureProvider.family<List<FluidIntake>, Hist
 });
 
 /// Provider for medication logs history
-final medicationHistoryProvider = FutureProvider.family<List<MedicationLog>, HistoryFilter>((ref, filter) async {
+final medicationHistoryProvider =
+    FutureProvider.family<List<MedicationLog>, HistoryFilter>(
+        (ref, filter) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return [];
@@ -105,7 +112,9 @@ final medicationHistoryProvider = FutureProvider.family<List<MedicationLog>, His
 });
 
 /// Provider for food consumption history
-final foodHistoryProvider = FutureProvider.family<List<FoodConsumption>, HistoryFilter>((ref, filter) async {
+final foodHistoryProvider =
+    FutureProvider.family<List<FoodConsumption>, HistoryFilter>(
+        (ref, filter) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return [];
@@ -121,12 +130,15 @@ final foodHistoryProvider = FutureProvider.family<List<FoodConsumption>, History
 });
 
 /// Provider for daily aggregated fluid totals
-final fluidIntakeTrendProvider = FutureProvider.family<Map<DateTime, double>, HistoryFilter>((ref, filter) async {
+final fluidIntakeTrendProvider =
+    FutureProvider.family<Map<DateTime, double>, HistoryFilter>(
+        (ref, filter) async {
   final intake = await ref.watch(fluidIntakeHistoryProvider(filter).future);
-  
+
   final Map<DateTime, double> aggregated = {};
   for (final entry in intake) {
-    final date = DateTime(entry.consumedAt.year, entry.consumedAt.month, entry.consumedAt.day);
+    final date = DateTime(
+        entry.consumedAt.year, entry.consumedAt.month, entry.consumedAt.day);
     aggregated[date] = (aggregated[date] ?? 0) + entry.amountMl;
   }
   return aggregated;
@@ -149,7 +161,8 @@ final nutrientDataExistsProvider = FutureProvider<bool>((ref) async {
 });
 
 /// Provider for daily nutrient totals (used by Dashboard)
-final dailyNutrientTotalsProvider = FutureProvider<Map<String, double>>((ref) async {
+final dailyNutrientTotalsProvider =
+    FutureProvider<Map<String, double>>((ref) async {
   final supabase = Supabase.instance.client;
   final patient = ref.read(authNotifierProvider).value;
   if (patient == null) return {};
@@ -178,4 +191,3 @@ final dailyNutrientTotalsProvider = FutureProvider<Map<String, double>>((ref) as
     'phosphorus': (data['phosphorus_mg'] as num?)?.toDouble() ?? 0.0,
   };
 });
-

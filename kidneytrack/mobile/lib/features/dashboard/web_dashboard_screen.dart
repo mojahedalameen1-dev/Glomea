@@ -19,7 +19,7 @@ class WebDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final summaryAsync = ref.watch(dashboardSummaryProvider);
     final insightsAsync = ref.watch(medicalInsightsProvider);
-    
+
     return Scaffold(
       backgroundColor: AppColors.bgPage,
       body: summaryAsync.when(
@@ -34,7 +34,8 @@ class WebDashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildWebLayout(BuildContext context, WidgetRef ref, dynamic data, dynamic insights) {
+  Widget _buildWebLayout(
+      BuildContext context, WidgetRef ref, dynamic data, dynamic insights) {
     final metrics = data['metrics'] as List? ?? [];
 
     return SingleChildScrollView(
@@ -48,9 +49,13 @@ class WebDashboardScreen extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('لوحة التحكم الرئيسية', style: AppTextStyles.h1.copyWith(fontSize: 32)),
+                  Text('لوحة التحكم الرئيسية',
+                      style: AppTextStyles.h1.copyWith(fontSize: 32)),
                   const Gap(8),
-                  Text('مرحباً بك مجدداً في جلوميا. إليك ملخص حالتك الصحية اليوم.', style: AppTextStyles.bodyM.copyWith(color: AppColors.textSecondary)),
+                  Text(
+                      'مرحباً بك مجدداً في جلوميا. إليك ملخص حالتك الصحية اليوم.',
+                      style: AppTextStyles.bodyM
+                          .copyWith(color: AppColors.textSecondary)),
                 ],
               ),
               ElevatedButton.icon(
@@ -60,15 +65,17 @@ class WebDashboardScreen extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
                 ),
               ),
             ],
           ),
-          
+
           const Gap(40),
-          
+
           // Stats Row
           GridView.count(
             crossAxisCount: 4,
@@ -79,14 +86,24 @@ class WebDashboardScreen extends ConsumerWidget {
             children: [
               WebStatCard(
                 label: 'الكرياتينين',
-                value: metrics.isNotEmpty ? metrics.firstWhere((m) => m['code'] == 'CREAT', orElse: () => {'value': '0'})['value'].toString() : '0',
+                value: metrics.isNotEmpty
+                    ? metrics
+                        .firstWhere((m) => m['code'] == 'CREAT',
+                            orElse: () => {'value': '0'})['value']
+                        .toString()
+                    : '0',
                 unit: 'mg/dL',
                 icon: Icons.science_outlined,
                 color: AppColors.primary,
               ),
               WebStatCard(
                 label: 'البوتاسيوم',
-                value: metrics.isNotEmpty ? metrics.firstWhere((m) => m['code'] == 'K', orElse: () => {'value': '0'})['value'].toString() : '0',
+                value: metrics.isNotEmpty
+                    ? metrics
+                        .firstWhere((m) => m['code'] == 'K',
+                            orElse: () => {'value': '0'})['value']
+                        .toString()
+                    : '0',
                 unit: 'mmol/L',
                 icon: Icons.bloodtype_outlined,
                 color: AppColors.textCritical,
@@ -100,7 +117,8 @@ class WebDashboardScreen extends ConsumerWidget {
               ),
               WebStatCard(
                 label: 'السوائل اليومية',
-                value: '${ref.watch(todayFluidIntakeProvider)} / ${data['fluidLimitMl'] ?? HealthConstants.defaultFluidLimitMl}',
+                value:
+                    '${ref.watch(todayFluidIntakeProvider)} / ${data['fluidLimitMl'] ?? HealthConstants.defaultFluidLimitMl}',
                 unit: 'ml',
                 icon: Icons.water_drop_outlined,
                 color: AppColors.accent,
@@ -109,7 +127,7 @@ class WebDashboardScreen extends ConsumerWidget {
           ),
 
           const Gap(40),
-          
+
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -123,7 +141,11 @@ class WebDashboardScreen extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color: AppColors.bgSurface,
                         borderRadius: BorderRadius.circular(24),
-                        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 20)],
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.02),
+                              blurRadius: 20)
+                        ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,8 +153,11 @@ class WebDashboardScreen extends ConsumerWidget {
                           Text('تتبع السوائل', style: AppTextStyles.h2),
                           const Gap(24),
                           FluidCupsWidget(
-                            completedCups: ref.watch(todayFluidIntakeProvider) ~/ 250,
-                            totalCups: (data['fluidLimitMl'] ?? HealthConstants.defaultFluidLimitMl) ~/ HealthConstants.mlPerCup,
+                            completedCups:
+                                ref.watch(todayFluidIntakeProvider) ~/ 250,
+                            totalCups: (data['fluidLimitMl'] ??
+                                    HealthConstants.defaultFluidLimitMl) ~/
+                                HealthConstants.mlPerCup,
                             onAddCup: (count) {
                               ref.read(fluidProvider.notifier).addIntake(250);
                             },
@@ -143,21 +168,20 @@ class WebDashboardScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              
+
               const Gap(24),
-              
+
               // Insights and Alerts Sidebar area
               Expanded(
                 child: Column(
-                   children: [
-                     EGFRCard(egfr: insights.egfr, stage: insights.kidneyStage),
-                     const Gap(16),
-                     BloodPressureCard(
-                       avg: insights.bpAnalysis.avgSystolic, 
-                       trend: insights.bpAnalysis.trend, 
-                       controlRate: insights.bpAnalysis.controlRate
-                     ),
-                   ],
+                  children: [
+                    EGFRCard(egfr: insights.egfr, stage: insights.kidneyStage),
+                    const Gap(16),
+                    BloodPressureCard(
+                        avg: insights.bpAnalysis.avgSystolic,
+                        trend: insights.bpAnalysis.trend,
+                        controlRate: insights.bpAnalysis.controlRate),
+                  ],
                 ),
               ),
             ],
