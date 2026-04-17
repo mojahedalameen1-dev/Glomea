@@ -577,11 +577,12 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen>
                         (indicatorCode: code, filter: filter)))
                     .when(
                       data: (results) {
-                        if (results.isEmpty)
+                        if (results.isEmpty) {
                           return Center(
                               child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Text(l10n.noResults)));
+                        }
                         final unit = labIndicators[code]?['unit'] ?? '';
                         final spots = results
                             .map((r) => FlSpot(
@@ -773,11 +774,12 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen>
                   r.date.millisecondsSinceEpoch.toDouble(), valueSelector(r)!))
               .toList();
 
-          if (spots.isEmpty)
+          if (spots.isEmpty) {
             return Center(
                 child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(AppLocalizations.of(context)!.noResults)));
+          }
 
           return TrendLineChart(
             lines: [

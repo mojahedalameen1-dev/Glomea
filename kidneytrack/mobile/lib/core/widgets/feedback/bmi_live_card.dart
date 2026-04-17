@@ -68,8 +68,9 @@ class _BmiLiveCardState extends State<BmiLiveCard>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.heightCm <= 0 || widget.weightKg <= 0)
+    if (widget.heightCm <= 0 || widget.weightKg <= 0) {
       return const SizedBox.shrink();
+    }
 
     final status = _bmiStatus;
     final diff = widget.dryWeightKg != null

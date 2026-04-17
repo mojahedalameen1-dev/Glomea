@@ -21,7 +21,7 @@ class BottomNavShell extends StatelessWidget {
       body: navigationShell,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 4,
         onPressed: () => _openPotassiumScanner(context),
         shape: const CircleBorder(),
@@ -41,7 +41,7 @@ class BottomNavShell extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: isDark ? AppColors.bgSurfaceDark : AppColors.bgSurface,
+        color: Theme.of(context).colorScheme.surface,
         shape: const CircularNotchedRectangle(),
         notchMargin: 12,
         elevation: 0,
@@ -129,11 +129,10 @@ class _NavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isSelected = index == currentIndex;
-    final activeColor = AppColors.primary;
-    final inactiveColor =
-        isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
+    final cs = Theme.of(context).colorScheme;
+    final activeColor = cs.primary;
+    final inactiveColor = cs.onSurfaceVariant;
 
     return InkWell(
       onTap: () => onTap(index),

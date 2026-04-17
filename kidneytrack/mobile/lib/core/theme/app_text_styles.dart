@@ -78,6 +78,7 @@ class AppTextStyles {
   static TextStyle get displayLarge => interStyle.copyWith(
         fontSize: 48,
         fontWeight: FontWeight.w800,
+        height: 1.0,
         color: AppColors.textPrimary,
       );
 

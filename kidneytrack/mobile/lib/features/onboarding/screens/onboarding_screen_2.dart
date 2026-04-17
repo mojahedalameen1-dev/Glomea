@@ -108,8 +108,9 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
                         keyboardType: TextInputType.number,
                         suffixText: 'mL',
                         validator: (v) {
-                          if (v == null || v.isEmpty)
+                          if (v == null || v.isEmpty) {
                             return isAr ? 'هذا الحقل مطلوب' : 'Required';
+                          }
                           final val = int.tryParse(v);
                           if (val == null || val < 500 || val > 3000) {
                             return isAr
@@ -127,8 +128,9 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
                           isAr ? 'بوتاسيوم (ملجم)' : 'Potassium (mg)',
                           _potassiumController,
                           (v) {
-                            if (v == null || v.isEmpty)
+                            if (v == null || v.isEmpty) {
                               return isAr ? 'مطلوب' : 'Required';
+                            }
                             final val = int.tryParse(v);
                             if (val == null || val < 1000 || val > 3500) {
                               return isAr ? 'بين 1000-3500' : '1000-3500';
@@ -140,8 +142,9 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
                           isAr ? 'صوديوم (ملجم)' : 'Sodium (mg)',
                           _sodiumController,
                           (v) {
-                            if (v == null || v.isEmpty)
+                            if (v == null || v.isEmpty) {
                               return isAr ? 'مطلوب' : 'Required';
+                            }
                             final val = int.tryParse(v);
                             if (val == null || val < 500 || val > 3000) {
                               return isAr ? 'بين 500-3000' : '500-3000';
@@ -156,8 +159,9 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
                           isAr ? 'بروتين (جم)' : 'Protein (g)',
                           _proteinController,
                           (v) {
-                            if (v == null || v.isEmpty)
+                            if (v == null || v.isEmpty) {
                               return isAr ? 'مطلوب' : 'Required';
+                            }
                             final val = int.tryParse(v);
                             if (val == null || val < 30 || val > 120) {
                               return isAr ? 'بين 30-120' : '30-120';
@@ -169,8 +173,9 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
                           isAr ? 'فوسفور (ملجم)' : 'Phosphorus (mg)',
                           _phosphorusController,
                           (v) {
-                            if (v == null || v.isEmpty)
+                            if (v == null || v.isEmpty) {
                               return isAr ? 'مطلوب' : 'Required';
+                            }
                             final val = int.tryParse(v);
                             if (val == null || val < 500 || val > 1500) {
                               return isAr ? 'بين 500-1500' : '500-1500';

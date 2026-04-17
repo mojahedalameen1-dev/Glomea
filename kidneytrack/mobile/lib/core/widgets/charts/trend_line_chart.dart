@@ -123,8 +123,9 @@ class TrendLineChart extends StatelessWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, meta) {
-                  if (value == meta.min || value == meta.max)
+                  if (value == meta.min || value == meta.max) {
                     return const SizedBox.shrink();
+                  }
                   return Text(
                     value.toStringAsFixed(0),
                     style:

@@ -61,6 +61,8 @@ class GlomeaApp extends ConsumerWidget {
         title: 'KidneyTrack',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
         locale: locale,
         localizationsDelegates: const [
           AppLocalizations.delegate,

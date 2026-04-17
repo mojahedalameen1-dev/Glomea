@@ -104,15 +104,17 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
                           controller: _ageController,
                           keyboardType: TextInputType.number,
                           validator: (v) {
-                            if (v == null || v.isEmpty)
+                            if (v == null || v.isEmpty) {
                               return activeLocale.languageCode == 'en'
                                   ? 'Age is required'
                                   : 'العمر مطلوب';
+                            }
                             final age = int.tryParse(v);
-                            if (age == null || age <= 0 || age > 120)
+                            if (age == null || age <= 0 || age > 120) {
                               return activeLocale.languageCode == 'en'
                                   ? 'Invalid age'
                                   : 'عمر غير صالح';
+                            }
                             return null;
                           },
                         ),

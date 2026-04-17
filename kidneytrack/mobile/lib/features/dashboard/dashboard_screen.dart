@@ -169,8 +169,9 @@ class DashboardScreen extends ConsumerWidget {
                 // Drug Interactions
                 ref.watch(drugInteractionsProvider).maybeWhen(
                       data: (interactions) {
-                        if (interactions.isEmpty)
+                        if (interactions.isEmpty) {
                           return const SizedBox.shrink();
+                        }
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: interactions
@@ -264,8 +265,9 @@ class DashboardScreen extends ConsumerWidget {
                             .take(2)
                             .toList();
 
-                        if (unreadSafetyAlerts.isEmpty)
+                        if (unreadSafetyAlerts.isEmpty) {
                           return const SizedBox.shrink();
+                        }
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

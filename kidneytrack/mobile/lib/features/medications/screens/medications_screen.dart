@@ -106,8 +106,9 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
             label: Text(filter['label'] as String),
             selected: isSelected,
             onSelected: (val) {
-              if (val)
+              if (val) {
                 setState(() => _selectedFilterKey = filter['key'] as String);
+              }
             },
             selectedColor: AppColors.primary,
             backgroundColor: Theme.of(context).brightness == Brightness.dark
@@ -150,12 +151,15 @@ class _MedicationsScreenState extends ConsumerState<MedicationsScreen> {
       final logs = state.todayLogs.where((l) => l.medicationId == med.id);
       if (logs.isEmpty) return false;
 
-      if (_selectedFilterKey == 'taken')
+      if (_selectedFilterKey == 'taken') {
         return logs.any((l) => l.status == 'taken');
-      if (_selectedFilterKey == 'missed')
+      }
+      if (_selectedFilterKey == 'missed') {
         return logs.any((l) => l.status == 'missed');
-      if (_selectedFilterKey == 'pending')
+      }
+      if (_selectedFilterKey == 'pending') {
         return logs.any((l) => l.status == 'pending');
+      }
 
       return true;
     }).toList();

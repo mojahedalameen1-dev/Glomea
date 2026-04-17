@@ -267,8 +267,9 @@ class _DailyEntryScreenState extends ConsumerState<DailyEntryScreen> {
                                     : null,
                               );
 
-                          if (!context.mounted)
+                          if (!context.mounted) {
                             return; // Use context.mounted check
+                          }
 
                           setState(() => _isSaving = false);
 

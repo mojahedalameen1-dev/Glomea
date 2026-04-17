@@ -61,12 +61,15 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
               data: (alerts) {
                 final filteredAlerts = alerts.where((a) {
                   if (_filter == 'الكل') return true;
-                  if (_filter == 'حرجة')
+                  if (_filter == 'حرجة') {
                     return a.severity == AlertSeverity.critical;
-                  if (_filter == 'تحذير')
+                  }
+                  if (_filter == 'تحذير') {
                     return a.severity == AlertSeverity.warning;
-                  if (_filter == 'معلومات')
+                  }
+                  if (_filter == 'معلومات') {
                     return a.severity == AlertSeverity.info;
+                  }
                   return false;
                 }).toList();
 
