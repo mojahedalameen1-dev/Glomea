@@ -1,0 +1,346 @@
+{
+  "@@locale": "en",
+  "appTitle": "KidneyTrack",
+  "connectionError": "Connection Error",
+  "initErrorMessage": "Failed to initialize the application. Please check your internet connection and try again.",
+  "retry": "Retry",
+  
+  "stage1": "Stage 1",
+  "stage2": "Stage 2",
+  "stage3": "Stage 3",
+  "stage4": "Stage 4",
+  "stage5": "Stage 5",
+  "dialysis": "Dialysis",
+  "@dialysis": { "description": "Dialysis stage" },
+
+  "dashboardLoadingSummary": "Loading summary",
+  "dashboardCalculatingMetrics": "Calculating metrics",
+  "errorLoadingData": "Sorry, an error occurred while {task}",
+  "checkInternetRetry": "Please check your internet connection and try again.",
+  "urgentMedicalAlert": "Urgent Medical Alert",
+  "deteriorationMessage": "A persistent rise in creatinine levels has been detected — please consult your specialist for evaluation.",
+  "egfr": "eGFR",
+  "kidneyEfficiency": "Kidney Efficiency (eGFR)",
+  "kidneyStageDisplay": "Stage {stage}: {label}",
+  "fluidOverload": "Fluid Overload",
+  "dryWeight": "Dry Weight",
+  "currentWeight": "Current Weight",
+  "bpAverage": "Avg Pressure (Systolic)",
+  "controlRate": "Control Rate",
+  "dailyPotassium": "Daily Potassium",
+  "remaining": "Remaining",
+  "nutrientPotassium": "Potassium",
+  "nutrientPhosphorus": "Phosphorus",
+  "nutrientSodium": "Sodium",
+  "nutrientProtein": "Protein",
+  "unitMg": "mg",
+  "unitG": "g",
+  "unitBpm": "bpm",
+  "statusExceeded": "Exceeded Limit",
+  "statusApproaching": "Approaching Limit",
+  "statusWithin": "Within Limit",
+  "drugInteractionWarning": "Drug-Nutrient Interaction Warning",
+  "medicalDisclaimer": "For awareness only; does not replace physician consultation.",
+  "todayNutrition": "Today's Nutrition",
+  "quickGlance": "Quick Glance",
+  "latestLabResults": "Latest Lab Results",
+  "consecutiveDays": "{days} Consecutive Days!",
+  "streakEncouragement": "You are among the most committed patients!",
+  "heartRate": "Heart Rate",
+  "bloodPressure": "Blood Pressure",
+  "importantAlert": "Important Alert",
+  "safetyAlert": "Safety Alert",
+
+  "healthInfo": "Health Information",
+  "birthDateAge": "Birth Date / Age",
+  "years": "years",
+  "tapToSelect": "Tap to select",
+  "targetBp": "Target Blood Pressure",
+  "height": "Height",
+  "weight": "Weight",
+  "unitCm": "cm",
+  "unitKg": "kg",
+  "fluidLimit": "Fluid Limit",
+  "potassiumLimit": "Potassium Limit",
+  "phosphorusLimit": "Phosphorus Limit",
+  "sodiumLimit": "Sodium Limit",
+  "proteinLimit": "Protein Limit",
+  "settings": "Settings",
+  "notifications": "Notifications",
+  "notificationsComingSoon": "Coming soon in the next update",
+  "language": "Language",
+  "security": "Security",
+  "changePassword": "Change Password",
+  "logout": "Logout",
+  "logoutConfirm": "Are you sure you want to log out?",
+  "cancel": "Cancel",
+  "edit": "Edit",
+  "save": "Save",
+  "saveChanges": "Save Changes",
+  "patient": "Patient",
+  "noDialysis": "No Dialysis",
+  "hemodialysis": "Hemodialysis",
+  "peritonealDialysis": "Peritoneal Dialysis",
+  "kidneyTransplant": "Kidney Transplant",
+  "notSpecified": "Not Specified",
+  "systolic": "Systolic",
+  "diastolic": "Diastolic",
+  "editTargetBp": "Edit Target Blood Pressure",
+
+  "healthDataHistory": "Health Data History",
+  "showCharts": "Show Charts",
+  "showTimeline": "Show Timeline",
+  "weightFluid": "Weight & Fluids",
+  "weightTrend": "Weight Trend (kg)",
+  "bpTrend": "Blood Pressure (mmHg)",
+  "kidneyLabs": "Kidney Labs",
+  "heartSugar": "Heart & Sugar",
+  "mineralsVitamins": "Minerals & Vitamins",
+  "nutritionSummary": "Nutrition Summary",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "noResults": "No results",
+  "noWeightData": "No weight data",
+  "noFluidData": "No fluid data",
+  "noBpData": "No blood pressure data",
+  "goalMl": "Goal: {value}ml",
+  "@goalMl": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "targetSystolicLabel": "Target Systolic",
+  "targetDiastolicLabel": "Target Diastolic",
+  "minLimit": "Min",
+  "maxLimit": "Max",
+  "potassiumTrend": "Potassium Trend (mg)",
+  "phosphorusTrend": "Phosphorus Trend (mg)",
+  "sodiumTrend": "Sodium Trend (mg)",
+  "proteinTrend": "Protein Trend (g)",
+  "totalFluidIntake": "Total Daily Fluids (ml)",
+  "unitMl": "ml",
+
+  "myMedications": "My Medications",
+  "allMedications": "All Medications",
+  "filterAll": "All",
+  "filterPending": "Pending",
+  "filterTaken": "Taken",
+  "filterMissed": "Missed",
+  "noMedicationsAdded": "You haven't added any medications yet",
+  "noFilteredMedications": "No medications match this filter",
+  "resetFilter": "Reset Filter",
+  "addMedication": "Add Medication",
+  "addNewMedication": "Add New Medication",
+  "takeDose": "Take Dose",
+  "remindMe": "Remind Me",
+  "medicationDetails": "Medication Details",
+  "todayDoses": "Today's Doses",
+  "noScheduledDosesToday": "No doses scheduled for today",
+  "medicationName": "Medication Name",
+  "searchMedicationHint": "Search for medication name...",
+  "medicationNameRequired": "Please enter medication name",
+  "dosage": "Dosage",
+  "dosageHint": "Example: 500mg - 2 tablets",
+  "dosageRequired": "Please enter dosage",
+  "doseTimes": "Dose Times",
+  "addAnotherTime": "Add another time",
+  "additionalNotes": "Additional Notes",
+  "notesHint": "e.g., shortly before meals",
+  "saveMedication": "Save Medication",
+  "saveError": "Error saving: {error}",
+  "drugSafetyInfo": "Drug Safety Information",
+  "highRiskMedicationWarning": "Alert: High Risk Medication",
+  "adjustmentRequired": "Dose adjustment required",
+  "completelySafeMedication": "Completely safe medication",
+
+  "nephrotoxicWarning": "Important Alert: {medName} may negatively affect kidney function. Please review with your physician.",
+  "@nephrotoxicWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "doseAdjustmentCritical": "Critical Alert: {medName} requires a critical dose adjustment based on your severe kidney function decline. Consult physician immediately.",
+  "@doseAdjustmentCritical": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "doseAdjustmentWarning": "Alert: {medName} may need dose adjustment based on your kidney function (eGFR). Consult pharmacist or physician.",
+  "@doseAdjustmentWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "potassiumInteractionWarning": "Important Alert: You are taking potassium-raising medications ({medNames}), and you have exceeded your daily potassium limit! Consult physician immediately.",
+  "@potassiumInteractionWarning": {
+    "placeholders": {
+      "medNames": { "type": "String" }
+    }
+  },
+  "phosphorusInteractionWarning": "Alert: Taking {medName} with a high phosphorus diet may affect levels. Watch your phosphorus intake.",
+  "@phosphorusInteractionWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "sodiumInteractionWarning": "Alert: {medName} may affect sodium retention. You have exceeded the daily limit. Consult physician.",
+  "@sodiumInteractionWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "medicalBannerTitleCritical": "Critical Medical Warning",
+  "medicalBannerTitleWarning": "Medical Alert",
+  "medicalBannerTitleInfo": "Health Information",
+
+  "frequency": "Frequency",
+  "instructions": "Instructions",
+  "highRisk": "High Risk",
+  "medicalWarning": "Medical Warning",
+  "scheduleLabel": "Schedule: {times}",
+  "@scheduleLabel": {
+    "placeholders": {
+      "times": {
+        "type": "String"
+      }
+    }
+  },
+  "frequencyDaily": "Daily",
+
+  "scanBarcode": "Scan Barcode",
+  "pointCameraAtBarcode": "Point camera at product barcode",
+  "manualBarcodeEntry": "Enter Barcode Manually",
+  "analyzingProduct": "Analyzing product...",
+  "productNotFound": "Product not found ({barcode})",
+  "@productNotFound": {
+    "placeholders": {
+      "barcode": { "type": "String" }
+    }
+  },
+  "errorSearching": "An error occurred during search",
+  "enterBarcodeNumber": "Enter Barcode Number",
+  "barcodeExample": "Example: 089686120134",
+  "search": "Search",
+  "searchFoods": "Search Foods",
+  "searchProductHint": "Search for a product (e.g., Rice, Yogurt...)",
+  "searchAnyFoodOrBrand": "Search for any food or brand",
+  "noMatchingResults": "No matching results found",
+  "nutritionalFactsHint": "We will provide you with kidney-friendly nutritional facts",
+  "ensureCorrectSpelling": "Make sure the name is spelled correctly",
+  "dataNotAvailable": "Data not available",
+  "productAnalysisResults": "Product Analysis Results {product}",
+  "@productAnalysisResults": {
+    "placeholders": {
+      "product": { "type": "String" }
+    }
+  },
+  "close": "Close",
+  "nutritionalAnalysisPerGrams": "Nutritional Analysis (per {grams} g)",
+  "@nutritionalAnalysisPerGrams": {
+    "placeholders": {
+      "grams": { "type": "String" }
+    }
+  },
+  "nutrientSugars": "Sugars",
+  "nutrientCalories": "Calories",
+  "unitCalorie": "kcal",
+  "verifiedChoice": "Verified Choice",
+  "manualEntry": "Manual Entry",
+  "smartEstimation": "Smart Estimation",
+  "unknown": "Unknown",
+  "howMuchWillYouConsume": "How much will you consume?",
+  "valuesMayDifferWarning": "⚠️ These values may differ from the actual label; Verify manually before relying on this data.",
+  "dismissWarning": "Dismiss Warning",
+  "avoidThisProduct": "Avoid this product",
+  "consumeWithCaution": "Consume with caution",
+  "relativelySafeChoice": "Relatively safe choice",
+  "foodDrugInteraction": "Food-Drug Interaction",
+  "editNutrient": "Edit {nutrient}",
+  "@editNutrient": {
+    "placeholders": {
+      "nutrient": { "type": "String" }
+    }
+  },
+  "valuePer100g": "Value per 100g",
+  "saveToDailyLog": "Save to My Daily Log",
+  "pleaseLoginFirst": "Please login first",
+  "missingData": "Missing Data ⚠️",
+
+  "labCreatinine": "Creatinine",
+  "labPotassium": "Potassium",
+  "labUrea": "Urea",
+  "labSodium": "Sodium",
+  "labHemoglobin": "Hemoglobin",
+  "labPhosphorus": "Phosphorus",
+  "labHbA1c": "HbA1c",
+  "labTotalCholesterol": "Total Cholesterol",
+  "labLDL": "LDL Cholesterol",
+  "labTriglycerides": "Triglycerides",
+  "labCalcium": "Calcium",
+  "labVitaminD": "Vitamin D",
+  "labBloodPhosphorus": "Blood Phosphorus",
+  "labUrineACR": "Urine ACR",
+  "noteImportantForDiabeticCKD": "Important for diabetic CKD patients",
+
+  "enterLabResults": "Enter Lab Results",
+  "labDateTitle": "Lab Date",
+  "labDateLabel": "Lab Date",
+  "saveResultsManually": "Save Results Manually",
+  "scanLabPaperOCR": "Scan Lab Paper (OCR)",
+  "measurementUnit": "Measurement Unit",
+  "unitStoredAsIsMg": "Values entered in mg/dL — saved as is",
+  "unitConvertedAutomaticallyMmol": "Values entered in mmol/L — converted automatically when saving",
+  "dataSavedSuccessfully": "Data saved successfully!",
+  "updatingDashboard": "Updating dashboard...",
+
+  "normalRange": "Normal Range: {min} – {max} {unit}",
+  "@normalRange": {
+    "placeholders": {
+      "min": { "type": "String" },
+      "max": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "errorSavingExt": "Error saving: {error}",
+  "@errorSavingExt": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "errorScanningExt": "Scan failed: {error}",
+  "@errorScanningExt": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "labWarningCriticalHigh": "🔴 {name} is noticeably high — advising to contact your doctor soon",
+  "@labWarningCriticalHigh": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningHigh": "⚠ {name} is slightly higher than usual — monitor it and inform your doctor next visit",
+  "@labWarningHigh": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningCriticalLow": "🔴 {name} is noticeably low — advising to contact your doctor soon",
+  "@labWarningCriticalLow": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningLow": "⚠ {name} is slightly lower than usual — monitor it and inform your doctor next visit",
+  "@labWarningLow": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "english": "English",
+  "arabic": "Arabic"
+}

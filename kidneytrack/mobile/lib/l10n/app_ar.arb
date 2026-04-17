@@ -1,0 +1,346 @@
+{
+  "@@locale": "ar",
+  "appTitle": "KidneyTrack",
+  "connectionError": "خطأ في الاتصال بالخدمة",
+  "initErrorMessage": "تعذر تهيئة التطبيق. يرجى التأكد من اتصال الإنترنت وإعادة المحاولة.",
+  "retry": "إعادة المحاولة",
+  
+  "stage1": "المرحلة الأولى",
+  "stage2": "المرحلة الثانية",
+  "stage3": "المرحلة الثالثة",
+  "stage4": "المرحلة الرابعة",
+  "stage5": "المرحلة الخامسة",
+  "dialysis": "غسيل كلى",
+  "@dialysis": { "description": "Dialysis stage" },
+
+  "dashboardLoadingSummary": "جاري تحميل الملخص",
+  "dashboardCalculatingMetrics": "جاري حساب المؤشرات",
+  "errorLoadingData": "عذراً، حدث خطأ أثناء {task}",
+  "checkInternetRetry": "يرجى التأكد من اتصال الإنترنت ثم المحاولة مرة أخرى.",
+  "urgentMedicalAlert": "تنبيه طبي عاجل",
+  "deteriorationMessage": "تم رصد ارتفاع مستمر في نسب الكرياتينين — يرجى مراجعة طبيبك المختص للتقييم.",
+  "egfr": "كفاءة الكلى (eGFR)",
+  "kidneyEfficiency": "كفاءة الكلى (eGFR)",
+  "kidneyStageDisplay": "المرحلة {stage}: {label}",
+  "fluidOverload": "احتباس السوائل",
+  "dryWeight": "الوزن الجاف",
+  "currentWeight": "الحالي",
+  "bpAverage": "متوسط الضغط (الانقباضي)",
+  "controlRate": "نسبة الانضباط",
+  "dailyPotassium": "البوتاسيوم اليومي",
+  "remaining": "المتبقي",
+  "nutrientPotassium": "البوتاسيوم",
+  "nutrientPhosphorus": "الفوسفور",
+  "nutrientSodium": "الصوديوم",
+  "nutrientProtein": "البروتين",
+  "unitMg": "ملجم",
+  "unitG": "جم",
+  "unitBpm": "نبضة/د",
+  "statusExceeded": "تجاوز الحد",
+  "statusApproaching": "اقتراب من الحد",
+  "statusWithin": "ضمن الحد",
+  "drugInteractionWarning": "تحذير تفاعل دوائي-غذائي",
+  "medicalDisclaimer": "للتوعية فقط ولا يغني عن استشارة الطبيب",
+  "todayNutrition": "تغذية اليوم",
+  "quickGlance": "نظرة سريعة",
+  "latestLabResults": "أحدث التحاليل",
+  "consecutiveDays": "{days} أيام متواصلة!",
+  "streakEncouragement": "أنت من أكثر المرضى التزاماً 💪",
+  "heartRate": "نبض القلب",
+  "bloodPressure": "ضغط الدم",
+  "importantAlert": "تنبيه هام",
+  "safetyAlert": "تنبيه السلامة",
+
+  "healthInfo": "المعلومات الصحية",
+  "birthDateAge": "تاريخ الميلاد / العمر",
+  "years": "سنة",
+  "tapToSelect": "اضغط للتحديد",
+  "targetBp": "ضغط الدم المستهدف",
+  "height": "الطول",
+  "weight": "الوزن",
+  "unitCm": "سم",
+  "unitKg": "كجم",
+  "fluidLimit": "الحد اليومي للسوائل",
+  "potassiumLimit": "الحد اليومي للبوتاسيوم",
+  "phosphorusLimit": "الحد اليومي للفوسفور",
+  "sodiumLimit": "الحد اليومي للصوديوم",
+  "proteinLimit": "الحد اليومي للبروتين",
+  "settings": "الإعدادات",
+  "notifications": "التنبيهات",
+  "notificationsComingSoon": "قريباً في التحديث القادم",
+  "language": "اللغة",
+  "security": "الأمان",
+  "changePassword": "تغيير كلمة المرور",
+  "logout": "تسجيل الخروج",
+  "logoutConfirm": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "cancel": "إلغاء",
+  "edit": "تعديل",
+  "save": "حفظ",
+  "saveChanges": "حفظ التعديلات",
+  "patient": "المريض",
+  "noDialysis": "بدون غسيل",
+  "hemodialysis": "غسيل دموي",
+  "peritonealDialysis": "غسيل بريتوني",
+  "kidneyTransplant": "زراعة كلى",
+  "notSpecified": "غير محدد",
+  "systolic": "الانقباضي (Systolic)",
+  "diastolic": "الانبساطي (Diastolic)",
+  "editTargetBp": "تعديل ضغط الدم المستهدف",
+
+  "healthDataHistory": "سجل البيانات الصحية",
+  "showCharts": "عرض الرسوم البيانية",
+  "showTimeline": "عرض السجل الزمني",
+  "weightFluid": "الوزن والسوائل",
+  "weightTrend": "تطور الوزن (كجم)",
+  "bpTrend": "ضغط الدم (mmHg)",
+  "kidneyLabs": "تحاليل الكلى",
+  "heartSugar": "القلب والسكر",
+  "mineralsVitamins": "معادن وفيتامينات",
+  "nutritionSummary": "الملخص الغذائي",
+  "today": "اليوم",
+  "yesterday": "أمس",
+  "noResults": "لا توجد نتائج",
+  "noWeightData": "لا توجد بيانات وزن",
+  "noFluidData": "لا توجد بيانات سوائل",
+  "noBpData": "لا توجد بيانات ضغط دم",
+  "goalMl": "الهدف: {value} مل",
+  "@goalMl": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "targetSystolicLabel": "الهدف انقباضي",
+  "targetDiastolicLabel": "الهدف انبساطي",
+  "minLimit": "أدنى",
+  "maxLimit": "أقصى",
+  "potassiumTrend": "تطور البوتاسيوم (ملجم)",
+  "phosphorusTrend": "تطور الفوسفور (ملجم)",
+  "sodiumTrend": "تطور الصوديوم (ملجم)",
+  "proteinTrend": "تطور البروتين (جم)",
+  "totalFluidIntake": "إجمالي السوائل اليومي (مل)",
+  "unitMl": "مل",
+
+  "myMedications": "أدويتي",
+  "allMedications": "كل الأدوية",
+  "filterAll": "الكل",
+  "filterPending": "قيد الانتظار",
+  "filterTaken": "تم الأخذ",
+  "filterMissed": "فاتت الجرعة",
+  "noMedicationsAdded": "لم تقم بإضافة أي أدوية بعد",
+  "noFilteredMedications": "لا توجد أدوية تطابق هذا الفلتر",
+  "resetFilter": "إعادة تعيين الفلتر",
+  "addMedication": "إضافة دواء",
+  "addNewMedication": "إضافة دواء جديد",
+  "takeDose": "أخذ الجرعة",
+  "remindMe": "ذكرني",
+  "medicationDetails": "تفاصيل الدواء",
+  "todayDoses": "جرعات اليوم",
+  "noScheduledDosesToday": "لا توجد جرعات مقررة اليوم",
+  "medicationName": "اسم الدواء",
+  "searchMedicationHint": "ابحث عن اسم الدواء...",
+  "medicationNameRequired": "يرجى إدخال اسم الدواء",
+  "dosage": "الجرعة",
+  "dosageHint": "مثال: 500mg - قرصان",
+  "dosageRequired": "يرجى إدخال الجرعة",
+  "doseTimes": "مواعيد الجرعات",
+  "addAnotherTime": "إضافة موعد آخر",
+  "additionalNotes": "ملاحظات إضافية",
+  "notesHint": "مثل: قبل الأكل بفترة قصيرة",
+  "saveMedication": "حفظ الدواء",
+  "saveError": "خطأ في الحفظ: {error}",
+  "drugSafetyInfo": "معلومات السلامة الدوائية",
+  "highRiskMedicationWarning": "تنبيه: دواء مرتفع الخطورة",
+  "adjustmentRequired": "تعديل الجرعة مطلوب",
+  "completelySafeMedication": "دواء آمن كلياً",
+
+  "nephrotoxicWarning": "تحذير هام: [{medName}] قد يؤثر سلباً على وظائف الكلى. يرجى مراجعة طبيبك المعالج لتأكيد الاستخدام.",
+  "@nephrotoxicWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "doseAdjustmentCritical": "تحذير: [{medName}] يتطلب تعديل جرعة حرج بناءً على ضعف وظائف الكلى الشديد لديك. يرجى استشارة الطبيب فوراً.",
+  "@doseAdjustmentCritical": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "doseAdjustmentWarning": "تنبيه: [{medName}] قد يحتاج إلى تعديل في الجرعة بناءً على وظائف كليتك (eGFR). يرجى استشارة الصيدلي أو الطبيب.",
+  "@doseAdjustmentWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "potassiumInteractionWarning": "تحذير هام: أنت تتناول أدوية ترفع البوتاسيوم ({medNames})، وقد تجاوزت حد البوتاسيوم الغذائي اليوم! يرجى مراجعة طبيبك المعالج فوراً.",
+  "@potassiumInteractionWarning": {
+    "placeholders": {
+      "medNames": { "type": "String" }
+    }
+  },
+  "phosphorusInteractionWarning": "تنبيه: تناول [{medName}] مع نظام غذائي عالي الفوسفور قد يؤثر على مستوياته. يرجى الانتباه لحصتك من الفوسفور.",
+  "@phosphorusInteractionWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "sodiumInteractionWarning": "تنبيه: [{medName}] قد يؤثر على احتباس الصوديوم. تجاوزت الحد اليومي المسموح. استشر طبيبك.",
+  "@sodiumInteractionWarning": {
+    "placeholders": {
+      "medName": { "type": "String" }
+    }
+  },
+  "medicalBannerTitleCritical": "تحذير طبي حرج",
+  "medicalBannerTitleWarning": "تنبيه طبي",
+  "medicalBannerTitleInfo": "معلومة صحية",
+
+  "frequency": "التكرار",
+  "instructions": "التعليمات",
+  "highRisk": "خطورة عالية",
+  "medicalWarning": "تحذير طبي",
+  "scheduleLabel": "المواعيد: {times}",
+  "@scheduleLabel": {
+    "placeholders": {
+      "times": {
+        "type": "String"
+      }
+    }
+  },
+  "frequencyDaily": "يومي",
+
+  "scanBarcode": "مسح الباركود",
+  "pointCameraAtBarcode": "وجّه الكاميرا نحو باركود المنتج",
+  "manualBarcodeEntry": "إدخال الباركود يدوياً",
+  "analyzingProduct": "جارٍ تحليل المنتج...",
+  "productNotFound": "لم يتم العثور على المنتج ({barcode})",
+  "@productNotFound": {
+    "placeholders": {
+      "barcode": { "type": "String" }
+    }
+  },
+  "errorSearching": "حدث خطأ أثناء البحث",
+  "enterBarcodeNumber": "أدخل رقم الباركود",
+  "barcodeExample": "مثال: 089686120134",
+  "search": "بحث",
+  "searchFoods": "بحث عن الأطعمة",
+  "searchProductHint": "ابحث عن منتج (مثلاً: أرز، زبادي...)",
+  "searchAnyFoodOrBrand": "ابحث عن أي نوع طعام أو ماركة",
+  "noMatchingResults": "لم نجد نتائج مطابقة",
+  "nutritionalFactsHint": "سنزودك بالحقائق الغذائية المناسبة لمرضى الكلى",
+  "ensureCorrectSpelling": "تأكد من كتابة الاسم بشكل صحيح",
+  "dataNotAvailable": "داتا غير متوفرة",
+  "productAnalysisResults": "نتائج تحليل المنتج {product}",
+  "@productAnalysisResults": {
+    "placeholders": {
+      "product": { "type": "String" }
+    }
+  },
+  "close": "إغلاق",
+  "nutritionalAnalysisPerGrams": "التحليل الغذائي (لكل {grams} جم)",
+  "@nutritionalAnalysisPerGrams": {
+    "placeholders": {
+      "grams": { "type": "String" }
+    }
+  },
+  "nutrientSugars": "السكريات",
+  "nutrientCalories": "السعرات",
+  "unitCalorie": "سعرة",
+  "verifiedChoice": "خيار موثق",
+  "manualEntry": "إدخال يدوي",
+  "smartEstimation": "تقدير ذكي",
+  "unknown": "غير معروف",
+  "howMuchWillYouConsume": "ما هي الكمية التي ستتناولها؟",
+  "valuesMayDifferWarning": "⚠️ قد تختلف هذه القيم عن الملصق الحالي. تحقق دائماً يدويًا قبل الاعتماد على البيانات.",
+  "dismissWarning": "تجاهل التنبيه",
+  "avoidThisProduct": "تجنب هذا المنتج",
+  "consumeWithCaution": "تناوله بحذر",
+  "relativelySafeChoice": "خيار آمن نسبياً",
+  "foodDrugInteraction": "تفاعل دوائي مع الطعام",
+  "editNutrient": "تعديل {nutrient}",
+  "@editNutrient": {
+    "placeholders": {
+      "nutrient": { "type": "String" }
+    }
+  },
+  "valuePer100g": "القيمة لكل 100 جم",
+  "saveToDailyLog": "احفظ في سجلي اليومي",
+  "pleaseLoginFirst": "الرجاء تسجيل الدخول أولاً",
+  "missingData": "بيانات مفقودة ⚠️",
+
+  "labCreatinine": "الكرياتينين",
+  "labPotassium": "البوتاسيوم",
+  "labUrea": "اليوريا",
+  "labSodium": "الصوديوم",
+  "labHemoglobin": "الهيموجلوبين",
+  "labPhosphorus": "الفوسفور",
+  "labHbA1c": "السكر التراكمي (HbA1c)",
+  "labTotalCholesterol": "الكوليسترول الكلي",
+  "labLDL": "LDL الكوليسترول الضار",
+  "labTriglycerides": "الدهون الثلاثية",
+  "labCalcium": "الكالسيوم",
+  "labVitaminD": "فيتامين D",
+  "labBloodPhosphorus": "فوسفور الدم",
+  "labUrineACR": "ألبومين/كرياتينين البول",
+  "noteImportantForDiabeticCKD": "مهم لمرضى الكلى السكريين",
+
+  "enterLabResults": "إدخال نتائج المختبر",
+  "labDateTitle": "تاريخ التحاليل",
+  "labDateLabel": "تاريخ التحليل",
+  "saveResultsManually": "حفظ النتائج يدوياً",
+  "scanLabPaperOCR": "مسح ورقة التحليل آلياً (OCR)",
+  "measurementUnit": "وحدة القياس",
+  "unitStoredAsIsMg": "القيم المُدخلة بـ mg/dL — تُحفظ كما هي",
+  "unitConvertedAutomaticallyMmol": "القيم المُدخلة بـ mmol/L — تُحوَّل تلقائياً عند الحفظ",
+  "dataSavedSuccessfully": "تم حفظ البيانات بنجاح!",
+  "updatingDashboard": "جاري تحديث لوحة التحكم...",
+
+  "normalRange": "المدى الطبيعي: {min} – {max} {unit}",
+  "@normalRange": {
+    "placeholders": {
+      "min": { "type": "String" },
+      "max": { "type": "String" },
+      "unit": { "type": "String" }
+    }
+  },
+  "errorSavingExt": "خطأ في الحفظ: {error}",
+  "@errorSavingExt": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "errorScanningExt": "فشل المسح: {error}",
+  "@errorScanningExt": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+
+  "labWarningCriticalHigh": "🔴 {name} مرتفع بشكل ملحوظ — يُنصح بالتواصل مع طبيبك قريباً",
+  "@labWarningCriticalHigh": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningHigh": "⚠ {name} أعلى من المعتاد قليلاً — راقبه وأبلغ طبيبك في الزيارة القادمة",
+  "@labWarningHigh": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningCriticalLow": "🔴 {name} منخفض بشكل ملحوظ — يُنصح بالتواصل مع طبيبك قريباً",
+  "@labWarningCriticalLow": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "labWarningLow": "⚠ {name} أقل من المعتاد قليلاً — راقبه وأبلغ طبيبك في الزيارة القادمة",
+  "@labWarningLow": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+
+  "english": "الإنجليزية",
+  "arabic": "العربية"
+}

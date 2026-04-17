@@ -1,0 +1,56 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+nul
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.next/
+out/
+build/
+dist/
+
+# Flutter / Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+/kidneytrack/mobile/ios/Flutter/.last_build_id
+/kidneytrack/mobile/android/app/debug
+/kidneytrack/mobile/android/app/profile
+/kidneytrack/mobile/android/app/release
+
+# Temporary Analysis and Build Logs (KidneyTrack specific)
+*.txt
+*.log
+analyze_output*
+build_error*
+final_*
+scanner_check.txt
+dart_files.txt
+err.txt
+analysis_report*
+*.zip
+*.bak
+
+# Keep certain txt files if needed (e.g. documentation)
+!README.md
+!LICENSE
