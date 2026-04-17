@@ -51,9 +51,7 @@ class BottomNavShell extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: isDark
-                    ? AppColors.borderBaseDark
-                    : AppColors.borderBase.withValues(alpha: 0.1),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
               ),
             ),
           ),
