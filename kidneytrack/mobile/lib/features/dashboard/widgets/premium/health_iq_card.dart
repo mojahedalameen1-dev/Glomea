@@ -5,19 +5,30 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/models/medical_models.dart';
 
 class HealthIQCard extends StatelessWidget {
-  final double egfr;
-  final KidneyStageInfo stage;
+  final double? egfr;
+  final KidneyStageInfo? stage;
 
   const HealthIQCard({
     super.key,
-    required this.egfr,
-    required this.stage,
+    this.egfr,
+    this.stage,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final progress = (egfr / 120).clamp(0.0, 1.0);
+    
+    // Safety check for null data
+    final hasData = egfr != null && stage != null;
+    final displayEgfr = egfr ?? 0.0;
+    final displayStage = stage ?? KidneyStageInfo(
+      stage: 'قيد التقييم',
+      label: 'أدخل التحاليل للتقييم',
+      color: Colors.grey,
+      risk: 'أدخل التحاليل للتقييم',
+    );
+    
+    final progress = (displayEgfr / 120).clamp(0.0, 1.0);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -25,11 +36,11 @@ class HealthIQCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.premiumCardDark : Colors.white,
         borderRadius: BorderRadius.circular(32),
-        boxShadow: isDark
+        boxShadow: isDark || !hasData
             ? null
             : [
                 BoxShadow(
-                  color: stage.color.withValues(alpha: 0.08),
+                  color: displayStage.color.withValues(alpha: 0.08),
                   blurRadius: 30,
                   offset: const Offset(0, 10),
                 ),
@@ -51,9 +62,9 @@ class HealthIQCard extends StatelessWidget {
                 ),
                 const Gap(8),
                 Text(
-                  stage.label,
+                  displayStage.label,
                   style: AppTextStyles.h2.copyWith(
-                    fontSize: 24,
+                    fontSize: hasData ? 24 : 18,
                     color: isDark ? Colors.white : AppColors.premiumTextMain,
                   ),
                 ),
@@ -62,13 +73,13 @@ class HealthIQCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: stage.color.withValues(alpha: 0.1),
+                    color: displayStage.color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    'المرحلة ${stage.stage}',
+                    hasData ? 'المرحلة ${displayStage.stage}' : 'بيانات ناقصة',
                     style: AppTextStyles.label.copyWith(
-                      color: stage.color,
+                      color: displayStage.color,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -87,10 +98,12 @@ class HealthIQCard extends StatelessWidget {
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.easeOutCubic,
                   builder: (context, value, _) => CircularProgressIndicator(
-                    value: value,
+                    value: hasData ? value : 0,
                     strokeWidth: 10,
                     backgroundColor: isDark ? Colors.white12 : Colors.grey[100],
-                    valueColor: AlwaysStoppedAnimation<Color>(stage.color),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      hasData ? displayStage.color : Colors.grey[300]!,
+                    ),
                     strokeCap: StrokeCap.round,
                   ),
                 ),
@@ -99,10 +112,10 @@ class HealthIQCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    egfr.toStringAsFixed(0),
-                    style: AppTextStyles.h1.copyWith(
-                      fontSize: 28,
-                      color: stage.color,
+                    hasData ? displayEgfr.toStringAsFixed(0) : '--',
+                    style: AppTextStyles.displayLarge.copyWith(
+                      fontSize: 32,
+                      color: hasData ? displayStage.color : Colors.grey,
                     ),
                   ),
                   Text(

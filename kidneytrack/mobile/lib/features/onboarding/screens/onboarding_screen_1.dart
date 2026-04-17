@@ -24,6 +24,7 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
   late TextEditingController _ageController;
   late TextEditingController _physicianController;
   bool _stageError = false;
+  bool _isNavigating = false;
 
   @override
   void initState() {
@@ -335,43 +336,59 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
             final stage = ref.read(onboardingNotifierProvider).data.kidneyStage;
             debugPrint('Current kidneyStage: $stage');
 
-            final isFormValid = _formKey.currentState!.validate();
+            if (_isNavigating) return;
+
+            final isFormValid = _formKey.currentState?.validate() ?? false;
             final isStageSelected = stage != null;
 
-            setState(() => _stageError = !isStageSelected);
+            setState(() {
+              _stageError = !isStageSelected;
+              if (isFormValid && isStageSelected) {
+                _isNavigating = true;
+              }
+            });
 
             if (!isFormValid || !isStageSelected) {
+              debugPrint('Validation failed: form=$isFormValid, stage=$isStageSelected');
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(activeLocale.languageCode == 'ar'
                       ? 'يرجى إكمال جميع الحقول المطلوبة واختيار المرحلة'
                       : 'Please complete all required fields and select a stage'),
                   backgroundColor: AppColors.criticalRed,
+                  duration: const Duration(seconds: 2),
                 ),
               );
               return;
             }
 
-            debugPrint('Updating onboarding data...');
-            ref.read(onboardingNotifierProvider.notifier).updateData(
-                  ref.read(onboardingNotifierProvider).data.copyWith(
-                        fullName: _nameController.text.trim(),
-                        age: int.tryParse(_ageController.text),
-                        physicianName: _physicianController.text.trim(),
-                      ),
-                );
+            try {
+              debugPrint('Updating onboarding data...');
+              ref.read(onboardingNotifierProvider.notifier).updateData(
+                    ref.read(onboardingNotifierProvider).data.copyWith(
+                          fullName: _nameController.text.trim(),
+                          age: int.tryParse(_ageController.text),
+                          physicianName: _physicianController.text.trim(),
+                        ),
+                  );
 
-            // Navigate AFTER the current frame completes.
-            // updateData() triggers ref.watch rebuild which would
-            // cancel a synchronous context.go(). Deferring to
-            // post-frame guarantees the widget tree is stable.
-            debugPrint('Scheduling navigation to /onboarding/step2');
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (mounted) {
-                debugPrint('PostFrame: executing go(/onboarding/step2)');
+              debugPrint('Scheduling navigation to /onboarding/step2');
+              // Use a small delay to ensure the provider state is propagated
+              // before the router evaluates the next location.
+              Future.delayed(const Duration(milliseconds: 100), () {
+                if (!context.mounted) return;
+                debugPrint('Executing context.go(/onboarding/step2)');
                 context.go('/onboarding/step2');
+              });
+            } catch (e) {
+              debugPrint('Error in onboarding navigation: $e');
+              if (mounted) {
+                setState(() => _isNavigating = false);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error: $e'), backgroundColor: Colors.red),
+                );
               }
-            });
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
@@ -379,11 +396,20 @@ class _OnboardingScreen1State extends ConsumerState<OnboardingScreen1> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             elevation: 0,
           ),
-          child: Text(
-            activeLocale.languageCode == 'en' ? 'Next Step' : 'الخطوة التالية',
-            style: AppTextStyles.h3
-                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
+          child: _isNavigating
+              ? const SizedBox(
+                  height: 20,
+                  width: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+              : Text(
+                  activeLocale.languageCode == 'en' ? 'Next Step' : 'الخطوة التالية',
+                  style: AppTextStyles.h3
+                      .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
         ),
       ),
     );

@@ -60,7 +60,7 @@ class AppRouter {
       initialLocation: initialLocation,
       refreshListenable: _RouterNotifier(ref),
       redirect: (context, state) {
-        final location = state.matchedLocation;
+        final location = state.uri.path;
         final session = Supabase.instance.client.auth.currentSession;
         final isLoggedIn = session != null;
         debugPrint('Router CHECK: location=$location, isLoggedIn=$isLoggedIn');
@@ -79,32 +79,50 @@ class AppRouter {
           return login;
         }
 
-        // 2. Session exists — watch (not read) so redirect re-evaluates on change
+        // 2. Session exists — check onboarding status
         final authAsync = ref.watch(authNotifierProvider);
-        if (authAsync.isLoading) {
-          debugPrint('Router: Auth state loading, skipping redirect');
+        
+        // Use user metadata as a fast-path fallback while patient data is loading
+        final bool metadataOnboarded = session.user.userMetadata?['onboarding_complete'] == true;
+        
+        // Handle Error State: Don't force redirect if we can't reach the server
+        // This prevents the application from looping back to Onboarding when RLS fails
+        if (authAsync.hasError) {
+          debugPrint('Router: Auth error detected (${authAsync.error}), staying put');
+          return null; 
+        }
+
+        if (authAsync.isLoading && !metadataOnboarded) {
+          debugPrint('Router: Auth state loading and metadata not onboarded, skipping redirect');
           return null;
         }
 
-        if (isOnAuth || isOnBoarding) {
-          final patient = authAsync.valueOrNull;
-          final bool isOnboarded = patient?.onboardingComplete ??
-              (session.user.userMetadata?['onboarding_complete'] == true);
+        final patient = authAsync.valueOrNull;
+        final bool isOnboarded = patient?.onboardingComplete ?? metadataOnboarded;
 
-          debugPrint('Router: isOnboarded=$isOnboarded, location=$location');
+        debugPrint('Router: isOnboarded=$isOnboarded, location=$location');
 
-          if (!isOnboarded) {
-            if (isOnBoarding) {
-              debugPrint(
-                  'Router: User not onboarded, allowing onboarding route');
-              return null;
-            }
-            debugPrint('Router: User not onboarded, forcing step1');
-            return '$onboarding/step1';
+        if (!isOnboarded) {
+          // If not onboarded, only allow onboarding paths
+          if (isOnBoarding) return null;
+          
+          // Determine the correct resume step
+          // If basic info (Step 1) is missing, go to step 1
+          final bool step1Complete = patient != null && 
+              patient.firstName != null && 
+              patient.lastName != null &&
+              patient.birthDate != null;
+              
+          final targetPath = step1Complete ? '$onboarding/step2' : '$onboarding/step1';
+          
+          debugPrint('Router: User not onboarded. Step 1 Complete: $step1Complete. Redirecting to $targetPath');
+          return targetPath;
+        } else {
+          // If onboarded, don't allow auth or onboarding paths
+          if (isOnAuth || isOnBoarding) {
+            debugPrint('Router: User onboarded, redirecting to dashboard');
+            return dashboard;
           }
-
-          debugPrint('Router: User onboarded, redirecting to dashboard');
-          return dashboard;
         }
 
         return null;
@@ -122,7 +140,7 @@ class AppRouter {
         GoRoute(
           path: onboarding,
           redirect: (context, state) =>
-              state.matchedLocation == onboarding ? '$onboarding/step1' : null,
+              state.uri.path == onboarding ? '$onboarding/step1' : null,
           routes: [
             GoRoute(
               path: 'step1',
@@ -246,12 +264,14 @@ class _RouterNotifier extends ChangeNotifier {
       notifyListeners();
     });
 
-    // Listen only to onboarding completion transition (false → true)
+    // Listen to onboarding completion transition
     _ref.listen<bool?>(
       authNotifierProvider.select((s) => s.valueOrNull?.onboardingComplete),
       (previous, next) {
-        if (previous == false && next == true) {
-          debugPrint('Router: Onboarding completed, triggering redirect');
+        // Broaden condition to ensure we trigger on first load if already true
+        // or when transitioning from false/null to true.
+        if (next == true && previous != true) {
+          debugPrint('Router: Onboarding identified as complete, triggering redirect');
           notifyListeners();
         }
       },

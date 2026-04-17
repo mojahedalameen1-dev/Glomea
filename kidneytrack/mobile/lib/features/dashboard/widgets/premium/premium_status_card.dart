@@ -84,8 +84,8 @@ class PremiumStatusCard extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: AppTextStyles.metricValue.copyWith(
-                  fontSize: 28,
+                style: AppTextStyles.displayLarge.copyWith(
+                  fontSize: 32,
                   color: isDark ? Colors.white : AppColors.textPrimary,
                 ),
               ),

@@ -31,7 +31,8 @@ final dashboardSummaryProvider = FutureProvider.autoDispose((ref) async {
           resultsList.where((r) => r['indicatorCode'] == code).toList();
       if (relevant.isNotEmpty) {
         final latest = relevant.first;
-        final latestValue = (latest['value'] as num).toDouble();
+        final dynamic rawValue = latest['value'];
+        final double latestValue = rawValue != null ? (rawValue as num).toDouble() : 0.0;
 
         IndicatorStatus status = IndicatorStatus.safe;
         if (latestValue > warningMax) {
@@ -47,7 +48,7 @@ final dashboardSummaryProvider = FutureProvider.autoDispose((ref) async {
           'status': status.name,
           'sparkline': relevant
               .take(7)
-              .map((r) => (r['value'] as num).toDouble())
+              .map((r) => (r['value'] as num?)?.toDouble() ?? 0.0)
               .toList()
               .reversed
               .toList(),

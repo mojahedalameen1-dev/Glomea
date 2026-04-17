@@ -29,6 +29,7 @@ class FluidRingChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return LayoutBuilder(
       builder: (context, constraints) {
         final double effectiveSize = math.min(
@@ -42,32 +43,39 @@ class FluidRingChart extends StatelessWidget {
           animationDuration: 1200,
           curve: Curves.easeOutCubic,
           circularStrokeCap: CircularStrokeCap.round,
-          backgroundColor: AppColors.borderBase.withValues(alpha: 0.1),
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
           linearGradient: LinearGradient(
             colors: percent < 0.8
-                ? <Color>[const Color(0xFF0288D1), const Color(0xFF26C6DA)]
+                ? <Color>[
+                    Theme.of(context).colorScheme.primary,
+                    Theme.of(context).colorScheme.secondary,
+                  ]
                 : percent < 1.0
-                    ? <Color>[AppColors.textWarning, const Color(0xFFFFD54F)]
-                    : <Color>[AppColors.textCritical, const Color(0xFFFF6D00)],
+                    ? <Color>[AppColors.textWarning, Colors.orangeAccent]
+                    : <Color>[AppColors.textCritical, Colors.redAccent],
           ),
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CountUpText(
                 endValue: currentMl.toDouble(),
-                style: AppTextStyles.metricValue
-                    .copyWith(fontSize: effectiveSize * 0.18),
+                style: AppTextStyles.displayLarge.copyWith(
+                  fontSize: effectiveSize * 0.22,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
               ),
               Text(
                 'مل',
-                style: AppTextStyles.bodyS
-                    .copyWith(fontSize: effectiveSize * 0.08),
+                style: AppTextStyles.bodyS.copyWith(
+                  fontSize: effectiveSize * 0.08,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 4),
               Container(
                 width: effectiveSize * 0.4,
                 height: 1,
-                color: AppColors.borderBase.withValues(alpha: 0.1),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.1),
               ),
               const SizedBox(height: 4),
               Text(

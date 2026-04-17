@@ -20,6 +20,7 @@ class OnboardingScreen2 extends ConsumerStatefulWidget {
 
 class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
   final _formKey = GlobalKey<FormState>();
+  bool _isSubmitting = false;
 
   late TextEditingController _fluidController;
   late TextEditingController _potassiumController;
@@ -344,43 +345,49 @@ class _OnboardingScreen2State extends ConsumerState<OnboardingScreen2> {
         width: double.infinity,
         height: 56,
         child: ElevatedButton(
-          onPressed: state.isLoading
-              ? null
-              : () async {
-                  if (_formKey.currentState!.validate()) {
-                    final notifier =
-                        ref.read(onboardingNotifierProvider.notifier);
+          onPressed: (state.isLoading || _isSubmitting)
+               ? null
+               : () async {
+                   if (_formKey.currentState!.validate()) {
+                     setState(() => _isSubmitting = true);
+                     try {
+                       final notifier =
+                           ref.read(onboardingNotifierProvider.notifier);
 
-                    notifier.updateData(
-                      state.data.copyWith(
-                        fluidLimitMl: int.tryParse(_fluidController.text),
-                        potassiumLimitMg:
-                            int.tryParse(_potassiumController.text),
-                        sodiumLimitMg: int.tryParse(_sodiumController.text),
-                        proteinLimitG: int.tryParse(_proteinController.text),
-                        phosphorusLimitMg:
-                            int.tryParse(_phosphorusController.text),
-                        physicianName: _physicianController.text.trim(),
-                        notificationsEnabled: _notificationsEnabled,
-                      ),
-                    );
+                       notifier.updateData(
+                         state.data.copyWith(
+                           fluidLimitMl: int.tryParse(_fluidController.text),
+                           potassiumLimitMg:
+                               int.tryParse(_potassiumController.text),
+                           sodiumLimitMg: int.tryParse(_sodiumController.text),
+                           proteinLimitG: int.tryParse(_proteinController.text),
+                           phosphorusLimitMg:
+                               int.tryParse(_phosphorusController.text),
+                           physicianName: _physicianController.text.trim(),
+                           notificationsEnabled: _notificationsEnabled,
+                         ),
+                       );
 
-                    final success = await notifier.completeOnboarding();
+                       final success = await notifier.completeOnboarding();
 
-                    if (success && context.mounted) {
-                      // Done. AppRouter will handle the redirect because onboardingComplete is true.
-                      // But we use context.go to be safe and clean the stack.
-                      context.go('/dashboard');
-                    } else if (context.mounted && state.error != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.error!),
-                          backgroundColor: AppColors.criticalRed,
-                        ),
-                      );
-                    }
-                  }
-                },
+                       if (success && context.mounted) {
+                         // Explicitly go to dashboard to break any potential loops
+                         context.go('/dashboard');
+                       } else if (context.mounted && state.error != null) {
+                         ScaffoldMessenger.of(context).showSnackBar(
+                           SnackBar(
+                             content: Text(state.error!),
+                             backgroundColor: AppColors.criticalRed,
+                           ),
+                         );
+                       }
+                     } finally {
+                       if (mounted) {
+                         setState(() => _isSubmitting = false);
+                       }
+                     }
+                   }
+                 },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             shape:

@@ -13,15 +13,18 @@ class DashboardSummary {
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) {
     return DashboardSummary(
-      metrics: (json['metrics'] as List)
-          .map((m) => IndicatorMetric.fromJson(m))
-          .toList(),
-      fluidHistory: (json['fluidHistory'] as List)
-          .map((f) => FluidIntakeRecord.fromJson(f))
-          .toList(),
-      latestLabResults: (json['latestLabResults'] as List)
-          .map((l) => LabResultSummary.fromJson(l))
-          .toList(),
+      metrics: (json['metrics'] as List?)
+              ?.map((m) => IndicatorMetric.fromJson(m))
+              .toList() ??
+          [],
+      fluidHistory: (json['fluidHistory'] as List?)
+              ?.map((f) => FluidIntakeRecord.fromJson(f))
+              .toList() ??
+          [],
+      latestLabResults: (json['latestLabResults'] as List?)
+              ?.map((l) => LabResultSummary.fromJson(l))
+              .toList() ??
+          [],
       unreadAlerts: json['unreadAlerts'] ?? 0,
     );
   }
@@ -43,14 +46,14 @@ class IndicatorMetric {
 
   factory IndicatorMetric.fromJson(Map<String, dynamic> json) {
     return IndicatorMetric(
-      name: json['name'],
-      value: json['value'].toDouble(),
-      unit: json['unit'],
-      delta: json['delta']?.toDouble() ?? 0.0,
-      sparkline: (json['sparkline'] as List)
-          .map((s) => s.toDouble())
-          .toList()
-          .cast<double>(),
+      name: json['name'] ?? '',
+      value: (json['value'] as num?)?.toDouble() ?? 0.0,
+      unit: json['unit'] ?? '',
+      delta: (json['delta'] as num?)?.toDouble() ?? 0.0,
+      sparkline: (json['sparkline'] as List?)
+              ?.map((s) => (s as num).toDouble())
+              .toList() ??
+          [],
     );
   }
 }
@@ -86,14 +89,14 @@ class LabResultSummary {
 
   factory LabResultSummary.fromJson(Map<String, dynamic> json) {
     return LabResultSummary(
-      indicatorCode: json['indicatorCode'],
-      indicatorNameAr: json['indicatorNameAr'],
-      value: json['value'].toDouble(),
-      status: json['status'],
-      sparkline: (json['sparkline'] as List)
-          .map((s) => s.toDouble())
-          .toList()
-          .cast<double>(),
+      indicatorCode: json['indicatorCode'] ?? '',
+      indicatorNameAr: json['indicatorNameAr'] ?? '',
+      value: (json['value'] as num?)?.toDouble() ?? 0.0,
+      status: json['status'] ?? '',
+      sparkline: (json['sparkline'] as List?)
+              ?.map((s) => (s as num).toDouble())
+              .toList() ??
+          [],
     );
   }
 }

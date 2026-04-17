@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kidneytrack_mobile/core/theme/app_colors.dart';
 import 'package:kidneytrack_mobile/core/theme/app_text_styles.dart';
 import 'package:kidneytrack_mobile/features/potassium_scanner/widgets/scan_method_sheet.dart';
 
@@ -15,8 +14,6 @@ class BottomNavShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
       body: navigationShell,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

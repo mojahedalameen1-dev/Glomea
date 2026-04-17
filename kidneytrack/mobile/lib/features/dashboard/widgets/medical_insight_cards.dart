@@ -119,15 +119,15 @@ class FluidOverloadCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (overloadKg == null || dryWeight == null || currentWeight == null) {
-      return const SizedBox.shrink();
-    }
-
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final isWarning = overloadKg! > 1.5;
+    
+    final hasData = overloadKg != null && dryWeight != null && currentWeight != null;
+    final displayOverload = overloadKg ?? 0.0;
+    
+    final isWarning = hasData && displayOverload > 1.5;
     final color = isWarning ? AppColors.textCritical : AppColors.primary;
 
-    final l10n = AppLocalizations.of(context)!;
     return MedicalInsightContainer(
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -137,29 +137,38 @@ class FluidOverloadCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(l10n.fluidOverload, style: AppTextStyles.label),
-              Text(
-                '${overloadKg! > 0 ? "+" : ""}${overloadKg!.toStringAsFixed(1)} kg',
-                style: AppTextStyles.metricValue.copyWith(
-                  color: isWarning
-                      ? (isDark
-                          ? AppColors.textCriticalDark
-                          : AppColors.textCritical)
-                      : AppColors.primary,
-                  fontSize: 28,
+              if (hasData)
+                Text(
+                  '${displayOverload > 0 ? "+" : ""}${displayOverload.toStringAsFixed(1)} kg',
+                  style: AppTextStyles.metricValue.copyWith(
+                    color: isWarning
+                        ? (isDark
+                            ? AppColors.textCriticalDark
+                            : AppColors.textCritical)
+                        : AppColors.primary,
+                    fontSize: 28,
+                  ),
+                )
+              else
+                Text(
+                  '--',
+                  style: AppTextStyles.metricValue.copyWith(
+                    color: Colors.grey,
+                    fontSize: 28,
+                  ),
                 ),
-              ),
             ],
           ),
           const Gap(12),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
-              value: (overloadKg! / 5).clamp(0.0, 1.0),
+              value: hasData ? (displayOverload / 5).clamp(0.0, 1.0) : 0.0,
               minHeight: 12,
               backgroundColor: isDark
                   ? AppColors.borderBaseDark
                   : AppColors.borderBase.withValues(alpha: 0.1),
-              valueColor: AlwaysStoppedAnimation<Color>(color),
+              valueColor: AlwaysStoppedAnimation<Color>(hasData ? color : Colors.grey[300]!),
             ),
           ),
           const Gap(12),
@@ -167,7 +176,7 @@ class FluidOverloadCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${l10n.dryWeight}: ${dryWeight!.toStringAsFixed(1)}',
+                '${l10n.dryWeight}: ${hasData ? dryWeight!.toStringAsFixed(1) : "--"}',
                 style: AppTextStyles.bodyS.copyWith(
                   color: isDark
                       ? AppColors.textSecondaryDark
@@ -175,7 +184,7 @@ class FluidOverloadCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${l10n.currentWeight}: ${currentWeight!.toStringAsFixed(1)}',
+                '${l10n.currentWeight}: ${hasData ? currentWeight!.toStringAsFixed(1) : "--"}',
                 style: AppTextStyles.bodyS.copyWith(
                   color: isDark
                       ? AppColors.textSecondaryDark

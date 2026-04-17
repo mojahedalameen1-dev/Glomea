@@ -16,9 +16,17 @@ class LoadingSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final baseColor = isDark
+        ? Theme.of(context).colorScheme.surfaceContainerHighest
+        : const Color(0xFFE2E8F0);
+    final highlightColor = isDark
+        ? Theme.of(context).colorScheme.surface
+        : const Color(0xFFF8FAFC);
+
     return Shimmer.fromColors(
-      baseColor: const Color(0xFFE2E8F0),
-      highlightColor: const Color(0xFFF8FAFC),
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Container(
         width: width,
         height: height,

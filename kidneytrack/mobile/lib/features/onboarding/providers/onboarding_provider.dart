@@ -112,11 +112,23 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
       final data = state.data;
       final Map<String, dynamic> payload = {
         'onboardingComplete': true,
-        'updatedAt': DateTime.now().toIso8601String(),
         'notifications_enabled': data.notificationsEnabled,
       };
 
-      if (data.fullName != null) payload['full_name'] = data.fullName;
+      if (data.fullName != null) {
+        payload['full_name'] = data.fullName;
+
+        // Split full name into first and last name to satisfy NOT NULL constraints
+        final nameParts = data.fullName!.trim().split(' ');
+        if (nameParts.length > 1) {
+          payload['firstName'] = nameParts.first;
+          payload['lastName'] = nameParts.sublist(1).join(' ');
+        } else {
+          payload['firstName'] = data.fullName;
+          payload['lastName'] = ''; // Use empty string for last name if only one part provided
+        }
+      }
+
       if (data.physicianName != null) {
         payload['physician_name'] = data.physicianName;
       }
@@ -125,7 +137,10 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
         final birthYear = DateTime.now().year - data.age!;
         payload['birthDate'] = DateTime(birthYear, 1, 1).toIso8601String();
       }
-      if (data.kidneyStage != null) payload['kidneyStage'] = data.kidneyStage;
+      if (data.kidneyStage != null) {
+        payload['kidneyStage'] =
+            data.kidneyStage == 'DIALYSIS' ? 'STAGE_5' : data.kidneyStage;
+      }
       if (data.dialysisStatus != null) {
         payload['dialysisStatus'] = data.dialysisStatus;
       }

@@ -41,22 +41,24 @@ class FoodConsumption {
 
   factory FoodConsumption.fromJson(Map<String, dynamic> json) {
     return FoodConsumption(
-      id: json['id'] as String,
-      patientId: json['patientId'] as String,
-      foodName: json['foodName'] as String,
-      brand: json['brand'] as String,
-      gramsConsumed: (json['gramsConsumed'] as num).toDouble(),
-      potassium: (json['potassium'] as num).toDouble(),
-      phosphorus: (json['phosphorus'] as num).toDouble(),
-      sodium: (json['sodium'] as num).toDouble(),
-      protein: (json['protein'] as num).toDouble(),
-      calories: (json['calories'] as num).toDouble(),
+      id: json['id'] as String? ?? '',
+      patientId: json['patientId'] as String? ?? '',
+      foodName: json['foodName'] as String? ?? '',
+      brand: json['brand'] as String? ?? '',
+      gramsConsumed: (json['gramsConsumed'] as num?)?.toDouble() ?? 0.0,
+      potassium: (json['potassium'] as num?)?.toDouble() ?? 0.0,
+      phosphorus: (json['phosphorus'] as num?)?.toDouble() ?? 0.0,
+      sodium: (json['sodium'] as num?)?.toDouble() ?? 0.0,
+      protein: (json['protein'] as num?)?.toDouble() ?? 0.0,
+      calories: (json['calories'] as num?)?.toDouble() ?? 0.0,
       calcium: (json['calcium'] as num?)?.toDouble(),
       sugars: (json['sugars'] as num?)?.toDouble(),
       carbohydrates: (json['carbohydrates'] as num?)?.toDouble(),
       totalFat: (json['totalFat'] as num?)?.toDouble(),
-      dataSource: json['dataSource'] as String? ?? 'off',
-      consumedAt: DateTime.parse(json['consumedAt'] as String),
+      dataSource: json['dataSource'] as String? ?? 'manual',
+      consumedAt: json['consumedAt'] != null
+          ? DateTime.parse(json['consumedAt'] as String)
+          : DateTime.now(),
     );
   }
 

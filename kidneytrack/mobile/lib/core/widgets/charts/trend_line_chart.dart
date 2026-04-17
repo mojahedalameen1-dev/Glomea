@@ -30,6 +30,7 @@ class TrendLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     if (lines.isEmpty || lines.every((l) => l.spots.isEmpty)) {
       return const Center(
         child: Padding(
@@ -78,7 +79,9 @@ class TrendLineChart extends StatelessWidget {
         LineChartData(
           lineTouchData: LineTouchData(
             touchTooltipData: LineTouchTooltipData(
-              getTooltipColor: (_) => const Color(0xFF2E3440),
+              getTooltipColor: (_) => isDark
+                  ? Theme.of(context).colorScheme.surfaceContainerHighest
+                  : const Color(0xFF2E3440),
               tooltipRoundedRadius: 8,
               getTooltipItems: (touchedSpots) {
                 return touchedSpots.map((spot) {
@@ -112,8 +115,10 @@ class TrendLineChart extends StatelessWidget {
             show: true,
             drawVerticalLine: false,
             horizontalInterval: (finalMaxY - finalMinY) / 5,
-            getDrawingHorizontalLine: (value) => const FlLine(
-              color: Color(0xFFE5E9F0),
+            getDrawingHorizontalLine: (value) => FlLine(
+              color: isDark
+                  ? Theme.of(context).colorScheme.outlineVariant
+                  : const Color(0xFFE5E9F0),
               strokeWidth: 1,
             ),
           ),
@@ -128,8 +133,10 @@ class TrendLineChart extends StatelessWidget {
                   }
                   return Text(
                     value.toStringAsFixed(0),
-                    style:
-                        const TextStyle(color: Color(0xFF818CAB), fontSize: 10),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: 10,
+                    ),
                     textAlign: TextAlign.center,
                   );
                 },
@@ -150,8 +157,10 @@ class TrendLineChart extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
                       intl.DateFormat('d/M').format(date),
-                      style: const TextStyle(
-                          color: Color(0xFF818CAB), fontSize: 10),
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 10,
+                      ),
                     ),
                   );
                 },

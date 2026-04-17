@@ -13,10 +13,14 @@ class FluidIntake {
 
   factory FluidIntake.fromJson(Map<String, dynamic> json) {
     return FluidIntake(
-      id: json['id'],
-      patientId: json['patientId'],
-      amountMl: json['amountMl'] as int,
-      consumedAt: DateTime.parse(json['loggedAt'] ?? json['consumedAt']),
+      id: json['id'] as String?,
+      patientId: json['patientId'] as String? ?? '',
+      amountMl: json['amountMl'] as int? ?? 0,
+      consumedAt: json['loggedAt'] != null 
+          ? DateTime.parse(json['loggedAt'] as String)
+          : json['consumedAt'] != null
+              ? DateTime.parse(json['consumedAt'] as String)
+              : DateTime.now(),
     );
   }
 

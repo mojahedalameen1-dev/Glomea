@@ -19,6 +19,7 @@ final medicalInsightsProvider = FutureProvider<MedicalInsights>((ref) async {
         status: 'safe',
         remaining: HealthConstants.defaultPotassiumLimitMg.toDouble(),
       ),
+      isEarlyDeterioration: false,
     );
   }
 

@@ -19,13 +19,15 @@ class LabResult {
 
   factory LabResult.fromJson(Map<String, dynamic> json) {
     return LabResult(
-      id: json['id'],
-      patientId: json['patientId'],
-      indicatorCode: json['indicatorCode'],
-      value: (json['value'] as num).toDouble(),
-      unit: json['unit'],
-      recordedAt: DateTime.parse(json['recordedAt']),
-      imageUrl: json['imageUrl'],
+      id: json['id'] as String?,
+      patientId: json['patientId'] as String? ?? '',
+      indicatorCode: json['indicatorCode'] as String? ?? '',
+      value: (json['value'] as num?)?.toDouble() ?? 0.0,
+      unit: json['unit'] as String? ?? '',
+      recordedAt: json['recordedAt'] != null
+          ? DateTime.parse(json['recordedAt'] as String)
+          : DateTime.now(),
+      imageUrl: json['imageUrl'] as String?,
     );
   }
 
