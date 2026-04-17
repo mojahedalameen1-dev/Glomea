@@ -15,27 +15,17 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 import 'core/services/notification_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   // Initialize Timezones
   tz.initializeTimeZones();
-  
+
   bool isSupabaseInitialized = false;
   try {
     await dotenv.load(fileName: ".env");
     await NotificationService.initialize();
-    
-    // Check and clear onboarding for testing
-    final prefs = await SharedPreferences.getInstance();
-    final onboardingDone = prefs.getBool('onboardingComplete') ?? false;
-    debugPrint('Onboarding complete status on launch: $onboardingDone');
-    
-    // Reset mechanism for testing
-    await prefs.remove('onboardingComplete');
-    // await prefs.clear(); // If you want to reset everything
 
     await Supabase.initialize(
       url: dotenv.env['SUPABASE_URL'] ?? SupabaseConfig.url,
@@ -89,14 +79,16 @@ class GlomeaApp extends ConsumerWidget {
                   const Icon(Icons.cloud_off, size: 64, color: AppColors.criticalRed),
                   const SizedBox(height: 24),
                   Text(
-                    isInitialized ? "" : (locale.languageCode == 'ar' ? 'خطأ في الاتصال بالخدمة' : 'Connection Error'),
+                    locale.languageCode == 'ar'
+                        ? 'خطأ في الاتصال بالخدمة'
+                        : 'Connection Error',
                     style: AppTextStyles.h2,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    locale.languageCode == 'ar' 
-                      ? 'تعذر تهيئة التطبيق. يرجى التأكد من اتصال الإنترنت وإعادة المحاولة.'
-                      : 'Failed to initialize the application. Please check your internet connection and try again.',
+                    locale.languageCode == 'ar'
+                        ? 'تعذر تهيئة التطبيق. يرجى التأكد من اتصال الإنترنت وإعادة المحاولة.'
+                        : 'Failed to initialize the application. Please check your internet connection and try again.',
                     textAlign: TextAlign.center,
                     style: AppTextStyles.bodyM,
                   ),
