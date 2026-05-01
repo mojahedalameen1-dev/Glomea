@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { requireAdmin } from "@/lib/require-admin"
 import { revalidatePath } from "next/cache"
 
 export async function createAlert(formData: {
@@ -11,8 +12,13 @@ export async function createAlert(formData: {
   status: string
   patientId?: string
 }) {
-  const supabase = await createClient()
+  try {
+    await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
 
+  const supabase = await createClient()
   const { data, error } = await supabase
     .from('Alert')
     .insert([{
@@ -34,8 +40,13 @@ export async function createAlert(formData: {
 }
 
 export async function markAlertAsRead(id: string) {
-  const supabase = await createClient()
+  try {
+    await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('Alert')
     .update({ status: 'read', updated_at: new Date().toISOString() })
@@ -52,8 +63,13 @@ export async function markAlertAsRead(id: string) {
 }
 
 export async function deleteAlert(id: string) {
-  const supabase = await createClient()
+  try {
+    await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
 
+  const supabase = await createClient()
   const { error } = await supabase
     .from('Alert')
     .delete()

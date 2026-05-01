@@ -1,15 +1,19 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { requireAdmin } from "@/lib/require-admin"
 import { revalidatePath } from "next/cache"
 import { logActivity } from "@/lib/activity-log"
 
 export async function createPatient(formData: any) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  if (!user) return { success: false, error: "Unauthorized" }
+  let adminCtx
+  try {
+    adminCtx = await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
 
+  const supabase = await createClient()
   const { data, error } = await supabase
     .from('Patient')
     .insert([{
@@ -24,10 +28,9 @@ export async function createPatient(formData: any) {
     return { success: false, error: error.message }
   }
 
-  // Log the activity
   await logActivity({
-    userId: user.id,
-    userName: user.email ?? 'Admin',
+    userId: adminCtx.user.id,
+    userName: adminCtx.admin.full_name ?? adminCtx.user.email ?? 'Admin',
     action: 'CREATE',
     section: 'patients',
     details: { patientName: data[0].full_name }
@@ -39,16 +42,17 @@ export async function createPatient(formData: any) {
 }
 
 export async function updatePatient(id: string, formData: any) {
+  let adminCtx
+  try {
+    adminCtx = await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
+
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) return { success: false, error: "Unauthorized" }
-
   const { data, error } = await supabase
     .from('Patient')
-    .update({
-      ...formData
-    })
+    .update({ ...formData })
     .eq('id', id)
     .select()
 
@@ -57,10 +61,9 @@ export async function updatePatient(id: string, formData: any) {
     return { success: false, error: error.message }
   }
 
-  // Log the activity
   await logActivity({
-    userId: user.id,
-    userName: user.email ?? 'Admin',
+    userId: adminCtx.user.id,
+    userName: adminCtx.admin.full_name ?? adminCtx.user.email ?? 'Admin',
     action: 'UPDATE',
     section: 'patients',
     details: { patientName: data[0].full_name }
@@ -73,12 +76,15 @@ export async function updatePatient(id: string, formData: any) {
 }
 
 export async function deletePatient(id: string) {
+  let adminCtx
+  try {
+    adminCtx = await requireAdmin()
+  } catch (e: any) {
+    return { success: false, error: e.message }
+  }
+
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) return { success: false, error: "Unauthorized" }
-
-  // First get the name for the log
   const { data: patient } = await supabase
     .from('Patient')
     .select('full_name')
@@ -95,11 +101,10 @@ export async function deletePatient(id: string) {
     return { success: false, error: error.message }
   }
 
-  // Log the activity
   if (patient) {
     await logActivity({
-      userId: user.id,
-      userName: user.email ?? 'Admin',
+      userId: adminCtx.user.id,
+      userName: adminCtx.admin.full_name ?? adminCtx.user.email ?? 'Admin',
       action: 'DELETE',
       section: 'patients',
       details: { patientName: patient.full_name }
